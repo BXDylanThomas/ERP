@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dylan.dao.DepartmentDao">
+
+    <!--添加部门-->
+    <insert id="addDepartment"  useGeneratedKeys="false" keyProperty="id" >
+        insert into T_DEPARTMENT values(DEPARTMENT_SEQ.nextval,#{name},#{description},#{createTime},#{state})
+    </insert>
+
+    <!--更新部门信息  创建时间不能改-->
+    <update id="updateDepartment">
+        update T_DEPARTMENT set D_NAME=#{name},D_DESCRIPTION=#{description} where D_ID=#{id}
+    </update>
+
+    <!--查询  部门名称 有没有 重复 的-->
+    <select id="queryDepartmentBy_name" resultType="com.dylan.model.Department">
+         select * from T_DEPARTMENT where D_NAME=#{name} and rownum=1
+    </select>
+
+    <!--删除部门  设置state == -1-->
+    <update id="updateDepartmentBy_delete">
+        update T_DEPARTMENT set D_STATE=#{dimission} where D_ID=#{depId}
+    </update>
+
+    <!--通过部门id  查询部门-->
+    <select id="queryDepartmentBy_id" resultMap="departmentMap">
+        select d.D_ID,d.D_NAME,d.D_DESCRIPTION,d.D_CREATETIME,
+            from T_DEPARTMENT d  where d.D_ID=#{depId}
+    </select>
+
+    <!--查询所有的部门  为了部门 分页的 size-->
+    <select id="queryAllDepartment"  resultMap="departmentMap">
+         select d.D_ID from  T_DEPARTMENT d where d.D_STATE=#{regular}
+    </select>
+
+    <!-- 分页 查询部门-->
+    <select id="queryDepartmentBy_everyPage" resultMap="departmentMap">
+       select  d.D_ID,d.D_NAME,d.D_DESCRIPTION,d.D_CREATETIME
+          from (select rownum rn,d.* from  T_DEPARTMENT d
+                  where d.D_STATE=#{regular} and ROWNUM &lt;=#{show}) d
+          where d.rn &gt;=#{current}
+    </select>
+
+    <resultMap id="departmentMap" type="Department">
+        <id property="id" column="D_ID"/>
+        <result property="name" column="D_NAME"/>
+        <result property="createTime" column="D_CREATETIME"/>
+        <result property="description" column="D_DESCRIPTION"/>
+        <result property="state" column="D_STATE"/>
+    </resultMap>
+
+
+</mapper>

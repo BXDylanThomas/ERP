@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dylan.dao.AdminDao">
+
+    <select id="queryAdmin" resultMap="adminMap">
+        select  * from T_ADMIN where A_NAME=#{name} and A_PASSWORD=#{password}
+    </select>
+
+    <resultMap id="adminMap" type="Admin">
+        <id property="id" column="A_ID"/>
+        <result property="name" column="A_NAME"/>
+        <result property="password" column="A_PASSWORD"/>
+    </resultMap>
+</mapper>

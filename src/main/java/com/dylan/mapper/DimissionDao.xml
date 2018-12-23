@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dylan.dao.DimissionDao">
+    <!--添加离职记录表-->
+    <insert id="addDimission" useGeneratedKeys="false" keyProperty="id" >
+        insert into T_DIMISSION values(DIMISSION_SEQ.nextval,#{empId},#{depId},#{posId},#{entryTime},#{outTime},#{description})
+    </insert>
+</mapper>
