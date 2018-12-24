@@ -3,23 +3,18 @@ package com.dylan.model;
 import java.io.Serializable;
 
 /**
- * 员工基本信息表
+ * 员工
  */
 public class Employee implements Serializable {
 
-    private Integer id;    //自增id
-    private String name;   //员工姓名
-    private String password;  //员工登录密码
-    private String sex;   //员工性别
-    private Integer age;  //员工年龄
-    private Integer phone;  //员工联系电话
-    private String email;   //员工邮箱
-    private String address;   //员工联系地址
+    private Integer id;
+    private Integer accId;  //登录账号的id
+    private Integer resId; //简历id
+    private Integer posId;  //职位id
     private String entryTime;  //入职时间
-    private int state;   //状态   0  实习   1 正式   -1  离职
-
-    private Department department;
-    private Position position;
+    private Double salary;   //基本工资
+    private Double performance;  //绩效奖金
+    private Integer empState;   //状态    leave 离职  1     regular 在职  2      watch 试用期 3
 
     public Employee() {
     }
@@ -32,60 +27,28 @@ public class Employee implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Integer getAccId() {
+        return accId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAccId(Integer accId) {
+        this.accId = accId;
     }
 
-    public String getPassword() {
-        return password;
+    public Integer getResId() {
+        return resId;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setResId(Integer resId) {
+        this.resId = resId;
     }
 
-    public String getSex() {
-        return sex;
+    public Integer getPosId() {
+        return posId;
     }
 
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
-    public Integer getPhone() {
-        return phone;
-    }
-
-    public void setPhone(Integer phone) {
-        this.phone = phone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
+    public void setPosId(Integer posId) {
+        this.posId = posId;
     }
 
     public String getEntryTime() {
@@ -96,43 +59,41 @@ public class Employee implements Serializable {
         this.entryTime = entryTime;
     }
 
-    public int getState() {
-        return state;
+    public Double getSalary() {
+        return salary;
     }
 
-    public void setState(int state) {
-        this.state = state;
+    public void setSalary(Double salary) {
+        this.salary = salary;
     }
 
-    public Department getDepartment() {
-        return department;
+    public Double getPerformance() {
+        return performance;
     }
 
-    public void setDepartment(Department department) {
-        this.department = department;
+    public void setPerformance(Double performance) {
+        this.performance = performance;
     }
 
-    public Position getPosition() {
-        return position;
+    public Integer getEmpState() {
+        return empState;
     }
 
-    public void setPosition(Position position) {
-        this.position = position;
+    public void setEmpState(Integer empState) {
+        this.empState = empState;
     }
 
     @Override
     public String toString() {
         return "Employee{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", password='" + password + '\'' +
-                ", sex='" + sex + '\'' +
-                ", age=" + age +
-                ", phone=" + phone +
-                ", email='" + email + '\'' +
-                ", address='" + address + '\'' +
+                ", accId=" + accId +
+                ", resId=" + resId +
+                ", posId=" + posId +
                 ", entryTime='" + entryTime + '\'' +
-                ", state='" + state + '\'' +
+                ", salary=" + salary +
+                ", performance=" + performance +
+                ", empState='" + empState + '\'' +
                 '}';
     }
 }

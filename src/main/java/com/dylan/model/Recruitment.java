@@ -1,20 +1,16 @@
 package com.dylan.model;
 
-import java.io.Serializable;
-
 /**
  * 招聘
  */
-public class Recruitment implements Serializable {
+public class Recruitment {
 
-    private Integer id;  //自增id
-    private Integer depid;  //招聘部门id
-    private Integer posid;   //招聘职位id
-    private String description;  //职位要求描述
-    private String company;   //公司介绍
-    private String comAddress;  //公司地址
-    private String experience;  //要求经验
-    private String education;   //要求学历
+    private Integer id;
+    private Integer posId;
+    private String title;
+    private String content;
+    private Integer count;
+    private String createTime;
 
     public Recruitment() {
     }
@@ -27,73 +23,55 @@ public class Recruitment implements Serializable {
         this.id = id;
     }
 
-    public Integer getDepid() {
-        return depid;
+    public Integer getPosId() {
+        return posId;
     }
 
-    public void setDepid(Integer depid) {
-        this.depid = depid;
+    public void setPosId(Integer posId) {
+        this.posId = posId;
     }
 
-    public Integer getPosid() {
-        return posid;
+    public String getTitle() {
+        return title;
     }
 
-    public void setPosid(Integer posid) {
-        this.posid = posid;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getDescription() {
-        return description;
+    public String getContent() {
+        return content;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public String getCompany() {
-        return company;
+    public Integer getCount() {
+        return count;
     }
 
-    public void setCompany(String company) {
-        this.company = company;
+    public void setCount(Integer count) {
+        this.count = count;
     }
 
-    public String getComAddress() {
-        return comAddress;
+    public String getCreateTime() {
+        return createTime;
     }
 
-    public void setComAddress(String comAddress) {
-        this.comAddress = comAddress;
-    }
-
-    public String getExperience() {
-        return experience;
-    }
-
-    public void setExperience(String experience) {
-        this.experience = experience;
-    }
-
-    public String getEducation() {
-        return education;
-    }
-
-    public void setEducation(String education) {
-        this.education = education;
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
     }
 
     @Override
     public String toString() {
         return "Recruitment{" +
                 "id=" + id +
-                ", depid=" + depid +
-                ", posid=" + posid +
-                ", description='" + description + '\'' +
-                ", company='" + company + '\'' +
-                ", comAddress='" + comAddress + '\'' +
-                ", experience='" + experience + '\'' +
-                ", education='" + education + '\'' +
+                ", posId=" + posId +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", count=" + count +
+                ", createTime='" + createTime + '\'' +
                 '}';
     }
 }

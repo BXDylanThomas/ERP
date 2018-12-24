@@ -1,68 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.dylan.dao.PositionDao">
+<mapper namespace="com.dylan.dao.AccountDao">
 
-    <!--添加职位-->
-    <insert id="addPosition"  useGeneratedKeys="false" keyProperty="id" >
-        insert into T_POSITION values(POSITION_SEQ.nextval,#{name},#{description},#{createTime},#{salary},#{depid},#{state})
+    <!--添加账户-->
+    <insert id="addAccount">
+        insert into T_ACCOUNT values(ACCOUNT_SEQ.nextval,#{name},#{password},#{type})
     </insert>
 
-    <!--查询职位名称不能重复-->
-    <select id="queryPositionBy_name" resultType="com.dylan.model.Position">
-        select  P_ID from T_POSITION where P_NAME=#{name} and rownum=1;
-    </select>
-
-    <!--更新职位  创建时间不能更改-->
-    <update id="updatePosition">
-        update T_POSITION set P_NAME=#{name},P_DESCRIPTION=#{description},P_SALARY=#{salary} where P_ID=#{posId}
+    <!--修改  密码  或  类型-->
+    <update id="updateAccount">
+        update T_ACCOUNT set A_TYPE=#{type},A_PASSWORD=#{password} where A_ID=#{id}
     </update>
 
-    <!--删除职位   state  == -1-->
-    <update id="updatePositionBy_delete">
-         update T_POSITION set  P_STATE =#{dimission} where P_ID=#{posId}
-    </update>
-
-    <!--通过部门id查询所有职位-->
-    <select id="queryPositionBy_depId" resultMap="positionMap">
-        select  d.D_ID
-         from T_DEPARTMENT d,T_POSITION p
-         where d.D_ID=p.P_DEPID
-         and d.D_STATE=#{regular} and p.P_STATE=#{regular} and d.D_ID=#{depId}
+    <!--查询  用于登录-->
+    <select id="queryAccount" resultMap="accountMap">
+        select * from T_ACCOUNT where A_NAME=#{name} and A_PASSWORD=#{password} and A_TYPE=#{type}
     </select>
 
-    <!--通过部门id查询所有职位  分页-->
-    <select id="queryPositionBy_depId_everypage" resultMap="positionMap">
-        select d.D_ID,d.D_NAME,d.D_DESCRIPTION,d.D_CREATETIME,
-                d.P_ID,d.P_NAME,d.P_DESCRIPTION,d.P_CREATETIME
-         from (select rownum rn,d.*,p.* from T_DEPARTMENT d,T_POSITION p
-                where d.D_ID=p.P_DEPID  and d.D_STATE=#{regular} and p.P_STATE=#{regular}
-                 and d.D_ID=#{depId} and ROWNUM &lt;=#{show})d
-          where d.rn &gt;=#{current}
+    <!--查询  检查用户名 是否 重复 -->
+    <select id="queryAccountBy_name" resultMap="accountMap">
+        select * from T_ACCOUNT where A_NAME=#{name} and rownum=1
     </select>
 
-    <!--通过 部门id 和 职位id  查询 所有  包括 在职  离职员工-->
-    <select id="queryPositionBy_depId_posId" resultMap="positionMap">
-        select d.D_ID,d.D_NAME,d.D_DESCRIPTION,d.D_CREATETIME,
-                p.P_ID,p.P_NAME,p.P_DESCRIPTION,p.P_CREATETIME
-        from T_DEPARTMENT d,T_POSITION p
-         where d.D_ID=p.P_DEPID and d.D_STATE=#{regular} and p.P_STATE=#{regular} and d.D_ID=#{depId} and p.P_ID=#{posId}
+    <!--通过id查询-->
+    <select id="queryAccountBy_id" resultType="com.dylan.model.Account">
+          select * from T_ACCOUNT where A_ID=#{id} and rownum=1
     </select>
 
-
-    <resultMap id="positionMap" type="Position">
-        <id property="id" column="P_ID"/>
-        <result property="name" column="P_NAME"/>
-        <result property="description" column="P_DESCRIPTION"/>
-        <result property="createTime" column="P_CREATETIME"/>
-        <result property="salary" column="P_SALARY"/>
-        <result property="depid" column="P_DEPID"/>
-        <result property="state" column="P_STATE"/>
-        <association property="department" javaType="Department">
-            <id property="id" column="D_ID"/>
-            <result property="name" column="D_NAME"/>
-            <result property="createTime" column="D_CREATETIME"/>
-            <result property="description" column="D_DESCRIPTION"/>
-            <result property="state" column="D_STATE"/>
-        </association>
+    <resultMap id="accountMap" type="Account">
+        <id  property="id" column="A_ID"/>
+        <result property="name" column="A_NAME"/>
+        <result property="password" column="A_PASSWORD"/>
+        <result property="type" column="A_TYPE"/>
     </resultMap>
+
 </mapper>

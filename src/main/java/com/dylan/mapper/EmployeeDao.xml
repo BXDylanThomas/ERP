@@ -1,111 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.dylan.dao.EmployeeDao">
-
     <!--添加员工-->
-    <insert id="addEmployee" useGeneratedKeys="false" keyProperty="id" >
-        insert into T_EMPLOYEE values(DEP_POS_EMP_SEQ.nextval,#{name},#{password},#{sex},#{address},#{phone},#{email},#{entryTime},#{state})
+    <insert id="addEmployee">
+        insert into T_EMPLOYEE values (EMPLOYEE_SEQ.nextval,#{accId},#{resId},#{posId},#{entryTime},#{salary},#{performance},#{empState})
     </insert>
-
-    <!--更新员工基本信息-->
     <update id="updateEmployee">
-        update T_EMPLOYEE set E_NAME=#{name},E_PHONE=#{phone},E_EMAIL=#{email},E_ADDRESS=#{address} where E_ID=#{id}
+
     </update>
-
-    <!--给员工办理  转正  离职-->
-    <update id="updateEmployeeBy_state">
-        update T_EMPLOYEE set E_STATE=#{state} where E_ID=#{id}
-    </update>
-
-    <!--修改密码-->
-    <update id="updateEmployeeBy_password">
-        update T_EMPLOYEE set E_PASSWORD=#{password} where E_ID=#{empId}
-    </update>
-
-    <!--员工登录-->
-    <select id="queryEmployee" resultMap="employeeMap">
-        select d.D_ID,d.D_NAME, p.P_ID,p.P_NAME,
-                e.E_ID,e.E_NAME,e.E_SEX,e.E_AGE,e.E_PHONE,e.E_EMAIL,e.E_ADDRESS,e.E_ENTRYTIME
-        from T_EMPLOYEE e,T_POSITION p,T_DEPARTMENT d,T_DEP_POS_EMP dpe
-        where e.E_ID=#{id} and e.E_PASSWORD=#{password} and e.E_ID=dpe.R_EMPID and dpe.R_DEPID=d.D_ID and dpe.R_POSID=p.P_ID and rownum=1
-    </select>
-
-    <!--通过 员工id 查找员工-->
-    <select id="queryEmployeeBy_id" resultMap="employeeMap">
-        select d.D_ID,d.D_NAME, p.P_ID,p.P_NAME,
-                e.E_ID,e.E_NAME,e.E_SEX,e.E_AGE,e.E_PHONE,e.E_EMAIL,e.E_ADDRESS,e.E_ENTRYTIME
-        from T_EMPLOYEE e,T_POSITION p,T_DEPARTMENT d,T_DEP_POS_EMP dpe
-        where  e.E_ID=dpe.R_EMPID and dpe.R_DEPID=d.D_ID and dpe.R_POSID=p.P_ID and E_ID=#{empId} and rownum=1
-    </select>
-
-    <!--查询某部门的员工  非离职 部门存在 职位存在-->
-    <select id="queryEmployeeBy_depId" resultMap="employeeMap">
-        select e.E_ID
-        from T_EMPLOYEE e,T_POSITION p,T_DEPARTMENT d,T_DEP_POS_EMP dpe
-        where e.E_ID=dpe.R_EMPID and dpe.R_DEPID=d.D_ID and dpe.R_POSID=p.P_ID
-        and e.E_STATE!=#{dimission}and p.P_STATE!=#{dimission} and d.D_STATE!=#{dimission}
-        and d.D_ID=#{depId}
-    </select>
-
-    <!--查询某部门的员工  分页-->
-    <select id="queryEmployeeBy_depId_everypage" resultMap="employeeMap">
-        select d.D_ID,d.D_NAME,d.P_ID,d.P_NAME,
-                d.E_ID,d.E_NAME,d.E_SEX,d.E_AGE,d.E_PHONE,d.E_EMAIL,d.E_ADDRESS,d.E_ENTRYTIME
-         from (select rownum rn,d.*,p.*,e.* from T_EMPLOYEE e,T_POSITION p,T_DEPARTMENT d,T_DEP_POS_EMP dpe
-                where e.E_ID=dpe.R_EMPID and dpe.R_DEPID=d.D_ID and dpe.R_POSID=p.P_ID
-                and e.E_STATE!=#{dimission}and p.P_STATE!=#{dimission} and d.D_STATE!=#{dimission} and d.D_ID=#{depId} and ROWNUM &lt;=#{show})d
-        where d.rn &gt;=#{current}
-    </select>
-
-    <!--查询某部门某职位的员工-->
-    <select id="queryEmployeeBy_depId_posId" resultMap="employeeMap">
-           select e.E_ID
-        from T_EMPLOYEE e,T_POSITION p,T_DEPARTMENT d,T_DEP_POS_EMP dpe
-        where e.E_ID=dpe.R_EMPID and dpe.R_DEPID=d.D_ID and dpe.R_POSID=p.P_ID
-        and e.E_STATE!=#{dimission}and p.P_STATE!=#{dimission} and d.D_STATE!=#{dimission}
-        and d.D_ID=#{depId} and p.P_ID=#{posId}
-    </select>
-
-    <!--查询某部门某职位的员工  分页-->
-    <select id="queryEmployeeBy_depId_posId_everyPage" resultMap="employeeMap">
-        select d.D_ID,d.D_NAME,d.P_ID,d.P_NAME,
-                 d.E_ID,d.E_NAME,d.E_SEX,d.E_AGE,d.E_PHONE,d.E_EMAIL,d.E_ADDRESS,d.E_ENTRYTIME
-             from (select rownum rn,d.*,p.*,e.* from T_EMPLOYEE e,T_POSITION p,T_DEPARTMENT d,T_DEP_POS_EMP dpe
-                    where e.E_ID=dpe.R_EMPID and dpe.R_DEPID=d.D_ID and dpe.R_POSID=p.P_ID
-                    and e.E_STATE!=#{dimission}and p.P_STATE!=#{dimission} and d.D_STATE!=#{dimission}
-                    and d.D_ID=#{depId} and p.P_ID=#{posId} and ROWNUM &lt;=#{show})d
-         where d.rn &gt;=#{current}
-    </select>
-
-
-    <resultMap id="employeeMap" type="Employee">
-        <id property="id" column="E_ID"/>
-        <result property="name" column="E_NAME"/>
-        <result property="password" column="E_PASSWORD"/>
-        <result property="sex" column="E_SEX"/>
-        <result property="age" column="E_AGE"/>
-        <result property="phone" column="E_PHONE"/>
-        <result property="email" column="E_EMAIL"/>
-        <result property="address" column="E_ADDRESS"/>
-        <result property="entryTime" column="E_ENTRYTIME"/>
-        <result property="state" column="E_STATE"/>
-        <association property="department" javaType="Department">
-            <id property="id" column="D_ID"/>
-            <result property="name" column="D_NAME"/>
-            <result property="createTime" column="D_CREATETIME"/>
-            <result property="description" column="D_DESCRIPTION"/>
-            <result property="state" column="D_STATE"/>
-        </association>
-        <association property="position" javaType="Position">
-            <id property="id" column="P_ID"/>
-            <result property="name" column="P_NAME"/>
-            <result property="description" column="P_DESCRIPTION"/>
-            <result property="createTime" column="P_CREATETIME"/>
-            <result property="salary" column="P_SALARY"/>
-            <result property="depid" column="P_DEPID"/>
-            <result property="state" column="P_STATE"/>
-        </association>
-    </resultMap>
-
-
 </mapper>

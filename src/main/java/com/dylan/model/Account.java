@@ -3,15 +3,16 @@ package com.dylan.model;
 import java.io.Serializable;
 
 /**
- * 游客登录账号    用来制作投递简历
+ * 账号登录
  */
-public class Visitor implements Serializable {
+public class Account implements Serializable {
 
     private Integer id;
     private String name;
     private String password;
+    private String type;    // admin 管理员  visitor 游客    employee  员工
 
-    public Visitor() {
+    public Account() {
     }
 
     public Integer getId() {
@@ -38,12 +39,21 @@ public class Visitor implements Serializable {
         this.password = password;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
-        return "Visitor{" +
+        return "Account{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
+                ", type='" + type + '\'' +
                 '}';
     }
 }

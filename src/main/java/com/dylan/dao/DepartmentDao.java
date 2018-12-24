@@ -10,21 +10,23 @@ public interface DepartmentDao {
     //添加部门
     boolean addDepartment(Department department);
 
-    //查重部门名字 ，如果重复，不能添加
-    Department queryDepartmentBy_name(String name);
-
-    //更新部门信息  如:修改名字  如果有state == -1  表示删除职位
+    //更新部门名字
     boolean updateDepartment(Department department);
 
-    //更新部门信息 将state == -1
-    boolean updateDepartmentBy_delete(Map<String,Object> map);
+    //删除部门
+    boolean deleteDepartment(int depId);
+
+
+    //通过名字查询部门  判断是否重复
+    Department queryDepartmentBy_name(String name);
+
+    //通过 id   查询部门
+    Department queryDepartmentBy_depId(int depId);
 
     //查询所有部门
-    List<Department> queryAllDepartment(Map<String,Object> map);
+    Integer  queryAllDeprtment();
 
-    //分页查询所有部门
-    List<Department> queryDepartmentBy_everyPage(Map<String,Object> map);
+    //查询所有部门分页
+    List<Department>  queryAllDeprtmentBy_everypage(Map<String,Object> map);
 
-    //通过id查询部门
-    Department queryDepartmentBy_id(Map<String,Object> map);
 }

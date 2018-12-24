@@ -9,7 +9,7 @@
     <title></title>
     <script>
 
-        window.location.href="adminLogin"
+        window.location.href="returnLogin"
     </script>
 </head>
 

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dylan.dao.RecruitmentDao">
+
+    <!--添加招聘信息-->
+    <insert id="addRecruitment">
+        insert into T_RECRUITMENT values(RECRUITMENT_SEQ.nextval,#{posId},#{title},#{content},#{count},#{createTime})
+    </insert>
+
+    <!--删除招聘信息-->
+    <delete id="deleteRecruitment">
+        delete from T_RECRUITMENT where R_ID=#{id}
+    </delete>
+
+    <!--通过职位id 查询 数量 -->
+    <select id="queryRecruitmentBy_posId" resultMap="recruitment">
+        select count(R_ID) from T_RECRUITMENT where R_POSID=#{posId}
+    </select>
+
+    <!--通过 id  查询  分页-->
+    <select id="queryRecruitmentBy_posId_everyPage" resultMap="recruitment">
+        select r.R_ID,r.R_POSID,r.R_TITLE,r.R_CONTENT,r.R_COUNT,r.R_CREATETIME from (select rownum rn,r.* from T_RECRUITMENT r
+                          where R_POSID=#{posId} and ROWNUM &lt;=#{show})r
+        where r.rn &gt;=#{current}
+    </select>
+
+    <select id="queryAllRecruitmentBy" resultType="java.lang.Integer">
+        select count(R_ID) from T_RECRUITMENT where R_POSID=#{posId}
+    </select>
+
+    <select id="queryAllRecruitmentBy_everyPage" resultType="java.lang.Integer">
+         select r.R_ID,r.R_POSID,r.R_TITLE,r.R_CONTENT,r.R_COUNT,r.R_CREATETIME from (select rownum rn,r.* from T_RECRUITMENT r
+                          where ROWNUM &lt;=#{show})r
+        where r.rn &gt;=#{current}
+    </select>
+
+    <resultMap id="recruitment" type="Recruitment">
+        <id property="id" column=""/>
+        <result property="posId" column=""/>
+        <result property="title" column=""/>
+        <result property="content" column=""/>
+        <result property="count" column=""/>
+        <result property="createTime" column=""/>
+    </resultMap>
+
+</mapper>

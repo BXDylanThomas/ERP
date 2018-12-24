@@ -39,7 +39,7 @@
 <div class="container">
 
     <section class="main">
-        <form class="form-3" method="post" action="visitorLogin">
+        <form class="form-3" method="post" action="login">
             <p class="clearfix">
                 <label for="login">用户名：</label>
                 <input type="text" name="name" id="login" placeholder="请输入用户名" required>
@@ -49,8 +49,17 @@
                 <input type="password" name="password" id="password" placeholder="请输入密码" required>
             </p>
             <p class="clearfix">
+                <label for="address">账号类型：</label>
+              <select id="address" name="type">
+                  <option value="visitor">游客</option>
+                  <option value="employee">员工</option>
+                  <option value="admin">管理员</option>
+              </select>
+            </p>
+            <br/>
+            <p class="clearfix">
                 <input type="submit" name="submit" value="登录" style="position: relative;left: 60px">
-                <a href="toRegister" style="color: #0273dd;text-decoration: #0273dd">还没账号？</a>
+                <a href="returnRegister" style="color: #0273dd;text-decoration: #0273dd">还没账号？</a>
             </p>
         </form>
 

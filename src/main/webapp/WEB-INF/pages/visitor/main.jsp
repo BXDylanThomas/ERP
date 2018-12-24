@@ -9,6 +9,7 @@
     <title></title>
 </head>
 <body>
-   ${sessionScope.visitor}
+
+
 </body>
 </html>

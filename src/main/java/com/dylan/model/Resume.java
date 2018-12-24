@@ -5,22 +5,19 @@ import java.io.Serializable;
 /**
  * 简历
  */
-public class Resume implements Serializable {
+public class Resume  implements Serializable {
 
-    private Integer id;  //自增id
-    private Integer visid; //游客id
-    private String name; //姓名
+    private Integer id;
+    private String name;  //姓名
+    private String birth;  //出生年月
     private String sex;  //性别
-    private Integer age;  //年龄
-    private String birth; //出生年月
-    private String address; //联系地址
     private Integer phone;  //联系电话
-    private String email;  //联系邮箱
-    private String education; //学历
-    private String school;   //毕业学校
-    private Double salary;  //期望薪资
+    private String address;  //联系地址
+    private String email;  //邮箱
+    private String education;  //最高学历
+    private String major;   //专业
     private String experience;  //工作经验
-    private String selfEvaluate;  //自我评价
+    private Integer accId;  //账号id
 
     public Resume() {
     }
@@ -33,36 +30,12 @@ public class Resume implements Serializable {
         this.id = id;
     }
 
-    public Integer getVisid() {
-        return visid;
-    }
-
-    public void setVisid(Integer visid) {
-        this.visid = visid;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
     }
 
     public String getBirth() {
@@ -73,12 +46,12 @@ public class Resume implements Serializable {
         this.birth = birth;
     }
 
-    public String getAddress() {
-        return address;
+    public String getSex() {
+        return sex;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 
     public Integer getPhone() {
@@ -87,6 +60,14 @@ public class Resume implements Serializable {
 
     public void setPhone(Integer phone) {
         this.phone = phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getEmail() {
@@ -105,20 +86,12 @@ public class Resume implements Serializable {
         this.education = education;
     }
 
-    public String getSchool() {
-        return school;
+    public String getMajor() {
+        return major;
     }
 
-    public void setSchool(String school) {
-        this.school = school;
-    }
-
-    public Double getSalary() {
-        return salary;
-    }
-
-    public void setSalary(Double salary) {
-        this.salary = salary;
+    public void setMajor(String major) {
+        this.major = major;
     }
 
     public String getExperience() {
@@ -129,31 +102,28 @@ public class Resume implements Serializable {
         this.experience = experience;
     }
 
-    public String getSelfEvaluate() {
-        return selfEvaluate;
+    public Integer getAccId() {
+        return accId;
     }
 
-    public void setSelfEvaluate(String selfEvaluate) {
-        this.selfEvaluate = selfEvaluate;
+    public void setAccId(Integer accId) {
+        this.accId = accId;
     }
 
     @Override
     public String toString() {
-        return "Resume{" +
+        return "ResumeDao{" +
                 "id=" + id +
-                ", visid=" + visid +
                 ", name='" + name + '\'' +
-                ", sex='" + sex + '\'' +
-                ", age=" + age +
                 ", birth='" + birth + '\'' +
-                ", address='" + address + '\'' +
+                ", sex='" + sex + '\'' +
                 ", phone=" + phone +
+                ", address='" + address + '\'' +
                 ", email='" + email + '\'' +
                 ", education='" + education + '\'' +
-                ", school='" + school + '\'' +
-                ", salary=" + salary +
+                ", major='" + major + '\'' +
                 ", experience='" + experience + '\'' +
-                ", selfEvaluate='" + selfEvaluate + '\'' +
+                ", accId=" + accId +
                 '}';
     }
 }

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dylan.dao.PositionDao">
+
+    <!--添加职位-->
+    <insert id="addPosition">
+         insert into T_POSITION values(POSITION_SEQ.nextval,#{name},#{createTime},#{depId})
+    </insert>
+    <!--更新部门名字-->
+    <update id="updatePosition">
+        update  T_POSITION set  P_NAME=#{name} where P_ID=#{id}
+    </update>
+
+    <!--删除职位-->
+    <delete id="deletePosition">
+        delete  from T_POSITION where P_ID=#{posId}
+    </delete>
+
+    <!--通过  名字  查询职位  判断是否重复 -->
+    <select id="queryPositionBy_name" resultType="com.dylan.model.Position">
+        select  * from T_POSITION where P_NAME=#{name} and rownum=1
+    </select>
+
+    <!--通过 职位id  查询职位  -->
+    <select id="queryPositionBy_podId" resultType="com.dylan.model.Position">
+        select   p.P_ID,p.P_NAME,p.P_CREATETIME,p.P_DEPID,d.D_ID,d.D_NAME,d.D_CREATETIM
+        from T_POSITION p,T_DEPARTMENT d
+        where p.P_DEPID=d.D_ID and  P_ID=#{posId} and rownum=1
+    </select>
+
+    <!--通过部门ID  查询职位  -->
+    <select id="queryPositionBy_depId" resultType="java.lang.Integer">
+        select  count(P_ID) from T_POSITION where P_DEPID=#{posId}
+    </select>
+
+    <!--分页-->
+    <select id="queryPositionBy_depId_everyPage" resultType="java.lang.Integer">
+        select p.P_ID,p.P_NAME,p.P_CREATETIME,p.P_DEPID,p.D_ID,p.D_NAME,p.D_CREATETIM
+        from (select rownum rn,d.* ,p.* from T_POSITION p,T_DEPARTMENT d
+                        where p.P_DEPID=d.D_ID and d.D_ID=#{depId} and ROWNUM &lt;=#{show}) p
+          where p.rn &gt;=#{current}
+    </select>
+
+    <resultMap id="positionMap" type="Position">
+        <id property="id" column="P_ID"/>
+        <result property="name" column="P_NAME"/>
+        <result property="createTime" column="P_CREATETIME"/>
+        <result property="depId" column="P_DEPID"/>
+        <association property="department" javaType="Department">
+            <id property="id" column="D_ID"/>
+            <result property="name" column="D_NAME"/>
+            <result property="createTime" column="D_CREATETIM"/>
+        </association>
+    </resultMap>
+</mapper>
