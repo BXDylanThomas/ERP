@@ -31,14 +31,30 @@ public class Account_controller {
         }else{
             session.setAttribute("user",user);
             if(user.getType().equals(ADMIN)){
-                return "admin/main";
+                return "forward:returnAdmin";
             }else if(user.getType().equals(EMPLOYEE)){
-                return "employee/main";
+                return "forward:returnEmployee";
             }else {
-                return "visitor/main";
+                return "forward:returnVisitor";
             }
         }
     }
+
+    @RequestMapping("/returnAdmin")
+    public String returnAdmin(){
+        return "admin/main";
+    }
+
+    @RequestMapping("/returnEmployee")
+    public String returnEmployee(){
+        return "employee/main";
+    }
+
+    @RequestMapping("/returnVisitor")
+    public String returnVisitor(){
+        return "visitor/main";
+    }
+
 
     @RequestMapping("/returnLogin")
     public String returnLogin(){

@@ -9,7 +9,7 @@
     <title></title>
     <script>
 
-        window.location.href="returnLogin"
+        window.location.href="queryALlPosition"
     </script>
 </head>
 

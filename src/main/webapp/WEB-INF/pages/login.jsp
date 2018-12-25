@@ -50,7 +50,7 @@
             </p>
             <p class="clearfix">
                 <label for="address">账号类型：</label>
-              <select id="address" name="type">
+              <select id="address" name="type"  style="position: relative;left: 100px;width: 70px">
                   <option value="visitor">游客</option>
                   <option value="employee">员工</option>
                   <option value="admin">管理员</option>
@@ -58,7 +58,8 @@
             </p>
             <br/>
             <p class="clearfix">
-                <input type="submit" name="submit" value="登录" style="position: relative;left: 60px">
+                <input type="submit" name="submit" value="登录" style="position: relative;width:100px ">
+                <br/>
                 <a href="returnRegister" style="color: #0273dd;text-decoration: #0273dd">还没账号？</a>
             </p>
         </form>

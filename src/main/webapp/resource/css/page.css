@@ -1,0 +1,40 @@
+#show{
+    width: 30px;
+}
+#page{
+    position: relative;
+    left: 400px;
+    font-size: 15px;
+    top: 70px;
+}
+
+#page a{
+    text-decoration: underline blue;
+    margin: 0px 5px
+}
+
+#main{
+    position: relative;
+    left: 400px;
+    top: 50px;
+}
+#add{
+    font-size: 20px;
+    background: #F22D00;
+    color:white;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius:2px;
+}
+
+#main input{
+    border: none;
+    text-align: center;
+    width: 90px;
+}
+td{
+    text-align: center;
+}
+.createTime{
+    width: 200px;
+}

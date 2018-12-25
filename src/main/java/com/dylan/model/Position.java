@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * 职务
  */
-public class Position implements Serializable {
+public class Position implements Serializable,Comparable {
 
     private Integer id;
     private String name;
@@ -63,6 +63,13 @@ public class Position implements Serializable {
                 ", name='" + name + '\'' +
                 ", createTime='" + createTime + '\'' +
                 ", depId=" + depId +
+                ", department=" + department +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Position P= (Position) o;
+        return this.getDepId()-((Position) o).depId;
     }
 }

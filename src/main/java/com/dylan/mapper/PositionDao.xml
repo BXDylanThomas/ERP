@@ -1,37 +1,67 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.dylan.dao.AccountDao">
+<mapper namespace="com.dylan.dao.PositionDao">
 
-    <!--添加账户-->
-    <insert id="addAccount">
-        insert into T_ACCOUNT values(ACCOUNT_SEQ.nextval,#{name},#{password},#{type})
+    <!--添加职位-->
+    <insert id="addPosition">
+         insert into T_POSITION values(POSITION_SEQ.nextval,#{name},#{createTime},#{depId})
     </insert>
-
-    <!--修改  密码  或  类型-->
-    <update id="updateAccount">
-        update T_ACCOUNT set A_TYPE=#{type},A_PASSWORD=#{password} where A_ID=#{id}
+    <!--更新部门名字-->
+    <update id="updatePosition">
+        update  T_POSITION set  P_NAME=#{name} where P_ID=#{id}
     </update>
 
-    <!--查询  用于登录-->
-    <select id="queryAccount" resultMap="accountMap">
-        select * from T_ACCOUNT where A_NAME=#{name} and A_PASSWORD=#{password} and A_TYPE=#{type}
+    <!--删除职位-->
+    <delete id="deletePosition">
+        delete  from T_POSITION where P_ID=#{posId}
+    </delete>
+
+    <!--通过  名字  查询职位  判断是否重复 -->
+    <select id="queryPositionBy_name" resultType="com.dylan.model.Position">
+        select  * from T_POSITION where P_NAME=#{name} and rownum=1
     </select>
 
-    <!--查询  检查用户名 是否 重复 -->
-    <select id="queryAccountBy_name" resultMap="accountMap">
-        select * from T_ACCOUNT where A_NAME=#{name} and rownum=1
+    <!--通过 职位id  查询职位  -->
+    <select id="queryPositionBy_podId" resultMap="positionMap">
+        select   p.P_ID,p.P_NAME,p.P_CREATETIME,p.P_DEPID,d.D_ID,d.D_NAME,d.D_CREATETIM
+        from T_POSITION p,T_DEPARTMENT d
+        where p.P_DEPID=d.D_ID and  P_ID=#{posId} and rownum=1
     </select>
 
-    <!--通过id查询-->
-    <select id="queryAccountBy_id" resultType="com.dylan.model.Account">
-          select * from T_ACCOUNT where A_ID=#{id} and rownum=1
+    <!--通过部门ID  查询职位  -->
+    <select id="queryPositionBy_depId" resultMap="positionMap">
+        select p.P_ID,p.P_NAME,p.P_CREATETIME,p.P_DEPID,d.D_ID,d.D_NAME,d.D_CREATETIM from T_POSITION p,T_DEPARTMENT d
+         where P_DEPID=#{posId} and p.P_DEPID=d.D_ID
     </select>
 
-    <resultMap id="accountMap" type="Account">
-        <id  property="id" column="A_ID"/>
-        <result property="name" column="A_NAME"/>
-        <result property="password" column="A_PASSWORD"/>
-        <result property="type" column="A_TYPE"/>
+    <!--分页-->
+    <select id="queryPositionBy_depId_everyPage" resultMap="positionMap">
+        select p.P_ID,p.P_NAME,p.P_CREATETIME,p.P_DEPID,p.D_ID,p.D_NAME,p.D_CREATETIM
+        from (select rownum rn,d.* ,p.* from T_POSITION p,T_DEPARTMENT d
+                        where p.P_DEPID=d.D_ID and d.D_ID=#{depId} and ROWNUM &lt;=#{show}) p
+          where p.rn &gt;=#{current}
+    </select>
+    <select id="queryAllPosition" resultMap="positionMap">
+         select p.P_ID,p.P_NAME,p.P_CREATETIME,p.P_DEPID,d.D_ID,d.D_NAME,d.D_CREATETIM from T_POSITION p,T_DEPARTMENT d
+         where p.P_DEPID=d.D_ID
+    </select>
+
+    <select id="queryAllPositionBy_everyPage" resultMap="positionMap">
+         select p.P_ID,p.P_NAME,p.P_CREATETIME,p.P_DEPID,p.D_ID,p.D_NAME,p.D_CREATETIM
+        from (select rownum rn,d.* ,p.* from T_POSITION p,T_DEPARTMENT d
+                        where p.P_DEPID=d.D_ID and ROWNUM &lt;=#{show}) p
+          where p.rn &gt;=#{current}
+    </select>
+
+    <resultMap id="positionMap" type="Position">
+        <id property="id" column="P_ID"/>
+        <result property="name" column="P_NAME"/>
+        <result property="createTime" column="P_CREATETIME"/>
+        <result property="depId" column="P_DEPID"/>
+        <association property="department" javaType="Department">
+            <id property="id" column="D_ID"/>
+            <result property="name" column="D_NAME"/>
+            <result property="createTime" column="D_CREATETIM"/>
+        </association>
     </resultMap>
-
 </mapper>

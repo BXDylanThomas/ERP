@@ -14,33 +14,44 @@
 
     <!--通过职位id 查询 数量 -->
     <select id="queryRecruitmentBy_posId" resultMap="recruitment">
-        select count(R_ID) from T_RECRUITMENT where R_POSID=#{posId}
+       select r.R_ID,r.R_POSID,r.R_TITLE,r.R_CONTENT,r.R_COUNT,r.R_CREATETIME,
+                p.P_ID,p.P_DEPID,p.P_NAME,d.D_ID,d.D_NAME
+         from T_RECRUITMENT r,T_POSITION p,T_DEPARTMENT d
+        where R_POSID=#{posId} and r.R_POSID=p.P_ID and p.P_DEPID=d.D_ID
     </select>
 
     <!--通过 id  查询  分页-->
     <select id="queryRecruitmentBy_posId_everyPage" resultMap="recruitment">
-        select r.R_ID,r.R_POSID,r.R_TITLE,r.R_CONTENT,r.R_COUNT,r.R_CREATETIME from (select rownum rn,r.* from T_RECRUITMENT r
-                          where R_POSID=#{posId} and ROWNUM &lt;=#{show})r
+         select r.R_ID,r.R_POSID,r.R_TITLE,r.R_CONTENT,r.R_COUNT,r.R_CREATETIME,
+                r.P_ID,r.P_DEPID,r.P_NAME,r.D_ID,r.D_NAME
+              from (select rownum rn,r.*,p.*,d.* from T_RECRUITMENT r,T_POSITION p,T_DEPARTMENT d
+                      where  R_POSID=#{posId} and r.R_POSID=p.P_ID and p.P_DEPID=d.D_ID  and ROWNUM &lt;=#{show})r
         where r.rn &gt;=#{current}
     </select>
 
-    <select id="queryAllRecruitmentBy" resultType="java.lang.Integer">
-        select count(R_ID) from T_RECRUITMENT where R_POSID=#{posId}
+    <select id="queryAllRecruitmentBy" resultMap="recruitment">
+        select r.R_ID,r.R_POSID,r.R_TITLE,r.R_CONTENT,r.R_COUNT,r.R_CREATETIME,
+                p.P_ID,p.P_DEPID,p.P_NAME,d.D_ID,d.D_NAME
+         from T_RECRUITMENT r,T_POSITION p,T_DEPARTMENT d
+        where  r.R_POSID=p.P_ID and p.P_DEPID=d.D_ID
     </select>
 
-    <select id="queryAllRecruitmentBy_everyPage" resultType="java.lang.Integer">
-         select r.R_ID,r.R_POSID,r.R_TITLE,r.R_CONTENT,r.R_COUNT,r.R_CREATETIME from (select rownum rn,r.* from T_RECRUITMENT r
-                          where ROWNUM &lt;=#{show})r
+    <select id="queryAllRecruitmentBy_everyPage" resultMap="recruitment">
+         select r.R_ID,r.R_POSID,r.R_TITLE,r.R_CONTENT,r.R_COUNT,r.R_CREATETIME,
+                r.P_ID,r.P_DEPID,r.P_NAME,r.D_ID,r.D_NAME
+              from (select rownum rn,r.*,p.*,d.* from T_RECRUITMENT r,T_POSITION p,T_DEPARTMENT d
+                      where  r.R_POSID=p.P_ID and p.P_DEPID=d.D_ID  and ROWNUM &lt;=#{show})r
         where r.rn &gt;=#{current}
     </select>
 
     <resultMap id="recruitment" type="Recruitment">
-        <id property="id" column=""/>
-        <result property="posId" column=""/>
-        <result property="title" column=""/>
-        <result property="content" column=""/>
-        <result property="count" column=""/>
-        <result property="createTime" column=""/>
+        <id property="id" column="R_ID"/>
+        <result property="posId" column="R_POSID"/>
+        <result property="title" column="R_TITLE"/>
+        <result property="content" column="R_CONTENT"/>
+        <result property="count" column="R_COUNT"/>
+        <result property="createTime" column="R_CREATETIME"/>
+        <association property="positions" resultMap="com.dylan.dao.PositionDao.positionMap"/>
     </resultMap>
 
 </mapper>

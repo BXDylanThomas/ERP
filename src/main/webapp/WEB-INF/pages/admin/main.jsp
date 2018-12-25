@@ -8,24 +8,54 @@
 <head>
     <base href="<%=basePath%>"/>
     <title></title>
+    <link rel="stylesheet" href="resource/css/base.css">
 </head>
 <body>
-
-        <form action="addDepartment" method="post">
-            <label for="name">部门名称：</label><input required type="text" name="name" id="name">
-            <label for="description">描述：</label><input required type="text" name="description" id="description">
-            <input type="submit" value="确定" >
-        </form>
-
-
-        <c:if test="${res}">
-            ${departments}
+    <div>
+    <!--top-->
+    <div id="top">
+        <c:if test="${sessionScope.user!=null}">
+            <div  class="welcome">
+                <span>欢迎：${sessionScope.user.name}</span>
+                <a href="exit">退出</a>
+            </div>
         </c:if>
-        <c:if test="${!res}">
-           123
-        </c:if>
+    </div>
+    <div id="introduce"><span>XXXXX公司</span></div>
+    <div id="guid">
+        <div id="guid2">
+            <ul>
+                <li class="menu">
+                    <a href="">主页</a>
+                </li>
+                <li class="menu">
+                    <a href="queryDepartment">部门管理</a>
+                </li>
+                <li class="menu">
+                    <a href="queryALlPosition">职位管理</a>
+                </li>
+                <li class="menu">
+                    <a href="">员工管理</a>
+                </li>
+                <li class="menu">
+                    <a href="queryAllRecruitment">招聘管理</a>
+                </li>
+                <li class="menu">
+                    <a href="">培训管理</a>
+                </li>
+                <li class="menu">
+                    <a href="">查看考勤</a>
+                </li>
+                <li class="menu">
+                    <a href="">薪资结算</a>
+                </li>
+                <li class="menu">
+                    <a href="">查看奖惩记录</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
 
-        <a href="queryDepartment">查询</a>
-        ${departments}
 </body>
 </html>

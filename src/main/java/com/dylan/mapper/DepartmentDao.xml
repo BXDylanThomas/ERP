@@ -27,13 +27,13 @@
     </select>
 
     <!--查询所有部门的数量-->
-    <select id="queryAllDeprtment" resultType="java.lang.Integer">
-        select count(D_ID) from T_DEPARTMENT
+    <select id="queryAllDeprtment" resultMap="departmentMap">
+        select d.D_ID,d.D_NAME,d.D_CREATETIM from T_DEPARTMENT d
     </select>
 
     <!--分页查询所有部门-->
-    <select id="queryAllDeprtmentBy_everypage" resultType="com.dylan.model.Department">
-        select * from (select rownum rn,d.*  from T_DEPARTMENT d where ROWNUM &lt;=#{show})d where d.rn &gt;=#{current}
+    <select id="queryAllDeprtmentBy_everypage" resultMap="departmentMap" >
+        select d.D_ID,d.D_NAME,d.D_CREATETIM from (select rownum rn,d.*  from T_DEPARTMENT d where ROWNUM &lt;=#{show})d where d.rn &gt;=#{current}
     </select>
 
     <resultMap id="departmentMap" type="Department">

@@ -1,5 +1,9 @@
 package com.dylan.model;
 
+import javafx.geometry.Pos;
+
+import java.util.List;
+
 /**
  * 招聘
  */
@@ -11,6 +15,9 @@ public class Recruitment {
     private String content;
     private Integer count;
     private String createTime;
+
+    private Position positions;
+
 
     public Recruitment() {
     }
@@ -61,6 +68,14 @@ public class Recruitment {
 
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
+    }
+
+    public Position getPositions() {
+        return positions;
+    }
+
+    public void setPositions(Position positions) {
+        this.positions = positions;
     }
 
     @Override

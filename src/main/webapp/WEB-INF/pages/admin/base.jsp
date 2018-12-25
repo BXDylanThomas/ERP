@@ -7,21 +7,13 @@
 <html>
 <head>
     <base href="<%=basePath%>"/>
-    <link href="resource/css/base.css">
+    <title></title>
+    <link rel="stylesheet" href="resource/css/base.css">
 </head>
 <body>
-
-<%--base--%>
-<div>
+    <div>
     <!--top-->
     <div id="top">
-        <%--没有登录--%>
-        <c:if test="${sessionScope.user==null}">
-            <div class="welcome">
-                <a href="returnRegister">免费注册</a>
-                <a href="returnLogin">登录</a>
-            </div>
-        </c:if>
         <c:if test="${sessionScope.user!=null}">
             <div  class="welcome">
                 <span>欢迎：${sessionScope.user.name}</span>
@@ -34,17 +26,31 @@
         <div id="guid2">
             <ul>
                 <li class="menu">
-                    <a href="returnVisitor">主页</a>
+                    <a href="">主页</a>
                 </li>
                 <li class="menu">
-                    <a href="">查看招聘</a>
+                    <a href="queryDepartment">部门管理</a>
                 </li>
-                <li class="menu"  id="a">
-                    <a href="">个人信息</a>
-                    <ul id="query">
-                        <li class="menu"><a href="">查看简历</a></li>
-                        <li class="menu"><a href="">查看面试邀请</a></li>
-                    </ul>
+                <li class="menu">
+                    <a href="queryALlPosition">职位管理</a>
+                </li>
+                <li class="menu">
+                    <a href="">员工管理</a>
+                </li>
+                <li class="menu">
+                    <a href="queryAllRecruitment">招聘管理</a>
+                </li>
+                <li class="menu">
+                    <a href="">培训管理</a>
+                </li>
+                <li class="menu">
+                    <a href="">查看考勤</a>
+                </li>
+                <li class="menu">
+                    <a href="">薪资结算</a>
+                </li>
+                <li class="menu">
+                    <a href="">查看奖惩记录</a>
                 </li>
             </ul>
         </div>
@@ -52,5 +58,6 @@
 </div>
 
 </body>
+
 </body>
 </html>
