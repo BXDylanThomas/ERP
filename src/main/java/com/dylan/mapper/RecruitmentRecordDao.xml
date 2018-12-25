@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dylan.dao.RecruitmentRecordDao">
+
+    <!--添加简历投递记录表  添加的有 招聘id  简历id-->
+    <insert id="addRecruitmentRecord">
+        insert into T_RECRTUITMENTRECORD(RR_ID, RR_RECID, RR_RESID,RR_STATE) values(RECRITUIMENTRESOURD_SEQ.nextval,#{recId},#{resId},#{state})
+    </insert>
+
+    <!--更新 添加面试时间-->
+    <update id="updateRecruitmentRecord_time">
+        update T_RECRTUITMENTRECORD set RR_TIME=#{time},RR_STATE=#{state} where RR_ID=#{id}
+    </update>
+
+    <!--是否已经阅-->
+    <update id="updateRecruitmentRecord_state">
+        update T_RECRTUITMENTRECORD set RR_STATE=#{state} where RR_ID=#{id}
+    </update>
+
+    <!--查看某招聘的所有简历-->
+    <select id="queryRecruitmentRecordBy_accId" resultMap="recruitmentRecordMap">
+        select rr.RR_ID,rr.RR_RESID,rr.RR_RECID,rr.RR_TIME,rr.RR_STATE,
+            r.R_ID,r.R_ACCID,r.R_NAME,r.R_BIRTH,r.R_SEX,r.R_PHONE,r.R_ADDRESS,r.R_EMAIL,r.R_EDUCATION,r.R_MAJOR,r.R_EXPERIENCE
+        from T_RECRTUITMENTRECORD rr,T_RESUME r
+        where rr.RR_RESID=r.R_ID and rr.RR_RECID=#{recId}
+    </select>
+
+    <!--查看某招聘的所有简历  分页-->
+    <select id="queryRecruitmentRecordBy_accId_everyPae" resultMap="recruitmentRecordMap">
+        select  r.RR_ID,r.RR_RESID,r.RR_RECID,r.RR_TIME,r.RR_STATE,
+            r.R_ID,r.R_ACCID,r.R_NAME,r.R_BIRTH,r.R_SEX,r.R_PHONE,r.R_ADDRESS,r.R_EMAIL,r.R_EDUCATION,r.R_MAJOR,r.R_EXPERIENCE
+            from (select rownum rn,rr.*,r.* from T_RECRTUITMENTRECORD rr,T_RESUME r
+              where rr.RR_RESID=r.R_ID and rr.RR_RECID=#{recId} and  ROWNUM &lt;=#{show})r
+          where r.rn &gt;=#{current}
+    </select>
+
+
+    <resultMap id="recruitmentRecordMap" type="RecruitmentRecord">
+        <id property="id" column="RR_ID"/>
+        <result property="recId" column="RR_RECID"/>
+        <result property="resId" column="RR_RESID"/>
+        <result property="time" column="RR_TIME"/>
+        <result property="state" column="RR_STATE"/>
+        <association property="resume" resultMap="com.dylan.dao.ResumeDao.resumeMap"/>
+    </resultMap>
+</mapper>

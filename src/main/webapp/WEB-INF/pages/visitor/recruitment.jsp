@@ -7,16 +7,43 @@
 <html>
 <head>
     <base href="<%=basePath%>"/>
-    <title></title>
-    <link rel="stylesheet" href="resource/css/base.css">
+    <link rel="stylesheet"  href="resource/css/base.css">
     <link rel="stylesheet" href="resource/css/page.css">
-    <link rel="stylesheet" href="resource/css/recruitment.css">
+    <link rel="stylesheet" href="resource/css/vrec.css">
     <script src="resource/js/jquery-3.3.1.js"></script>
+    <script>
+        $(function () {
+            $(".send").click(function () {
+                $.ajax({
+                    type:"post",url:"sendresumemake",
+                    data:"recId="+$(this).next().val(),
+                    success:function (obj) {
+                        if(obj==-1){
+                            window.location.href="login"
+                        }else if(obj==0){
+                            alert("已经投递")
+                        }else{
+                            alert("投递成功")
+                        }
+                    }
+                })
+            })
+        })
+    </script>
 </head>
 <body>
+
+<%--base--%>
 <div>
     <!--top-->
     <div id="top">
+        <%--没有登录--%>
+        <c:if test="${sessionScope.user==null}">
+            <div class="welcome">
+                <a href="returnRegister">免费注册</a>
+                <a href="returnLogin">登录</a>
+            </div>
+        </c:if>
         <c:if test="${sessionScope.user!=null}">
             <div  class="welcome">
                 <span>欢迎：${sessionScope.user.name}</span>
@@ -29,40 +56,22 @@
         <div id="guid2">
             <ul>
                 <li class="menu">
-                    <a href="">主页</a>
-                </li>
-                <li class="menu">
-                    <a href="queryDepartment">部门管理</a>
-                </li>
-                <li class="menu">
-                    <a href="queryALlPosition">职位管理</a>
-                </li>
-                <li class="menu">
-                    <a href="">员工管理</a>
+                    <a href="returnVisitor">主页</a>
                 </li>
                 <li class="menu"  id="a">
-                    <a href="queryAllRecruitment">招聘管理</a>
+                    <a href="visitorqueryAllRecruitment">查看招聘</a>
                 </li>
-                <li class="menu">
-                    <a href="">培训管理</a>
-                </li>
-                <li class="menu">
-                    <a href="">查看考勤</a>
-                </li>
-                <li class="menu">
-                    <a href="">薪资结算</a>
-                </li>
-                <li class="menu">
-                    <a href="">查看奖惩记录</a>
+                <li class="menu" >
+                    <a href="tovisitorInfo">个人信息</a>
+
                 </li>
             </ul>
         </div>
     </div>
 </div>
 
-<div id="next">
-    <div >
-        <div id="main">
+<div id="next" style="position: relative;left: 500px;top: 10px;">
+         <div>
             <a href="toRecruitment">添加招聘</a>
             <c:if test="${recruitment==null}">
                 <td colspan="3">没有数据</td>
@@ -72,9 +81,9 @@
                     <table border="1" rules="all">
                         <tr>
                             <th colspan="3">招聘</th>
-                            <td rowspan="10">
-                                <a href="queryrecruitmentRecord">查看简历</a><br/>
-                                <a href="deleteRecruitment?id=${r.id}" onclick= "if(confirm( '是否确定！ ')==false)return   false; ">删除</a>
+                            <td rowspan="10" style="width: 80px">
+                                <a href="javascript:void(0)" class="send">投递简历</a>
+                                <input type="hidden" value="${r.id}" >
                             </td>
                         </tr>
                         <tr>
@@ -103,10 +112,10 @@
                         </tr>
                         <tr>
                             <th>招聘时间：</th>
-                            <td colspan="2">${r.time}</td>
+                            <td colspan="2">${r.createTime}</td>
                         </tr>
 
-                     </table>
+                    </table>
                     <br/><br/>
                 </c:forEach>
             </c:if>
@@ -114,15 +123,16 @@
 
         <div id="page">
             <span>页数：</span>
-            <a href="queryAllRecruitment?current=1">首页</a>
-            <a href="queryAllRecruitment?current=${prepages}">上一页</a>
+            <a href="visitorqueryAllRecruitment?current=1">首页</a>
+            <a href="visitorqueryAllRecruitment?current=${prepages}">上一页</a>
             <c:forEach  var ="i" begin="1" end="${pages}">
-                <a href="queryAllRecruitment?current=${i}">${i}</a>
+                <a href="visitorqueryAllRecruitment?current=${i}">${i}</a>
             </c:forEach>
-            <a href="queryAllRecruitment?current=${nextpages}">下一页</a>
+            <a href="visitorqueryAllRecruitment?current=${nextpages}">下一页</a>
             &nbsp;<span>总共：<input type="text" value="${all}" readonly id="show">条数据</span>
         </div>
-    </div>
+
 </div>
 </body>
+
 </html>

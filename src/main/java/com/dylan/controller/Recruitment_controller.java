@@ -1,13 +1,19 @@
 package com.dylan.controller;
 
+import com.dylan.model.Position;
 import com.dylan.model.Recruitment;
+import com.dylan.service.PositionService;
 import com.dylan.service.RecruitmentService;
 import com.dylan.util.PagesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -15,6 +21,8 @@ public class Recruitment_controller {
 
     @Autowired
     private RecruitmentService recruitmentService;
+    @Autowired
+    private PositionService positionService;
 
     /***
      * 添加招聘信息
@@ -23,21 +31,34 @@ public class Recruitment_controller {
      */
     @RequestMapping("/addRecruitment")
     public String addRecruitment(Recruitment recruitment){
+        recruitment.setContent(recruitment.getContent().trim());
+        System.out.println(recruitment);
+
         boolean res = recruitmentService.addRecruitment(recruitment);
-        if(res){
-            return "";
-        }else{
-            return "";
-        }
+       return "forward:queryAllRecruitment";
     }
+
+    @RequestMapping("/toRecruitment")
+    public String toRecruitment(HttpSession session){
+        List<Position> positions = positionService.queryPosition(0);
+        session.setAttribute("positions",positions);
+        return "admin/recruitmentadd";
+    }
+
     @RequestMapping("/deleteRecruitment")
     public String deleteRecruitment(Integer id){
         boolean res = recruitmentService.deleteRecruitment(id);
         return "forward:queryAllRecruitment";
     }
 
+    @RequestMapping("/queryRe")
+    @ResponseBody
+    public List<Position> queryRe(Integer depId) throws IOException {
+        List<Position> positions = positionService.queryPosition(depId);
+        return positions;
+    }
     /**
-     * 查询所有的招聘信息
+     * 管理员 查询所有的招聘信息
      * @param current
      * @return
      */
@@ -60,7 +81,30 @@ public class Recruitment_controller {
 
         model.addAttribute("recruitment",recruitment);
         return "admin/recruitment";
+    }
 
+    /**
+     * y员工查看招聘
+     */
+    @RequestMapping("/visitorqueryAllRecruitment")
+    public String visitorqueryAllRecruitment(String current, Model model){
+        //总共有多少数据
+        List<Recruitment> rec = recruitmentService.queryRecruitmentBy_posId(0);
+
+        model.addAttribute("all",rec.size());
+        int pages = PagesUtil.getPages(rec.size());
+
+        //当前页数
+        int page = PagesUtil.getAllPage(current);
+        model.addAttribute("pages",pages);
+
+        //得到前一页和后一页
+        PagesUtil.getPre_next_page(page,pages,model);
+
+        List<Recruitment> recruitment = recruitmentService.queryRecruitmentBy_posId_everyPage(0,page);
+
+        model.addAttribute("recruitment",recruitment);
+        return "visitor/recruitment";
     }
 
     /**

@@ -16,6 +16,8 @@ public interface RecruitmentDao {
     //删除招聘信息
     boolean deleteRecruitment(int id);
 
+
+
     //通过职位id   查询招聘信息数量
     List<Recruitment> queryRecruitmentBy_posId(int posId);
 

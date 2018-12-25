@@ -7,7 +7,7 @@
 <html>
 <head>
     <base href="<%=basePath%>"/>
-    <link href="resource/css/base.css">
+    <link rel="stylesheet"  href="resource/css/base.css">
 </head>
 <body>
 
@@ -33,18 +33,14 @@
     <div id="guid">
         <div id="guid2">
             <ul>
-                <li class="menu">
-                    <a href="returnVisitor">主页</a>
+                <li class="menu" id="a">
+                    <a href="returnVisitor" >主页</a>
                 </li>
                 <li class="menu">
-                    <a href="">查看招聘</a>
+                    <a href="visitorqueryAllRecruitment">查看招聘</a>
                 </li>
-                <li class="menu"  id="a">
-                    <a href="">个人信息</a>
-                    <ul id="query">
-                        <li class="menu"><a href="">查看简历</a></li>
-                        <li class="menu"><a href="">查看面试邀请</a></li>
-                    </ul>
+                <li class="menu">
+                    <a href="tovisitorInfo">个人信息</a>
                 </li>
             </ul>
         </div>

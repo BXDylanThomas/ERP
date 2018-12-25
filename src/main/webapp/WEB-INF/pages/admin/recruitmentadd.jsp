@@ -10,8 +10,10 @@
     <title></title>
     <link rel="stylesheet" href="resource/css/base.css">
     <link rel="stylesheet" href="resource/css/page.css">
+    <link rel="stylesheet" href="resource/css/recruitmentadd.css">
     <script src="resource/js/jquery-3.3.1.js"></script>
-    <script src="resource/js/department.js"></script>
+    <script src="resource/js/recruitment.js"></script>
+
 </head>
 <body>
 <div>
@@ -31,7 +33,7 @@
                 <li class="menu">
                     <a href="">主页</a>
                 </li>
-                <li class="menu" id="a">
+                <li class="menu">
                     <a href="queryDepartment">部门管理</a>
                 </li>
                 <li class="menu">
@@ -40,7 +42,7 @@
                 <li class="menu">
                     <a href="">员工管理</a>
                 </li>
-                <li class="menu">
+                <li class="menu"  id="a">
                     <a href="queryAllRecruitment">招聘管理</a>
                 </li>
                 <li class="menu">
@@ -59,49 +61,57 @@
         </div>
     </div>
 </div>
+
 <div id="next">
     <div >
-        <div id="main">
-            <a href="javascript:void(0)" id="add">添加部门</a>
-            <table>
+        <form method="post" action="addRecruitment">
+            <table border="1" rules="all">
                 <tr>
-                    <th><input type="checkbox" id="all"><label for="all">全选</label></th>
-                    <th>部门名称</th>
-                    <th>创建时间</th>
-                    <th></th>
-
+                    <th colspan="3">招聘</th>
                 </tr>
-                <c:if test="${department==null || empty department}">
-                    <td colspan="4">没有数据</td>
-                </c:if>
-                <c:if test="${department!=null || not empty department  }">
-                    <c:forEach items="${department}" var="d">
-                        <tr>
-                            <td><input type="checkbox" class="check" value="${d.id}"></td>
-                            <td><input value="${d.name}" disabled></td>
-                            <td class="time">${d.time}</td>
-                            <td><a href="javascript:void(0)" class="update">修改</a><input type="hidden" value="${d.id}"></td>
-                        </tr>
-                    </c:forEach>
-                </c:if>
-
-                <tr id="ad">
-                    <td><a href="javascript:void(0)" id="del">删除</a></td>
+                <tr>
+                    <th>部门：</th>
+                    <td colspan="2">
+                        <select id="department">
+                            <option>请选择部门</option>
+                            <c:forEach items="${sessionScope.positions}" var="d">
+                                <option value="${d.department.id}">${d.department.name}</option>
+                            </c:forEach>
+                            <otion>12</otion><otion>12</otion>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>职位：</th>
+                    <td colspan="2">
+                        <select id="position" name="posId">
+                            <option>请选择职位</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th >标题</th>
+                    <td colspan="2"><input type="text" name="title" required> </td>
+                </tr>
+                <tr>
+                    <th colspan="3">招聘要求</th>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                      <textarea name="content" required> </textarea>
+                    </td>
+                </tr>
+                <tr></tr>
+                <tr></tr>
+                <tr>
+                    <th>招聘人数：</th>
+                    <td colspan="2"><input type="text" name="count" required>个</td>
                 </tr>
             </table>
-        </div>
-
-        <div id="page">
-            <span>页数：</span>
-            <a href="queryDepartment?current=1">首页</a>
-            <a href="queryDepartment?current=${prepages}">上一页</a>
-            <c:forEach  var ="i" begin="1" end="${pages}">
-                <a href="queryDepartment?current=${i}">${i}</a>
-            </c:forEach>
-            <a href="queryDepartment?current=${nextpages}">下一页</a>
-            &nbsp;<span>总共：<input type="text" value="${all}" readonly id="show">条数据</span>
-        </div>
+            <input type="submit" value="确认" id="submit">
+        </form>
     </div>
 </div>
+
 </body>
 </html>

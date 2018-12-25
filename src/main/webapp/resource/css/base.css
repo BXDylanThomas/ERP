@@ -65,16 +65,27 @@
     background: #ad7d4c;
     position: relative;
 }
+#look{
+    display: none;
+    position: relative;
+    top: 8px;
+}
 
-#a:hover #query{
+#a:hover #look{
     display: block;
 }
 #query {
     float: left;
-    display: none;
-    position: relative;
-    top:200px;
 }
 input{
     background: white;
+}
+
+textarea{
+    max-width:400px;
+    max-height:200px;
+    min-width:400px;
+    min-height:200px;
+    overflow:hidden;
+    resize: none;
 }

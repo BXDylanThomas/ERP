@@ -55,7 +55,6 @@ public class Account_controller {
         return "visitor/main";
     }
 
-
     @RequestMapping("/returnLogin")
     public String returnLogin(){
         return "login";
@@ -79,6 +78,6 @@ public class Account_controller {
     @RequestMapping("/exit")
     public String exit(HttpSession session){
         session.removeAttribute("user");
-        return "";
+        return "forward:returnLogin";
     }
 }

@@ -3,7 +3,7 @@
 <mapper namespace="com.dylan.dao.DepartmentDao">
     <!--添加部门-->
     <insert id="addDepartment">
-        insert into T_DEPARTMENT values(DEPARTMENT_SEQ.nextval,#{name},#{createTime})
+        insert into T_DEPARTMENT values(DEPARTMENT_SEQ.nextval,#{name},#{time})
     </insert>
 
     <!--更新部门名字-->
@@ -39,6 +39,6 @@
     <resultMap id="departmentMap" type="Department">
         <id property="id" column="D_ID"/>
         <result property="name" column="D_NAME"/>
-        <result property="createTime" column="D_CREATETIM"/>
+        <result property="time" column="D_CREATETIM"/>
     </resultMap>
 </mapper>

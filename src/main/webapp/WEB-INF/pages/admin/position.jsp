@@ -40,10 +40,10 @@
                     <a href="">员工管理</a>
                 </li>
                 <li class="menu">
-                    <a href="">招聘管理</a>
+                    <a href="queryAllRecruitment">招聘管理</a>
                 </li>
                 <li class="menu">
-                    <a href="queryAllRecruitment">培训管理</a>
+                    <a href="">培训管理</a>
                 </li>
                 <li class="menu">
                     <a href="">查看考勤</a>
@@ -87,7 +87,7 @@
                             <td><input type="checkbox" class="check" value="${p.id}"></td>
                             <td>${p.department.name}</td>
                             <td><input value="${p.name}"disabled></td>
-                            <td class="createTime">${p.createTime}</td>
+                            <td class="time">${p.time}</td>
                             <td><a href="javascript:void(0)"class="update">修改</a><input type="hidden" value="${p.id}"></td>
                         </tr>
                     </c:forEach>

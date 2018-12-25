@@ -9,6 +9,7 @@
     <base href="<%=basePath%>"/>
     <title></title>
     <link rel="stylesheet"  href="resource/css/base.css">
+    <link rel="stylesheet"  href="resource/css/resume.css">
 </head>
 <body>
 
@@ -46,6 +47,10 @@
             </ul>
         </div>
     </div>
+</div>
+<div id="next">
+    <a href="queryResume">查看简历</a> &emsp;
+    <a href="#">查看面试邀请</a>
 </div>
 
 </body>

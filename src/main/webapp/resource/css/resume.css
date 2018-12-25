@@ -1,0 +1,25 @@
+td,input,textarea{
+    margin: 0px;
+}
+input{
+    width: 100%;
+}
+
+#next{
+    position: relative;
+    left: 500px;
+    top: 10px;
+}
+
+#sub{
+    position: relative;
+    left: 140px;
+    top: 8px;
+    width:  100px;
+    height: 40px;
+    background: red;
+    color: white;
+    border: none;
+    margin: 0px;
+    padding: 0px;
+}

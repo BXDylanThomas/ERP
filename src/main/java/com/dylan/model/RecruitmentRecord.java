@@ -10,8 +10,10 @@ public class RecruitmentRecord implements Serializable {
     private Integer id;
     private Integer recId;  //招聘id
     private Integer resId;   //简历id
-    private String createTime;  //创建时间
+    private String time;  //面试时间
     private Integer state;     // 1  表示  已经看过   0 没有 看过
+
+    private Resume resume;
 
     public RecruitmentRecord() {
     }
@@ -40,12 +42,12 @@ public class RecruitmentRecord implements Serializable {
         this.resId = resId;
     }
 
-    public String getCreateTime() {
-        return createTime;
+    public String getTime() {
+        return time;
     }
 
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public Integer getState() {
@@ -56,14 +58,23 @@ public class RecruitmentRecord implements Serializable {
         this.state = state;
     }
 
+    public Resume getResume() {
+        return resume;
+    }
+
+    public void setResume(Resume resume) {
+        this.resume = resume;
+    }
+
     @Override
     public String toString() {
         return "RecruitmentRecord{" +
                 "id=" + id +
                 ", recId=" + recId +
                 ", resId=" + resId +
-                ", createTime='" + createTime + '\'' +
+                ", time='" + time + '\'' +
                 ", state=" + state +
+                ", resume=" + resume +
                 '}';
     }
 }

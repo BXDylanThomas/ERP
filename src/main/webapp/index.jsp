@@ -9,7 +9,7 @@
     <title></title>
     <script>
 
-        window.location.href="queryALlPosition"
+        window.location.href="returnVisitor"
     </script>
 </head>
 

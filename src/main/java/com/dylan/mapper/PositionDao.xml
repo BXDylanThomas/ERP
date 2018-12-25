@@ -4,7 +4,7 @@
 
     <!--添加职位-->
     <insert id="addPosition">
-         insert into T_POSITION values(POSITION_SEQ.nextval,#{name},#{createTime},#{depId})
+         insert into T_POSITION values(POSITION_SEQ.nextval,#{name},#{time},#{depId})
     </insert>
     <!--更新部门名字-->
     <update id="updatePosition">
@@ -56,12 +56,12 @@
     <resultMap id="positionMap" type="Position">
         <id property="id" column="P_ID"/>
         <result property="name" column="P_NAME"/>
-        <result property="createTime" column="P_CREATETIME"/>
+        <result property="time" column="P_CREATETIME"/>
         <result property="depId" column="P_DEPID"/>
         <association property="department" javaType="Department">
             <id property="id" column="D_ID"/>
             <result property="name" column="D_NAME"/>
-            <result property="createTime" column="D_CREATETIM"/>
+            <result property="time" column="D_CREATETIM"/>
         </association>
     </resultMap>
 </mapper>

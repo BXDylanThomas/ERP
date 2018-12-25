@@ -7,6 +7,8 @@ import com.dylan.util.PagesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +29,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
         if(recruitment==null || recruitment.getPosId()<=0){
             return false;
         }
+        recruitment.setCreateTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
         return recruitmentDao.addRecruitment(recruitment);
     }
 
