@@ -87,6 +87,7 @@ public class Recruitment {
                 ", content='" + content + '\'' +
                 ", count=" + count +
                 ", createTime='" + createTime + '\'' +
+                ", positions=" + positions +
                 '}';
     }
 }

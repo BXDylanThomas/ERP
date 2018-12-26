@@ -39,6 +39,6 @@
     <resultMap id="departmentMap" type="Department">
         <id property="id" column="D_ID"/>
         <result property="name" column="D_NAME"/>
-        <result property="time" column="D_CREATETIM"/>
+        <result property="createTime" column="D_CREATETIM"/>
     </resultMap>
 </mapper>

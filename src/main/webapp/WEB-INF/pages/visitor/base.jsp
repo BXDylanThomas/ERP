@@ -30,7 +30,7 @@
             </div>
         </c:if>
     </div>
-    <div id="introduce"><span>XXXXX公司</span></div>
+    <div id="introduce"></div>
     <div id="guid">
         <div id="guid2">
             <ul>

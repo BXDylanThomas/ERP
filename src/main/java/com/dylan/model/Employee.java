@@ -12,9 +12,13 @@ public class Employee implements Serializable {
     private Integer resId; //简历id
     private Integer posId;  //职位id
     private String entryTime;  //入职时间
-    private Double salary;   //基本工资
+    private Integer salId;   //基本工资 id
     private Double performance;  //绩效奖金
     private Integer empState;   //状态    leave 离职  1     regular 在职  2      watch 试用期 3
+
+    private Resume resume;
+    private Position position;
+    private Salary salary;
 
     public Employee() {
     }
@@ -59,14 +63,6 @@ public class Employee implements Serializable {
         this.entryTime = entryTime;
     }
 
-    public Double getSalary() {
-        return salary;
-    }
-
-    public void setSalary(Double salary) {
-        this.salary = salary;
-    }
-
     public Double getPerformance() {
         return performance;
     }
@@ -83,6 +79,38 @@ public class Employee implements Serializable {
         this.empState = empState;
     }
 
+    public Resume getResume() {
+        return resume;
+    }
+
+    public void setResume(Resume resume) {
+        this.resume = resume;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
+    public Integer getSalId() {
+        return salId;
+    }
+
+    public void setSalId(Integer salId) {
+        this.salId = salId;
+    }
+
+    public Salary getSalary() {
+        return salary;
+    }
+
+    public void setSalary(Salary salary) {
+        this.salary = salary;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
@@ -91,9 +119,11 @@ public class Employee implements Serializable {
                 ", resId=" + resId +
                 ", posId=" + posId +
                 ", entryTime='" + entryTime + '\'' +
-                ", salary=" + salary +
+                ", salary=" + salId +
                 ", performance=" + performance +
-                ", empState='" + empState + '\'' +
+                ", empState=" + empState +
+                ", resume=" + resume +
+                ", position=" + position +
                 '}';
     }
 }

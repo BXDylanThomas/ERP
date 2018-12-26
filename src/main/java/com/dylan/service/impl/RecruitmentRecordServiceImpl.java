@@ -1,18 +1,13 @@
 package com.dylan.service.impl;
 
-import com.dylan.dao.AccountDao;
-import com.dylan.dao.RecruitmentDao;
-import com.dylan.dao.RecruitmentRecordDao;
-import com.dylan.dao.ResumeDao;
-import com.dylan.model.Account;
-import com.dylan.model.Recruitment;
-import com.dylan.model.RecruitmentRecord;
-import com.dylan.model.Resume;
+import com.dylan.dao.*;
+import com.dylan.model.*;
 import com.dylan.service.RecruitmentRecordService;
 import com.dylan.util.PagesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -20,7 +15,9 @@ import java.util.*;
 public class RecruitmentRecordServiceImpl implements RecruitmentRecordService {
     public final static int UNREAD=0;
     public final static int HASREAD=1;
+    public final static int WATCH=1;
     public final static String EMPLOYEE="employee";
+
 
     @Autowired
     private RecruitmentRecordDao recruitmentRecordDao;
@@ -28,6 +25,10 @@ public class RecruitmentRecordServiceImpl implements RecruitmentRecordService {
     private AccountDao accountDao;
     @Autowired
     private ResumeDao resumeDao;
+    @Autowired
+    private EmployeeDao employeeDao;
+    @Autowired
+    private SalaryDao salaryDao;
 
     /**
      * 添加简历投递记录表  添加的有 招聘id  简历id
@@ -60,34 +61,74 @@ public class RecruitmentRecordServiceImpl implements RecruitmentRecordService {
     }
 
     /**
-     * 如果通知面试 ，默认表示已经录用  修改账号 状态为 员工
+     * 如果通知面试
      * 面试时间设置是  确认的第二天
      * @return
      */
     @Override
-    public boolean updateRecruitmentRecord_time(int id,int accId) {
-        if(id<=0|| accId<=0){
+    public boolean updateRecruitmentRecord_time(int id,Salary salary) {
+        if(id<=0){
             return false;
         }
+        //如果已经有面试时间返回
         Date date=new Date();
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(date);
         calendar.add(calendar.DATE,1);//把日期往后增加一天.整数往后推,负数往前移动
         date=calendar.getTime();
-        System.out.println(date);
 
         Map<String,Object> map=new HashMap<>();
         map.put("id",id);
         map.put("state",HASREAD);
-        map.put("time",new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
+        map.put("time",new SimpleDateFormat("yyyy-MM-dd").format(date));
 
-        boolean res1 = recruitmentRecordDao.updateRecruitmentRecord_time(map);
+        //添加基本薪资
+        boolean res = salaryDao.addSalary(salary);
+        System.out.println(res);
+        return recruitmentRecordDao.updateRecruitmentRecord_time(map) && res;
+    }
 
-        //修改游客账号状态 变成 员工
-        Account account = accountDao.queryAccountBy_id(accId);
+    /**确认成为员工
+     *
+     * @param account
+     * @return
+     */
+    @Override
+    public boolean sureChange(Account account,int posId) {
+        if(account==null){
+            return false;
+        }
         account.setType(EMPLOYEE);
-        boolean res2 = accountDao.updateAccount(account);
-        return res1 && res2;
+        boolean res = accountDao.updateAccount(account);
+        Resume resume = resumeDao.queryResumeBy_accId(account.getId());
+
+        Employee  employee=new Employee();
+        //账号
+        employee.setAccId(account.getId());
+        //设置简历id
+        employee.setResId(resume.getId());
+        //职位id
+        employee.setPosId(posId);
+        //薪资id
+        System.out.println(resume.getId());
+        Salary salary = salaryDao.querySalaryBy_resId(resume.getId());
+        System.out.println(salary);
+
+        employee.setSalId(salary.getId());
+        //入职时间
+        employee.setEntryTime(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+        //计算绩效 基本的10%  保留2位
+        DecimalFormat df2 = new DecimalFormat("#.00");
+        double money=salary.getMoney()*0.1;
+        money= Double.parseDouble(df2.format(money));
+        employee.setPerformance(money);
+
+        //添加员工试用期
+        employee.setEmpState(WATCH);
+
+        //添加员工
+        boolean res2 = employeeDao.addEmployee(employee);
+        return res && res2;
     }
 
     /**
@@ -106,21 +147,60 @@ public class RecruitmentRecordServiceImpl implements RecruitmentRecordService {
     }
 
     @Override
+    public RecruitmentRecord queryRecruitmentRecordBy_id(int id) {
+        if(id<=0){
+            return null;
+        }
+        return recruitmentRecordDao.queryRecruitmentRecordBy_id(id);
+    }
+
+    /**
+     * 通过职位id 查询
+     * @param recId
+     * @return
+     */
+    @Override
     public List<RecruitmentRecord> queryRecruitmentRecordBy_accId(int recId) {
         if(recId<=0){
             return null;
         }
         return recruitmentRecordDao.queryRecruitmentRecordBy_accId(recId);
     }
-
+    /**
+     * 通过职位id 查询  分页
+     * @param recId
+     * @return
+     */
     @Override
     public List<RecruitmentRecord> queryRecruitmentRecordBy_accId_everyPae(int recId, int currentPage) {
         if(recId<=0 || currentPage<=0){
             return null;
         }
+
         Map<String,Object> map=new HashMap<>();
         map.put("recId",recId);
         Map<String, Object> page = PagesUtil.getPage(map, currentPage);
-        return recruitmentRecordDao.queryRecruitmentRecordBy_accId_everyPae(map);
+
+        List<RecruitmentRecord> recruitmentRecords = recruitmentRecordDao.queryRecruitmentRecordBy_accId_everyPae(map);
+        return recruitmentRecords;
+    }
+
+    @Override
+    public List<RecruitmentRecord> queryRecruitmentRecordBy_you(int accId) {
+        if(accId<=0){
+            return null;
+        }
+        return recruitmentRecordDao.queryRecruitmentRecordBy_you(accId);
+    }
+
+    @Override
+    public List<RecruitmentRecord> queryRecruitmentRecordBy_you_everyPage(int accId, int currentPage) {
+        if(accId<=0 || currentPage<=0){
+            return null;
+        }
+        Map<String,Object> map=new HashMap<>();
+        map.put("accId",accId);
+        Map<String, Object> page = PagesUtil.getPage(map, currentPage);
+        return recruitmentRecordDao.queryRecruitmentRecordBy_you_everyPage(map);
     }
 }

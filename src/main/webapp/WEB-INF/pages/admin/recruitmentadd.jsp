@@ -10,7 +10,7 @@
     <title></title>
     <link rel="stylesheet" href="resource/css/base.css">
     <link rel="stylesheet" href="resource/css/page.css">
-    <link rel="stylesheet" href="resource/css/recruitmentadd.css">
+    <link rel="stylesheet" href="resource/css/table.css">
     <script src="resource/js/jquery-3.3.1.js"></script>
     <script src="resource/js/recruitment.js"></script>
 
@@ -26,7 +26,7 @@
             </div>
         </c:if>
     </div>
-    <div id="introduce"><span>XXXXX公司</span></div>
+    <div id="introduce"></div>
     <div id="guid">
         <div id="guid2">
             <ul>
@@ -40,7 +40,7 @@
                     <a href="queryALlPosition">职位管理</a>
                 </li>
                 <li class="menu">
-                    <a href="">员工管理</a>
+                    <a href="queryAllEmployee">员工管理</a>
                 </li>
                 <li class="menu"  id="a">
                     <a href="queryAllRecruitment">招聘管理</a>
@@ -108,7 +108,7 @@
                     <td colspan="2"><input type="text" name="count" required>个</td>
                 </tr>
             </table>
-            <input type="submit" value="确认" id="submit">
+            <input type="submit" value="确认" id="sub">
         </form>
     </div>
 </div>

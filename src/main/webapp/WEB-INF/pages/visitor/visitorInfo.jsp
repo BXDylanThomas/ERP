@@ -9,7 +9,6 @@
     <base href="<%=basePath%>"/>
     <title></title>
     <link rel="stylesheet"  href="resource/css/base.css">
-    <link rel="stylesheet"  href="resource/css/resume.css">
 </head>
 <body>
 
@@ -31,7 +30,7 @@
             </div>
         </c:if>
     </div>
-    <div id="introduce"><span>XXXXX公司</span></div>
+    <div id="introduce"></div>
     <div id="guid">
         <div id="guid2">
             <ul>
@@ -49,8 +48,8 @@
     </div>
 </div>
 <div id="next">
-    <a href="queryResume">查看简历</a> &emsp;
-    <a href="#">查看面试邀请</a>
+    <a href="queryResume">查看简历</a><br/><br/>
+    <a href="queryResumeaccId">查看面试邀请</a>
 </div>
 
 </body>

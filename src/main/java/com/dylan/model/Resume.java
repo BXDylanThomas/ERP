@@ -19,6 +19,8 @@ public class Resume  implements Serializable {
     private String experience;  //工作经验
     private Integer accId;  //账号id
 
+    private Salary salary;
+
     public Resume() {
     }
 
@@ -110,9 +112,17 @@ public class Resume  implements Serializable {
         this.accId = accId;
     }
 
+    public Salary getSalary() {
+        return salary;
+    }
+
+    public void setSalary(Salary salary) {
+        this.salary = salary;
+    }
+
     @Override
     public String toString() {
-        return "ResumeDao{" +
+        return "Resume{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", birth='" + birth + '\'' +
@@ -124,6 +134,7 @@ public class Resume  implements Serializable {
                 ", major='" + major + '\'' +
                 ", experience='" + experience + '\'' +
                 ", accId=" + accId +
+                ", salary=" + salary +
                 '}';
     }
 }

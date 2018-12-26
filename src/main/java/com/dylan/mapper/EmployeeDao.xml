@@ -3,9 +3,83 @@
 <mapper namespace="com.dylan.dao.EmployeeDao">
     <!--添加员工-->
     <insert id="addEmployee">
-        insert into T_EMPLOYEE values (EMPLOYEE_SEQ.nextval,#{accId},#{resId},#{posId},#{entryTime},#{salary},#{performance},#{empState})
+        insert into T_EMPLOYEE values (EMPLOYEE_SEQ.nextval,#{accId},#{resId},#{posId},#{entryTime},#{salId},#{performance},#{empState})
     </insert>
     <update id="updateEmployee">
-
+        update T_EMPLOYEE set E_EMPSTATE=#{empState} where
     </update>
+    <!--//查询所有的员工-->
+    <select id="queryAllEmployee" resultType="com.dylan.model.Employee">
+        select e.E_ID, e.E_ACCID,e.E_RESID,e.E_POSID,e.E_ENTRYTIME,e.E_SALID,e.E_PERFORMANCE,e.E_EMPSTATE,
+        r.R_ID,r.R_NAME,r.R_BIRTH,r.R_SEX,r.R_PHONE,r.R_ADDRESS,r.R_EMAIL,r.R_EDUCATION,r.R_MAJOR,r.R_EXPERIENCE,r.R_ACCID,
+        p.P_ID,p.P_NAME,p.P_CREATETIME,p.P_DEPID,d.D_ID,d.D_NAME,d.D_CREATETIM,
+        s.S_ID,s.S_RESID,s.S_SALARY
+        from T_EMPLOYEE e,T_RESUME r,T_POSITION p,T_DEPARTMENT d,T_SALARY s
+        where e.E_RESID=r.R_ID and e.E_POSID=p.P_ID and p.P_DEPID=d.D_ID and s.S_ID=e.E_SALID
+    </select>
+
+    <!-- //查询所有的员工  分页-->
+    <select id="queryAllEmployeeBy_everyPage" resultType="com.dylan.model.Employee">
+        select e.E_ID, e.E_ACCID,e.E_RESID,e.E_POSID,e.E_ENTRYTIME,e.E_SALID,e.E_PERFORMANCE,e.E_EMPSTATE,
+        e.R_ID,e.R_NAME,e.R_BIRTH,e.R_SEX,e.R_PHONE,e.R_ADDRESS,e.R_EMAIL,e.R_EDUCATION,e.R_MAJOR,e.R_EXPERIENCE,e.R_ACCID,
+        e.P_ID,e.P_NAME,e.P_CREATETIME,e.P_DEPID,e.D_ID,e.D_NAME,e.D_CREATETIM,
+        e.S_ID,e.S_RESID,e.S_SALARY
+          from (select rownum rn,e.*,r.*,p.*,d.*,s.* from T_EMPLOYEE e,T_RESUME r,T_POSITION p,T_DEPARTMENT d,T_SALARY s
+              where e.E_RESID=r.R_ID and e.E_POSID=p.P_ID and p.P_DEPID=d.D_ID and s.S_ID=e.E_SALID and ROWNUM &lt;=#{show})e
+        where  e.rn &gt;=#{current}
+    </select>
+
+    <!--查询某部门的所有员工-->
+    <select id="queryEmployeeBy_depId" resultType="com.dylan.model.Employee">
+         select e.E_ID, e.E_ACCID,e.E_RESID,e.E_POSID,e.E_ENTRYTIME,e.E_SALID,e.E_PERFORMANCE,e.E_EMPSTATE,
+        r.R_ID,r.R_NAME,r.R_BIRTH,r.R_SEX,r.R_PHONE,r.R_ADDRESS,r.R_EMAIL,r.R_EDUCATION,r.R_MAJOR,r.R_EXPERIENCE,r.R_ACCID,
+        p.P_ID,p.P_NAME,p.P_CREATETIME,p.P_DEPID,d.D_ID,d.D_NAME,d.D_CREATETIM,
+        s.S_ID,s.S_RESID,s.S_SALARY
+        from T_EMPLOYEE e,T_RESUME r,T_POSITION p,T_DEPARTMENT d,T_SALARY s
+        where e.E_RESID=r.R_ID and e.E_POSID=p.P_ID and p.P_DEPID=d.D_ID and s.S_ID=e.E_SALID and d.D_ID=#{depId}
+    </select>
+
+    <!--查询某部门的所有员工  分页-->
+    <select id="queryEmployeeBy_depId_evertPage" resultType="com.dylan.model.Employee">
+         select e.E_ID, e.E_ACCID,e.E_RESID,e.E_POSID,e.E_ENTRYTIME,e.E_SALID,e.E_PERFORMANCE,e.E_EMPSTATE,
+        e.R_ID,e.R_NAME,e.R_BIRTH,e.R_SEX,e.R_PHONE,e.R_ADDRESS,e.R_EMAIL,e.R_EDUCATION,e.R_MAJOR,e.R_EXPERIENCE,e.R_ACCID,
+        e.P_ID,e.P_NAME,e.P_CREATETIME,e.P_DEPID,e.D_ID,e.D_NAME,e.D_CREATETIM,
+        e.S_ID,e.S_RESID,e.S_SALARY
+          from (select rownum rn,e.*,r.*,p.*,d.*,s.* from T_EMPLOYEE e,T_RESUME r,T_POSITION p,T_DEPARTMENT d,T_SALARY s
+              where e.E_RESID=r.R_ID and e.E_POSID=p.P_ID and p.P_DEPID=d.D_ID and s.S_ID=e.E_SALID and d.D_ID=#{depId} and ROWNUM &lt;=#{show})e
+        where  e.rn &gt;=#{current}
+    </select>
+
+    <!--查询某职位的所有员工-->
+    <select id="queryEmployeeBy_posId" resultType="com.dylan.model.Employee">
+         select e.E_ID, e.E_ACCID,e.E_RESID,e.E_POSID,e.E_ENTRYTIME,e.E_SALID,e.E_PERFORMANCE,e.E_EMPSTATE,
+        r.R_ID,r.R_NAME,r.R_BIRTH,r.R_SEX,r.R_PHONE,r.R_ADDRESS,r.R_EMAIL,r.R_EDUCATION,r.R_MAJOR,r.R_EXPERIENCE,r.R_ACCID,
+        p.P_ID,p.P_NAME,p.P_CREATETIME,p.P_DEPID,d.D_ID,d.D_NAME,d.D_CREATETIM,
+        s.S_ID,s.S_RESID,s.S_SALARY
+        from T_EMPLOYEE e,T_RESUME r,T_POSITION p,T_DEPARTMENT d,T_SALARY s
+        where e.E_RESID=r.R_ID and e.E_POSID=p.P_ID and p.P_DEPID=d.D_ID and s.S_ID=e.E_SALID and p.P_ID=#{posId}
+    </select>
+    <!--查询某职位的所有员工 分页-->
+    <select id="queryEmployeeBy_posId_everyPage" resultType="com.dylan.model.Employee">
+         select e.E_ID, e.E_ACCID,e.E_RESID,e.E_POSID,e.E_ENTRYTIME,e.E_SALID,e.E_PERFORMANCE,e.E_EMPSTATE,
+        e.R_ID,e.R_NAME,e.R_BIRTH,e.R_SEX,e.R_PHONE,e.R_ADDRESS,e.R_EMAIL,e.R_EDUCATION,e.R_MAJOR,e.R_EXPERIENCE,e.R_ACCID,
+        e.P_ID,e.P_NAME,e.P_CREATETIME,e.P_DEPID,e.D_ID,e.D_NAME,e.D_CREATETIM,
+        e.S_ID,e.S_RESID,e.S_SALARY
+          from (select rownum rn,e.*,r.*,p.*,d.*,s.* from T_EMPLOYEE e,T_RESUME r,T_POSITION p,T_DEPARTMENT d,T_SALARY s
+              where e.E_RESID=r.R_ID and e.E_POSID=p.P_ID and p.P_DEPID=d.D_ID and s.S_ID=e.E_SALID and p.P_ID=#{posId} and ROWNUM &lt;=#{show})e
+        where  e.rn &gt;=#{current}
+    </select>
+
+    <resultMap id="employeeMap" type="Employee">
+        <id property="id" column="E_ID"/>
+        <result property="accId" column="E_ACCID"/>
+        <result property="resId" column="E_RESID"/>
+        <result property="posId" column="E_POSID"/>
+        <result property="entryTime" column="E_ENTRYTIME"/>
+        <result property="salId" column="E_SALID"/>
+        <result property="performance" column="E_PERFORMANCE"/>
+        <result property="empState" column="E_EMPSTATE"/>
+        <association property="resume" resultMap="com.dylan.dao.ResumeDao.resumeMap"/>
+        <association property="position" resultMap="com.dylan.dao.PositionDao.positionMap"/>
+    </resultMap>
 </mapper>

@@ -8,15 +8,8 @@
 <head>
     <base href="<%=basePath%>"/>
     <link rel="stylesheet"  href="resource/css/base.css">
+    <link rel="stylesheet"  href="resource/css/table.css">
     <link rel="stylesheet"  href="resource/css/resume.css">
-    <style>
-        input{
-            background: lightcyan;
-        }
-        td{
-            padding: 1px;
-        }
-    </style>
 </head>
 <body>
 
@@ -38,7 +31,7 @@
             </div>
         </c:if>
     </div>
-    <div id="introduce"><span>XXXXX公司</span></div>
+    <div id="introduce"></div>
     <div id="guid">
         <div id="guid2">
             <ul>

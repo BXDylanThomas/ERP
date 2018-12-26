@@ -14,6 +14,7 @@ public class RecruitmentRecord implements Serializable {
     private Integer state;     // 1  表示  已经看过   0 没有 看过
 
     private Resume resume;
+    private Recruitment recruitment;
 
     public RecruitmentRecord() {
     }
@@ -66,6 +67,14 @@ public class RecruitmentRecord implements Serializable {
         this.resume = resume;
     }
 
+    public Recruitment getRecruitment() {
+        return recruitment;
+    }
+
+    public void setRecruitment(Recruitment recruitment) {
+        this.recruitment = recruitment;
+    }
+
     @Override
     public String toString() {
         return "RecruitmentRecord{" +
@@ -75,6 +84,7 @@ public class RecruitmentRecord implements Serializable {
                 ", time='" + time + '\'' +
                 ", state=" + state +
                 ", resume=" + resume +
+                ", recruitment=" + recruitment +
                 '}';
     }
 }

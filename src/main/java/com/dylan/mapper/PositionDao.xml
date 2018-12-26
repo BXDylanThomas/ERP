@@ -56,12 +56,12 @@
     <resultMap id="positionMap" type="Position">
         <id property="id" column="P_ID"/>
         <result property="name" column="P_NAME"/>
-        <result property="time" column="P_CREATETIME"/>
+        <result property="createTime" column="P_CREATETIME"/>
         <result property="depId" column="P_DEPID"/>
         <association property="department" javaType="Department">
             <id property="id" column="D_ID"/>
             <result property="name" column="D_NAME"/>
-            <result property="time" column="D_CREATETIM"/>
+            <result property="createTime" column="D_CREATETIM"/>
         </association>
     </resultMap>
 </mapper>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dylan.dao.SalaryDao">
+
+    <insert id="addSalary">
+        insert into T_SALARY values (SALARY_SEQ.nextval,#{resId},#{money})
+    </insert>
+
+    <select id="querySalaryBy_resId" resultMap="salaryMap">
+        select S_ID,S_RESID,S_SALARY from T_SALARY where S_RESID=#{resId}
+    </select>
+
+    <resultMap id="salaryMap" type="Salary">
+        <id property="id" column="S_ID"/>
+        <result property="resId" column="S_RESID"/>
+        <result property="money" column="S_SALARY"/>
+    </resultMap>
+</mapper>

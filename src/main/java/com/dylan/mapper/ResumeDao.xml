@@ -31,5 +31,6 @@
         <result property="major" column="R_MAJOR"/>
         <result property="experience" column="R_EXPERIENCE"/>
         <result property="accId" column="R_ACCID"/>
+        <association property="salary" resultMap="com.dylan.dao.SalaryDao.salaryMap"/>
     </resultMap>
 </mapper>

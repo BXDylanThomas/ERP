@@ -22,7 +22,7 @@
         select rr.RR_ID,rr.RR_RESID,rr.RR_RECID,rr.RR_TIME,rr.RR_STATE,
             r.R_ID,r.R_ACCID,r.R_NAME,r.R_BIRTH,r.R_SEX,r.R_PHONE,r.R_ADDRESS,r.R_EMAIL,r.R_EDUCATION,r.R_MAJOR,r.R_EXPERIENCE
         from T_RECRTUITMENTRECORD rr,T_RESUME r
-        where rr.RR_RESID=r.R_ID and rr.RR_RECID=#{recId}
+        where rr.RR_RESID=r.R_ID and rr.RR_RECID=#{recId} and RR_STATE=0
     </select>
 
     <!--查看某招聘的所有简历  分页-->
@@ -30,8 +30,30 @@
         select  r.RR_ID,r.RR_RESID,r.RR_RECID,r.RR_TIME,r.RR_STATE,
             r.R_ID,r.R_ACCID,r.R_NAME,r.R_BIRTH,r.R_SEX,r.R_PHONE,r.R_ADDRESS,r.R_EMAIL,r.R_EDUCATION,r.R_MAJOR,r.R_EXPERIENCE
             from (select rownum rn,rr.*,r.* from T_RECRTUITMENTRECORD rr,T_RESUME r
-              where rr.RR_RESID=r.R_ID and rr.RR_RECID=#{recId} and  ROWNUM &lt;=#{show})r
+              where rr.RR_RESID=r.R_ID and rr.RR_RECID=#{recId} and RR_STATE=0 and  ROWNUM &lt;=#{show})r
           where r.rn &gt;=#{current}
+    </select>
+
+    <!--//通过 游客id  查询所有的有邀请的面试-->
+    <select id="queryRecruitmentRecordBy_you" resultMap="RecordMap">
+         select rr.RR_ID,rr.RR_RESID,rr.RR_RECID,rr.RR_TIME,rr.RR_STATE,
+            p.P_ID,p.P_NAME,p.P_CREATETIME,p.P_DEPID,d.D_ID,d.D_NAME,d.D_CREATETIM,s.S_ID,s.S_RESID,s.S_SALARY
+        from T_RECRTUITMENTRECORD rr,T_DEPARTMENT d,T_POSITION p,T_RESUME r,T_RECRUITMENT rec,T_SALARY s
+        where rr.RR_RESID=r.R_ID and r.R_ACCID=#{accId} and rec.R_ID=rr.RR_RECID and rec.R_POSID=p.P_ID and p.P_ID=d.D_ID and r.R_ID=s.S_RESID and rr.RR_TIME is not null
+    </select>
+
+    <!--//通过 游客id  查询所有的有邀请的面试  分页-->
+    <select id="queryRecruitmentRecordBy_you_everyPage" resultMap="RecordMap">
+        select  r.RR_ID,r.RR_RESID,r.RR_RECID,r.RR_TIME,r.RR_STATE,
+              r.P_ID,r.P_NAME,r.P_CREATETIME,r.P_DEPID,r.D_ID,r.D_NAME,r.D_CREATETIM,r.S_ID,r.S_RESID,r.S_SALARY
+            from (select rownum rn,rr.*,d.*,p.* ,s.*from T_RECRTUITMENTRECORD rr,T_DEPARTMENT d,T_POSITION p,T_RESUME r,T_RECRUITMENT rec,T_SALARY s
+              where rr.RR_RESID=r.R_ID and r.R_ACCID=#{accId} and rec.R_ID=rr.RR_RECID and rec.R_POSID=p.P_ID and p.P_ID=d.D_ID and r.R_ID=s.S_RESID and rr.RR_TIME is not null and  ROWNUM &lt;=#{show})r
+          where r.rn &gt;=#{current}
+    </select>
+
+    <!--通过id查询 -->
+    <select id="queryRecruitmentRecordBy_id" resultMap="RecordMap">
+        select rr.RR_ID,rr.RR_RESID,rr.RR_RECID,rr.RR_TIME,rr.RR_STATE from T_RECRTUITMENTRECORD rr where RR_ID=#{id}
     </select>
 
 
@@ -41,6 +63,16 @@
         <result property="resId" column="RR_RESID"/>
         <result property="time" column="RR_TIME"/>
         <result property="state" column="RR_STATE"/>
+        <association property="resume" resultMap="com.dylan.dao.ResumeDao.resumeMap"/>
+    </resultMap>
+
+    <resultMap id="RecordMap" type="RecruitmentRecord">
+        <id property="id" column="RR_ID"/>
+        <result property="recId" column="RR_RECID"/>
+        <result property="resId" column="RR_RESID"/>
+        <result property="time" column="RR_TIME"/>
+        <result property="state" column="RR_STATE"/>
+        <association property="recruitment" resultMap="com.dylan.dao.RecruitmentDao.recruitment"/>
         <association property="resume" resultMap="com.dylan.dao.ResumeDao.resumeMap"/>
     </resultMap>
 </mapper>

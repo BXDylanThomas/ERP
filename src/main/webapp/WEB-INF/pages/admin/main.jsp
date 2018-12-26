@@ -21,7 +21,7 @@
             </div>
         </c:if>
     </div>
-    <div id="introduce"><span>XXXXX公司</span></div>
+    <div id="introduce"></div>
     <div id="guid">
         <div id="guid2">
             <ul>
@@ -35,7 +35,7 @@
                     <a href="queryALlPosition">职位管理</a>
                 </li>
                 <li class="menu">
-                    <a href="">员工管理</a>
+                    <a href="queryAllEmployee">员工管理</a>
                 </li>
                 <li class="menu">
                     <a href="queryAllRecruitment">招聘管理</a>

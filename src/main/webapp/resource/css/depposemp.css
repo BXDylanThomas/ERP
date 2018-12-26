@@ -1,0 +1,16 @@
+#main input{
+    background: white;
+    border: none;
+    position: relative;
+
+}
+#main td{
+    text-align: center;
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+}
+
+#main .time{
+    width: 200px;
+}

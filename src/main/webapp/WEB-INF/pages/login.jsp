@@ -32,6 +32,9 @@
             position: relative;
             top:200px;
         }
+        select{
+            width: 130px;
+        }
     </style>
 </head>
 <body>

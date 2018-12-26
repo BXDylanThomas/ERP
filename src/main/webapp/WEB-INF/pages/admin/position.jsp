@@ -9,8 +9,13 @@
     <base href="<%=basePath%>"/>
     <title></title>
     <link rel="stylesheet" href="resource/css/base.css">
+    <link rel="stylesheet" href="resource/css/depposemp.css">
     <link rel="stylesheet" href="resource/css/page.css">
-
+    <style>
+        input{
+            background: white;
+        }
+    </style>
 </head>
 <body>
 <div>
@@ -23,7 +28,7 @@
             </div>
         </c:if>
     </div>
-    <div id="introduce"><span>XXXXX公司</span></div>
+    <div id="introduce"></div>
     <div id="guid">
         <div id="guid2">
             <ul>
@@ -37,7 +42,7 @@
                     <a href="queryALlPosition">职位管理</a>
                 </li>
                 <li class="menu">
-                    <a href="">员工管理</a>
+                    <a href="queryAllEmployee">员工管理</a>
                 </li>
                 <li class="menu">
                     <a href="queryAllRecruitment">招聘管理</a>
@@ -87,7 +92,7 @@
                             <td><input type="checkbox" class="check" value="${p.id}"></td>
                             <td>${p.department.name}</td>
                             <td><input value="${p.name}"disabled></td>
-                            <td class="time">${p.time}</td>
+                            <td class="time">${p.createTime }</td>
                             <td><a href="javascript:void(0)"class="update">修改</a><input type="hidden" value="${p.id}"></td>
                         </tr>
                     </c:forEach>
@@ -111,17 +116,19 @@
                 </tr>
             </table>
         </div>
-
-        <div id="page">
-            <span>页数：</span>
-            <a href="queryALlPosition?current=1">首页</a>
-            <a href="queryALlPosition?current=${prepages}">上一页</a>
-            <c:forEach  var ="i" begin="1" end="${pages}">
-                <a href="queryALlPosition?current=${i}">${i}</a>
-            </c:forEach>
-            <a href="queryALlPosition?current=${nextpages}">下一页</a>
-            &nbsp;<span>总共：<input type="text" value="${all}" readonly id="show">条数据</span>
+        <div id="xia">
+            <div id="page">
+                <span>页数：</span>
+                <a href="queryALlPosition?current=1">首页</a>
+                <a href="queryALlPosition?current=${prepages}">上一页</a>
+                <c:forEach  var ="i" begin="1" end="${pages}">
+                    <a href="queryALlPosition?current=${i}">${i}</a>
+                </c:forEach>
+                <a href="queryALlPosition?current=${nextpages}">下一页</a>
+                &nbsp;<span>总共：<input type="text" value="${all}" readonly style="width:30px ">条数据</span>
+            </div>
         </div>
+
     </div>
 </div>
 
