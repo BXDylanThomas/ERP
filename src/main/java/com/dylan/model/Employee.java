@@ -18,7 +18,7 @@ public class Employee implements Serializable {
 
     private Resume resume;
     private Position position;
-    private Salary salary;
+
 
     public Employee() {
     }
@@ -63,6 +63,14 @@ public class Employee implements Serializable {
         this.entryTime = entryTime;
     }
 
+    public Integer getSalId() {
+        return salId;
+    }
+
+    public void setSalId(Integer salId) {
+        this.salId = salId;
+    }
+
     public Double getPerformance() {
         return performance;
     }
@@ -95,21 +103,6 @@ public class Employee implements Serializable {
         this.position = position;
     }
 
-    public Integer getSalId() {
-        return salId;
-    }
-
-    public void setSalId(Integer salId) {
-        this.salId = salId;
-    }
-
-    public Salary getSalary() {
-        return salary;
-    }
-
-    public void setSalary(Salary salary) {
-        this.salary = salary;
-    }
 
     @Override
     public String toString() {
@@ -119,7 +112,7 @@ public class Employee implements Serializable {
                 ", resId=" + resId +
                 ", posId=" + posId +
                 ", entryTime='" + entryTime + '\'' +
-                ", salary=" + salId +
+                ", salId=" + salId +
                 ", performance=" + performance +
                 ", empState=" + empState +
                 ", resume=" + resume +

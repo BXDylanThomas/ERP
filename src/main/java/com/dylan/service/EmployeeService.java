@@ -10,6 +10,9 @@ public interface EmployeeService {
     //办理  转正  或离职
     boolean updateEmployee(Employee employee);
 
+    //通过账号账号id  查询某员工的具体信息
+    Employee queryEmployeeBy_accId(int accId);
+
     //查询所有的员工
     List<Employee> queryAllEmployee();
 

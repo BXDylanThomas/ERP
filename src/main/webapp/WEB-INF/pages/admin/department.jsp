@@ -33,7 +33,7 @@
         <div id="guid2">
             <ul>
                 <li class="menu">
-                    <a href="">主页</a>
+                    <a href="returnEmployee">主页</a>
                 </li>
                 <li class="menu" id="a">
                     <a href="queryDepartment">部门管理</a>
@@ -66,7 +66,18 @@
 <div id="next">
 
     <div id="main">
-        <a href="javascript:void(0)" id="add">添加部门</a>
+
+        <br/>
+        <span id="addpos" >添加职务</span> &emsp;
+        &emsp;
+        <tr >
+            <td></td>
+            <td><input type='text'id='newadd' required> </td>
+            <td></td>
+            <td><a href="javascript:void(0)" id='add3'>确认添加</a></td>
+        </tr>
+        <br/><br/>
+
         <table>
             <tr>
                 <th><input type="checkbox" id="all"><label for="all">全选</label></th>

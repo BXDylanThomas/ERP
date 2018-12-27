@@ -28,6 +28,20 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     /**
+     *   通过账号账号id  查询某员工的具体信息
+     *
+     * @param accId
+     * @return
+     */
+    @Override
+    public Employee queryEmployeeBy_accId(int accId) {
+        if(accId<=0){
+            return null;
+        }
+        return employeeDao.queryEmployeeBy_accId(accId);
+    }
+
+    /**
      * 查看所有的员工
      * @return
      */
@@ -47,7 +61,8 @@ public class EmployeeServiceImpl implements EmployeeService {
             return null;
         }
         Map<String,Object> map=new HashMap<>();
-        Map<String, Object> page = PagesUtil.getPage(map, currentPage);
+        map = PagesUtil.getPage(map, currentPage);
+
         return employeeDao.queryAllEmployeeBy_everyPage(map);
     }
 
@@ -65,7 +80,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             return null;
         }
         Map<String,Object> map=new HashMap<>();
-        Map<String, Object> page = PagesUtil.getPage(map, currentPage);
+         map = PagesUtil.getPage(map, currentPage);
         map.put("depId",depId);
         return employeeDao.queryEmployeeBy_depId_evertPage(map);
     }
@@ -85,7 +100,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         Map<String,Object> map=new HashMap<>();
         map.put("posId",posId);
-        Map<String, Object> page = PagesUtil.getPage(map, currentPage);
+        map = PagesUtil.getPage(map, currentPage);
         return employeeDao.queryEmployeeBy_posId_everyPage(map);
     }
 }

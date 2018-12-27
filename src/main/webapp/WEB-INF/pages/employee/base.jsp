@@ -26,36 +26,31 @@
         <div id="guid2">
             <ul>
                 <li class="menu">
-                    <a href="returnEmployee" id="a">主页</a>
+                    <a href="returnEmployee">主页</a>
                 </li>
                 <li class="menu">
-                    <a href="queryDepartment">部门管理</a>
+                    <a href="toemployeeinfo">个人信息</a>
                 </li>
                 <li class="menu">
-                    <a href="queryALlPosition">职位管理</a>
-                </li>
-                <li class="menu">
-                    <a href="queryAllEmployee">员工管理</a>
-                </li>
-                <li class="menu">
-                    <a href="queryAllRecruitment">招聘管理</a>
-                </li>
-                <li class="menu">
-                    <a href="">培训管理</a>
+                    <a href="queryAllEmployeeemp">员工查询</a>
                 </li>
                 <li class="menu">
                     <a href="">查看考勤</a>
                 </li>
                 <li class="menu">
-                    <a href="">薪资结算</a>
+                    <a href="">查看培训</a>
                 </li>
                 <li class="menu">
-                    <a href="">查看奖惩记录</a>
+                    <a href="">查看薪资</a>
                 </li>
             </ul>
         </div>
     </div>
 </div>
-    <div id="next"></div>
+    <div id="next">
+
+    </div>
+</body>
+
 </body>
 </html>

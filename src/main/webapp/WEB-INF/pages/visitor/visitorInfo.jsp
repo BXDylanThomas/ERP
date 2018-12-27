@@ -48,6 +48,7 @@
     </div>
 </div>
 <div id="next">
+    <br/>
     <a href="queryResume">查看简历</a><br/><br/>
     <a href="queryResumeaccId">查看面试邀请</a>
 </div>

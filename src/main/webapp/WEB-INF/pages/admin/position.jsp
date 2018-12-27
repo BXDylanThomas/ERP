@@ -33,7 +33,7 @@
         <div id="guid2">
             <ul>
                 <li class="menu">
-                    <a href="">主页</a>
+                    <a href="returnEmployee">主页</a>
                 </li>
                 <li class="menu" >
                     <a href="queryDepartment">部门管理</a>
@@ -66,7 +66,23 @@
 <div id="next">
     <div >
         <div id="main">
-            <a href="javascript:void(0)" id="add">添加职务</a>
+            <br/>
+            <span id="addpos" >添加职务</span>
+            &emsp;
+            <tr >
+                <td></td>
+                <td><select id="sel">
+                    <option>选择部门</option>
+                    <c:forEach items="${sessionScope.allDepartment}" var="d">
+                        <option value="${d.id}">${d.name}</option>
+                    </c:forEach>
+                </select>
+                </td>
+                <td><input id="name" value="${p.name}" style="background: lightcyan;border: 1px black solid"></td>
+                <td></td>
+                <td><a href="javascript:void(0)"id="addsure">确认添加</a></td>
+            </tr>
+            <br/><br/>
             &emsp;
             <span>查询部门：</span>
             <select id="select">
@@ -75,6 +91,7 @@
                     <option value="${d.id}">${d.name}</option>
                 </c:forEach>
             </select>
+            <br/>
             <table>
                 <tr>
                     <th><input type="checkbox" id="all"><label for="all">全选</label></th>
@@ -97,19 +114,6 @@
                         </tr>
                     </c:forEach>
                 </c:if>
-
-                <tr id="adddep" style="display: none">
-                    <td></td>
-                    <td><select id="sel">
-                        <c:forEach items="${sessionScope.allDepartment}" var="d">
-                            <option value="${d.id}">${d.name}</option>
-                        </c:forEach>
-                    </select>
-                    </td>
-                    <td><input id="name" value="${p.name}" style="background: lightcyan"></td>
-                    <td></td>
-                    <td><a href="javascript:void(0)"id="addsure">确认添加</a></td>
-                </tr>
 
                 <tr id="ad">
                     <td><a href="javascript:void(0)" id="del">删除</a></td>
@@ -134,5 +138,6 @@
 
 <script src="resource/js/jquery-3.3.1.js"></script>
 <script src="resource/js/position.js"></script>
+
 </body>
 </html>

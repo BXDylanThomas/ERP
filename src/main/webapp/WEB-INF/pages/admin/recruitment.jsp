@@ -29,7 +29,7 @@
         <div id="guid2">
             <ul>
                 <li class="menu">
-                    <a href="">主页</a>
+                    <a href="returnEmployee">主页</a>
                 </li>
                 <li class="menu">
                     <a href="queryDepartment">部门管理</a>
@@ -63,7 +63,7 @@
 <div id="next">
     <div >
         <div id="main">
-            <a href="toRecruitment" id="add">添加招聘</a>
+            <a href="toRecruitment" id="add">添加招聘</a><br/><br/>
             <c:if test="${recruitment==null || empty recruitment}">
                 <td colspan="3">没有数据</td>
             </c:if>

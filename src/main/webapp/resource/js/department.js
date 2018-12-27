@@ -1,15 +1,4 @@
 $(function () {
-    $("#add").click(function () {
-        var add = $("#ad");
-        $("#add").css("pointer-events", "none");
-
-          add.before("<tr>" +
-              "<td></td>" +
-              "<td><input type='text'id='newadd' required> </td>" +
-              "<td></td>"+
-              "<td><a href='javascript:void(0)' id='add3' >确定添加</a></td>"+
-              "</tr>");
-        $("#newadd").css({"border":"solid black 1px","background":"lightcyan"})
 
         $("#add3").click(function () {
             $.ajax({
@@ -24,7 +13,6 @@ $(function () {
                 }
             })
         })
-    })
 
     //修改部门    更新部门名称
     $(".update").click(function () {

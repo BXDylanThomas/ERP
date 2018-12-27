@@ -29,7 +29,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
         if(recruitment==null || recruitment.getPosId()<=0){
             return false;
         }
-        recruitment.setCreateTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        recruitment.setCreateTime(new SimpleDateFormat("yyyy-MM-dd ").format(new Date()));
         return recruitmentDao.addRecruitment(recruitment);
     }
 
@@ -72,7 +72,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
             return null;
         }
         Map<String,Object> map=new HashMap<>();
-        Map<String, Object> page = PagesUtil.getPage(map, currentPage);
+        map = PagesUtil.getPage(map, currentPage);
         if(posId!=0){
             map.put("depId",posId);
             return recruitmentDao.queryRecruitmentBy_posId_everyPage(map);

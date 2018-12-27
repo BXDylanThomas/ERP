@@ -4,7 +4,7 @@
 
     <!--添加招聘信息-->
     <insert id="addRecruitment">
-        insert into T_RECRUITMENT values(RECRUITMENT_SEQ.nextval,#{posId},#{title},#{content},#{count},#{time})
+        insert into T_RECRUITMENT values(RECRUITMENT_SEQ.nextval,#{posId},#{title},#{content},#{count},#{createTime})
     </insert>
 
     <!--删除招聘信息-->

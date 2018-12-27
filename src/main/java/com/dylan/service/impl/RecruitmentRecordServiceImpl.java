@@ -15,7 +15,7 @@ import java.util.*;
 public class RecruitmentRecordServiceImpl implements RecruitmentRecordService {
     public final static int UNREAD=0;
     public final static int HASREAD=1;
-    public final static int WATCH=1;
+    public final static int WATCH=3;
     public final static String EMPLOYEE="employee";
 
 
@@ -146,6 +146,11 @@ public class RecruitmentRecordServiceImpl implements RecruitmentRecordService {
         return recruitmentRecordDao.updateRecruitmentRecord_state(map);
     }
 
+    /**
+     *  //通过id查询
+     * @param id
+     * @return
+     */
     @Override
     public RecruitmentRecord queryRecruitmentRecordBy_id(int id) {
         if(id<=0){
@@ -155,7 +160,7 @@ public class RecruitmentRecordServiceImpl implements RecruitmentRecordService {
     }
 
     /**
-     * 通过职位id 查询
+     * 通过职位id 查询  所有
      * @param recId
      * @return
      */
@@ -185,6 +190,11 @@ public class RecruitmentRecordServiceImpl implements RecruitmentRecordService {
         return recruitmentRecords;
     }
 
+    /**
+     * //通过 游客id  查询所有的有邀请的面试
+     * @param accId
+     * @return
+     */
     @Override
     public List<RecruitmentRecord> queryRecruitmentRecordBy_you(int accId) {
         if(accId<=0){
@@ -193,6 +203,12 @@ public class RecruitmentRecordServiceImpl implements RecruitmentRecordService {
         return recruitmentRecordDao.queryRecruitmentRecordBy_you(accId);
     }
 
+    /**
+     * //通过 游客id  查询所有的有邀请的面试  分页
+     * @param accId
+     * @param currentPage
+     * @return
+     */
     @Override
     public List<RecruitmentRecord> queryRecruitmentRecordBy_you_everyPage(int accId, int currentPage) {
         if(accId<=0 || currentPage<=0){
@@ -200,7 +216,7 @@ public class RecruitmentRecordServiceImpl implements RecruitmentRecordService {
         }
         Map<String,Object> map=new HashMap<>();
         map.put("accId",accId);
-        Map<String, Object> page = PagesUtil.getPage(map, currentPage);
+         map = PagesUtil.getPage(map, currentPage);
         return recruitmentRecordDao.queryRecruitmentRecordBy_you_everyPage(map);
     }
 }

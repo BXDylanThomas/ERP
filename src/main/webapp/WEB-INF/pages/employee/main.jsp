@@ -8,24 +8,47 @@
 <head>
     <base href="<%=basePath%>"/>
     <title></title>
+    <link rel="stylesheet" href="resource/css/base.css">
 </head>
 <body>
-
-        <form action="addDepartment" method="post">
-            <label for="name">部门名称：</label><input required type="text" name="name" id="name">
-            <label for="description">描述：</label><input required type="text" name="description" id="description">
-            <input type="submit" value="确定" >
-        </form>
-
-
-        <c:if test="${res}">
-            ${departments}
+    <div>
+    <!--top-->
+    <div id="top">
+        <c:if test="${sessionScope.user!=null}">
+            <div  class="welcome">
+                <span>欢迎：${sessionScope.user.name}</span>
+                <a href="exit">退出</a>
+            </div>
         </c:if>
-        <c:if test="${!res}">
-           123
-        </c:if>
+    </div>
+    <div id="introduce"></div>
+    <div id="guid">
+        <div id="guid2">
+            <ul>
+                <li class="menu">
+                    <a href="returnEmployee" id="a">主页</a>
+                </li>
+                <li class="menu">
+                    <a href="toemployeeinfo">个人信息</a>
+                </li>
+                <li class="menu">
+                    <a href="queryAllEmployeeemp">员工查询</a>
+                </li>
+                <li class="menu">
+                    <a href="">查看考勤</a>
+                </li>
+                <li class="menu">
+                    <a href="">查看培训</a>
+                </li>
+                <li class="menu">
+                    <a href="">查看薪资</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
 
-        <a href="queryDepartment">查询</a>
-        ${departments}
+</body>
+
 </body>
 </html>

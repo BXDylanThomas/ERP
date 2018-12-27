@@ -23,7 +23,7 @@
     </select>
 
     <!--通过id查询-->
-    <select id="queryAccountBy_id" resultType="com.dylan.model.Account">
+    <select id="queryAccountBy_id" resultMap="accountMap">
           select * from T_ACCOUNT where A_ID=#{id} and rownum=1
     </select>
 

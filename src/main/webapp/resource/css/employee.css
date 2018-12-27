@@ -1,14 +1,26 @@
+#next{
+    position: relative;
+    left: 80px;
+}
+
 #main input{
     background: white;
     border: none;
     position: relative;
 
 }
-#main td{
+#main th,td{
+    padding: 0px 2px;
     text-align: center;
-    width: 100px;
     height: 30px;
     line-height: 30px;
+}
+#main .rul{
+    width: 80px;
+}
+
+#main .lg{
+    width: 200px;
 }
 
 #main .time{

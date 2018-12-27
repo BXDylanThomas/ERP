@@ -35,7 +35,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         }
         System.out.println(department);
         if(queryDepartmentBy_name(department.getName())){
-            department.setCreateTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+            department.setCreateTime(new SimpleDateFormat("yyyy-MM-dd ").format(new Date()));
             return departmentDao.addDepartment(department);
         }
 
@@ -53,7 +53,8 @@ public class DepartmentServiceImpl implements DepartmentService {
         if(department==null || department.getId()<=0 || department.getName()==null){
             return false;
         }
-        if(departmentDao.queryDepartmentBy_name(department.getName()).equals(department.getName())){
+        System.out.println(department);
+        if(departmentDao.queryDepartmentBy_name(department.getName())!=null){
             return true;
         }
         if(queryDepartmentBy_name(department.getName())){
@@ -129,7 +130,7 @@ public class DepartmentServiceImpl implements DepartmentService {
             return null;
         }
         Map<String,Object> map=new HashMap<>();
-        Map<String, Object> page = PagesUtil.getPage(map, currentPage);
+        map = PagesUtil.getPage(map, currentPage);
         return departmentDao.queryAllDeprtmentBy_everypage(map);
     }
 }

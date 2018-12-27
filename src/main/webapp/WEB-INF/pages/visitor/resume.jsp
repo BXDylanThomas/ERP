@@ -9,7 +9,6 @@
     <base href="<%=basePath%>"/>
     <link rel="stylesheet"  href="resource/css/base.css">
     <link rel="stylesheet"  href="resource/css/table.css">
-    <link rel="stylesheet"  href="resource/css/resume.css">
 
     <style>
         input{

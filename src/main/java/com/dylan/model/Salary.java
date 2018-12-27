@@ -31,8 +31,8 @@ public class Salary implements Serializable {
         return money;
     }
 
-    public void setMoney(Double salary) {
-        this.money = salary;
+    public void setMoney(Double money) {
+        this.money = money;
     }
 
     @Override
@@ -40,7 +40,7 @@ public class Salary implements Serializable {
         return "Salary{" +
                 "id=" + id +
                 ", resId=" + resId +
-                ", salary=" + money +
+                ", money=" + money +
                 '}';
     }
 }

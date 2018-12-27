@@ -4,10 +4,6 @@ $(function () {
         window.location.href="queryPosition?depId="+$("#select").val();
     })
 
-    //添加部门
-    $("#add").click(function () {
-        $("#adddep").css("display","block")
-    })
     $("#addsure").click(function () {
         var id=$("#sel");
         var name=$("#name")

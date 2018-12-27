@@ -31,7 +31,7 @@
         <div id="guid2">
             <ul>
                 <li class="menu">
-                    <a href="">主页</a>
+                    <a href="returnEmployee">主页</a>
                 </li>
                 <li class="menu">
                     <a href="queryDepartment">部门管理</a>
@@ -105,7 +105,7 @@
                 <tr></tr>
                 <tr>
                     <th>招聘人数：</th>
-                    <td colspan="2"><input type="text" name="count" required>个</td>
+                    <td colspan="2"><input type="number" name="count" style="width: 50px" required>个</td>
                 </tr>
             </table>
             <input type="submit" value="确认" id="sub">

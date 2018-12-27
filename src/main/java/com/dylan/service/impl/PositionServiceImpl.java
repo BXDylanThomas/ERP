@@ -32,7 +32,7 @@ public class PositionServiceImpl implements PositionService {
             return false;
         }
         if(queryPositionBy_name(position.getName())){
-            position.setCreateTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+            position.setCreateTime(new SimpleDateFormat("yyyy-MM-dd ").format(new Date()));
             return positionDao.addPosition(position);
         }
         return false;
@@ -49,7 +49,7 @@ public class PositionServiceImpl implements PositionService {
         if(position==null || position.getName()==null || position.getName().equals("") ){
             return false;
         }
-        if(positionDao.queryPositionBy_name(position.getName()).equals(position.getName())){
+        if(positionDao.queryPositionBy_name(position.getName())!=null){
             return true;
         }
         if(queryPositionBy_name(position.getName())){
@@ -123,7 +123,7 @@ public class PositionServiceImpl implements PositionService {
             return null;
         }
         Map<String,Object> map=new HashMap<>();
-        Map<String, Object> page = PagesUtil.getPage(map, currentPage);
+        map = PagesUtil.getPage(map, currentPage);
         if(depId!=0){
             map.put("depId",depId);
             return positionDao.queryPositionBy_depId_everyPage(map);
