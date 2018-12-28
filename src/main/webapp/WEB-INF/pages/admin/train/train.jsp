@@ -1,4 +1,3 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String path = request.getContextPath();
@@ -11,7 +10,7 @@
     <link rel="stylesheet" href="resource/css/base.css">
 </head>
 <body>
-    <div>
+<div>
     <!--top-->
     <div id="top">
         <c:if test="${sessionScope.user!=null}">
@@ -26,7 +25,7 @@
         <div id="guid2">
             <ul>
                 <li class="menu">
-                    <a href="returnEmployee" id="a">主页</a>
+                    <a href="returnEmployee">主页</a>
                 </li>
                 <li class="menu">
                     <a href="queryDepartment">部门管理</a>
@@ -40,7 +39,7 @@
                 <li class="menu">
                     <a href="queryAllRecruitment">招聘管理</a>
                 </li>
-                <li class="menu">
+                <li class="menu" id="a">
                     <a href="toTrain">培训管理</a>
                 </li>
                 <li class="menu">
@@ -56,6 +55,10 @@
         </div>
     </div>
 </div>
-    <div id="next"></div>
+<div id="next"></div>
+    <div id="main" style="position: relative;left: 600px;top: 5px;">
+        <br/><br/><a href="toTrainDepartment">查看部门培训</a>
+        <br/><br/><a href="queryAllTrainEmployee">查看员工培训</a>
+    </div>
 </body>
 </html>

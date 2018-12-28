@@ -45,7 +45,7 @@
                     <a href="queryAllRecruitment">招聘管理</a>
                 </li>
                 <li class="menu">
-                    <a href="">培训管理</a>
+                    <a href="toTrain">培训管理</a>
                 </li>
                 <li class="menu">
                     <a href="">查看考勤</a>
@@ -66,7 +66,7 @@
         <div>
             <span>查询部门：</span>
             <select id="department">
-                <option>请选择部门</option>
+                <option value="-1">请选择部门</option>
                 <c:forEach items="${sessionScope.allDepartment}" var="d">
                     <c:if test="${depId==d.id}">
                         <option value="${d.id}" selected>${d.name}</option>
@@ -79,7 +79,7 @@
             &emsp;
             &emsp;<span>选择职位：</span>
             <select id="position" name="posId">
-                <option>请选择职位</option>
+                <option value="-1" selected>请选择职位</option>
                 <c:forEach items="${sessionScope.allpositions}" var="p">
                     <option value="${p.id}">${p.name}</option>
                 </c:forEach>
@@ -131,7 +131,7 @@
                         <td class="=lg">${e.resume.email}</td>
                         <td class="rul">${e.resume.education}</td>
                         <td class="=lg">${e.resume.major}</td>
-                        <td class="=lg">${e.resume.experience}</td>
+                        <td class="=lg">${e.resume.exp}</td>
                         <td class="rul">
                             <a href="javascript:void(0)"class="update">修改信息</a>
                         </td>

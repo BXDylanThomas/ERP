@@ -41,7 +41,7 @@
                     <a href="queryAllRecruitment">招聘管理</a>
                 </li>
                 <li class="menu">
-                    <a href="">培训管理</a>
+                    <a href="toTrain">培训管理</a>
                 </li>
                 <li class="menu">
                     <a href="">查看考勤</a>

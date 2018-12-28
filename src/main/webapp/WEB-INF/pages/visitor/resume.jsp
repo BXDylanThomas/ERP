@@ -73,7 +73,7 @@
                     </tr>
                     <tr>
                         <th>出身年月：</th>
-                        <td><input type="text" value="${resume.birth}" name="birth" readonly></td>
+                        <td><input type="date" value="${resume.birth}" name="birth" readonly ></td>
                         <th>联系电话：</th>
                         <td><input type="text" value="${resume.phone}" name="phone" readonly></td>
                     </tr>
@@ -96,8 +96,8 @@
                     </tr>
                     <tr>
                         <td colspan="4">
-                            <textarea name="experience" required readonly>
-                                    ${resume.experience}
+                            <textarea name="exp" required readonly>
+                                    ${resume.exp}
                             </textarea>
                         </td>
                     </tr>

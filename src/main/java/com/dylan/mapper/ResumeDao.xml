@@ -4,13 +4,13 @@
 
     <!--添加简历-->
     <insert id="addResume">
-        insert into T_RESUME values(RESUME_SEQ.nextval,#{name},#{birth},#{sex},#{phone},#{address},#{email},#{education},#{major},#{experience},#{accId})
+        insert into T_RESUME values(RESUME_SEQ.nextval,#{name},#{birth},#{sex},#{phone},#{address},#{email},#{education},#{major},#{exp},#{accId})
     </insert>
 
     <!--更新简历-->
     <update id="updateResume">
         update T_RESUME set R_NAME=#{name},R_BIRTH=#{birth},R_SEX=#{sex},R_PHONE=#{phone},R_ADDRESS=#{address},R_EMAIL=#{email},
-        R_EDUCATION=#{education},R_MAJOR=#{major},R_EXPERIENCE=#{experience},R_ACCID=#{accId} where  R_ACCID=#{accId} and rownum=1
+        R_EDUCATION=#{education},R_MAJOR=#{major},R_EXPERIENCE=#{exp},R_ACCID=#{accId} where  R_ACCID=#{accId} and rownum=1
     </update>
 
     <!--通过账号id 查询  简历-->
@@ -29,7 +29,7 @@
         <result property="email" column="R_EMAIL"/>
         <result property="education" column="R_EDUCATION"/>
         <result property="major" column="R_MAJOR"/>
-        <result property="experience" column="R_EXPERIENCE"/>
+        <result property="exp" column="R_EXPERIENCE"/>
         <result property="accId" column="R_ACCID"/>
         <association property="salary" resultMap="com.dylan.dao.SalaryDao.salaryMap"/>
     </resultMap>

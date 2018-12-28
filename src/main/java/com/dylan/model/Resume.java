@@ -16,7 +16,7 @@ public class Resume  implements Serializable {
     private String email;  //邮箱
     private String education;  //最高学历
     private String major;   //专业
-    private String experience;  //工作经验
+    private String exp;  //工作经验
     private Integer accId;  //账号id
 
     private Salary salary;
@@ -96,12 +96,12 @@ public class Resume  implements Serializable {
         this.major = major;
     }
 
-    public String getExperience() {
-        return experience;
+    public String getExp() {
+        return exp;
     }
 
-    public void setExperience(String experience) {
-        this.experience = experience;
+    public void setExp(String exp) {
+        this.exp = exp;
     }
 
     public Integer getAccId() {
@@ -132,7 +132,7 @@ public class Resume  implements Serializable {
                 ", email='" + email + '\'' +
                 ", education='" + education + '\'' +
                 ", major='" + major + '\'' +
-                ", experience='" + experience + '\'' +
+                ", experien='" + exp + '\'' +
                 ", accId=" + accId +
                 ", salary=" + salary +
                 '}';

@@ -51,7 +51,7 @@
                     <a href="queryAllRecruitment">招聘管理</a>
                 </li>
                 <li class="menu">
-                    <a href="">培训管理</a>
+                    <a href="toTrain">培训管理</a>
                 </li>
                 <li class="menu">
                     <a href="">查看考勤</a>
@@ -111,8 +111,8 @@
                         </tr>
                         <tr>
                             <td colspan="4">
-                            <textarea name="experience" required readonly>
-                                    ${r.resume.experience}
+                            <textarea name="experien" required readonly>
+                                    ${r.resume.exp}
                             </textarea>
                             </td>
                         </tr>

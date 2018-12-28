@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 
 @Controller
 public class Resume_controller {
@@ -56,15 +57,17 @@ public class Resume_controller {
 
     /**
      * 添加个人简历
-     * @param resume
      * @param session
      * @return
      */
     @RequestMapping("/addresumemake")
-    public String addresumemake(Resume resume,HttpSession session){
-
+    public String addresumemake(String bir,String experience,Resume resume,HttpSession session){
         Account account = (Account) session.getAttribute("user");
+
         resume.setAccId(account.getId());
+        resume.setBirth(bir);
+        resume.setExp(experience);
+
         boolean res = resumeService.addResume(resume);
         return "forward:queryResume";
     }
@@ -79,6 +82,5 @@ public class Resume_controller {
         boolean res = resumeService.updateResume(resume);
         return "forward:queryResume";
     }
-
 
 }

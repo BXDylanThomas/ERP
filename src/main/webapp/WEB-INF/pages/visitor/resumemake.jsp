@@ -9,7 +9,6 @@
     <base href="<%=basePath%>"/>
     <link rel="stylesheet"  href="resource/css/base.css">
     <link rel="stylesheet"  href="resource/css/table.css">
-    <link rel="stylesheet"  href="resource/css/resume.css">
 </head>
 <body>
 
@@ -62,7 +61,7 @@
                 </tr>
                 <tr>
                     <th>出身年月：</th>
-                    <td><input type="text" name="birth" required></td>
+                    <td><input type="date" name="bir" required></td>
                     <th>联系电话：</th>
                     <td><input type="text" name="phone" required></td>
                 </tr>
@@ -70,11 +69,11 @@
                     <th>专业：</th>
                     <td><input type="text" name="major" required></td>
                     <th>最高学历：</th>
-                    <td><input type="text" name="education" required></td>
+                    <td><input type="text" name="education"required ></td>
                 </tr>
                 <tr>
                     <th>邮箱：</th>
-                    <td colspan="3"><input type="text" name="email" required></td>
+                    <td colspan="3"><input type="text" name="email"required ></td>
                 </tr>
                 <tr>
                     <th>联系地址：</th>
@@ -85,13 +84,10 @@
                 </tr>
                 <tr>
                     <td colspan="4">
-                        <textarea style="width: 500px" name="experience" required>
-
-                        </textarea>
+                        <input type="text" style="width:100%;height:150px" name="experience" required >
                     </td>
                 </tr>
             </table>
-
             <input type="submit" value="确定" id="sub">
         </form>
 </div>

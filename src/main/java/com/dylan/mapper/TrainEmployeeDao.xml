@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dylan.dao.TrainEmployeeDao">
+
+    <insert id="addTrainEmployee">
+        insert into T_TRAINEMPLOYEE values(TRAINEMPLOYEE_SEQ.nextval,#{empId},#{tId},#{state})
+    </insert>
+
+    <!--发布员工培训-->
+    <update id="updateTrainEmployee">
+        update T_TRAINEMPLOYEE set TE_STATE=1 where TE_ID=#{id}
+    </update>
+
+    <delete id="deleteTrainEmployee">
+        delete from T_TRAINEMPLOYEE where TE_ID=#{id}
+    </delete>
+
+    <!--通过员工id 查询培训  只能查询已经发布的-->
+    <select id="queryTrainEmployeeBy_empId" resultMap="trainEmployeeMap">
+          select te.TE_ID,te.TE_EMPID,te.TE_TID,te.TE_STATE,r.R_NAME,
+          t.T_ID,t.T_TITLE,t.T_CONTENT,t.T_ADDRESS,t.T_STARTTIME,t.T_ENDTIME
+        from T_TRAINEMPLOYEE te,T_EMPLOYEE e,T_TRAIN t,T_RESUME r
+        where te.TE_TID=t.T_ID and te.TE_EMPID=e.E_ID and e.E_RESID=r.R_ID and te.TE_EMPID=#{empId} and te.TE_STATE=1
+    </select>
+
+    <!--通过员工id 查询培训  只能查询已经发布的  分页-->
+    <select id="queryTrainEmployeeBy_empId_evereyPage"  resultMap="trainEmployeeMap">
+        select t.TE_ID,t.TE_EMPID,t.TE_TID,t.TE_STATE,t.R_NAME,
+          t.T_ID,t.T_TITLE,t.T_CONTENT,t.T_ADDRESS,t.T_STARTTIME,t.T_ENDTIME
+        from (select rownum rn,te.*,t.*,r.* from T_TRAINEMPLOYEE te,T_EMPLOYEE e,T_TRAIN t,T_RESUME r
+                   where te.TE_TID=t.T_ID and te.TE_EMPID=e.E_ID and e.E_RESID=r.R_ID and te.TE_EMPID=#{empId} and te.TE_STATE=1  and  ROWNUM &lt;=#{show})t
+            where t.rn &gt;=#{current}
+    </select>
+
+    <!--查看所有的员工培训-->
+    <select id="queryAllTrainEmployee"  resultMap="trainEmployeeMap">
+        select te.TE_ID,te.TE_EMPID,te.TE_TID,te.TE_STATE,r.R_NAME,
+          t.T_ID,t.T_TITLE,t.T_CONTENT,t.T_ADDRESS,t.T_STARTTIME,t.T_ENDTIME
+        from T_TRAINEMPLOYEE te,T_EMPLOYEE e,T_TRAIN t,T_RESUME r
+        where te.TE_TID=t.T_ID and te.TE_EMPID=e.E_ID and e.E_RESID=r.R_ID
+    </select>
+
+    <!--查看所有的员工培训 分页-->
+    <select id="queryAllTrainEmployee_everyPage"  resultMap="trainEmployeeMap">
+         select t.TE_ID,t.TE_EMPID,t.TE_TID,t.TE_STATE,t.R_NAME,
+          t.T_ID,t.T_TITLE,t.T_CONTENT,t.T_ADDRESS,t.T_STARTTIME,t.T_ENDTIME
+        from (select rownum rn,te.*,t.*,r.* from T_TRAINEMPLOYEE te,T_EMPLOYEE e,T_TRAIN t,T_RESUME r
+                   where te.TE_TID=t.T_ID and te.TE_EMPID=e.E_ID and e.E_RESID=r.R_ID  and  ROWNUM &lt;=#{show})t
+            where t.rn &gt;=#{current}
+    </select>
+
+    <!--查看所有的员工培训 是否发布的-->
+    <select id="queryAllTrainEmployeeBy_state_"  resultMap="trainEmployeeMap">
+         select te.TE_ID,te.TE_EMPID,te.TE_TID,te.TE_STATE,r.R_NAME,
+          t.T_ID,t.T_TITLE,t.T_CONTENT,t.T_ADDRESS,t.T_STARTTIME,t.T_ENDTIME
+        from T_TRAINEMPLOYEE te,T_EMPLOYEE e,T_TRAIN t,T_RESUME r
+        where te.TE_TID=t.T_ID and te.TE_EMPID=e.E_ID and e.E_RESID=r.R_ID and te.TE_STATE=#{state}
+    </select>
+
+    <!--查看所有的员工培训 是否发布的  分页-->
+    <select id="queryAllTrainEmployeeBy_state_everyPage_"  resultMap="trainEmployeeMap">
+         select t.TE_ID,t.TE_EMPID,t.TE_TID,t.TE_STATE,t.R_NAME,
+          t.T_ID,t.T_TITLE,t.T_CONTENT,t.T_ADDRESS,t.T_STARTTIME,t.T_ENDTIME
+        from (select rownum rn,te.*,t.*,r.* from T_TRAINEMPLOYEE te,T_EMPLOYEE e,T_TRAIN t,T_RESUME r
+                   where te.TE_TID=t.T_ID and te.TE_EMPID=e.E_ID and e.E_RESID=r.R_ID and te.TE_STATE=#{state}  and  ROWNUM &lt;=#{show})t
+            where t.rn &gt;=#{current}
+    </select>
+
+    <!--根据 培训表id 查询所有的-->
+    <select id="queryTrainEmployeeBy_tId" resultMap="trainEmployeeMap">
+        select te.TE_ID,te.TE_EMPID,te.TE_TID,te.TE_STATE,r.R_NAME,
+          t.T_ID,t.T_TITLE,t.T_CONTENT,t.T_ADDRESS,t.T_STARTTIME,t.T_ENDTIME
+        from T_TRAINEMPLOYEE te,T_EMPLOYEE e,T_TRAIN t,T_RESUME r
+        where te.TE_TID=t.T_ID and te.TE_EMPID=e.E_ID and e.E_RESID=r.R_ID and t.T_ID=#{tId}
+    </select>
+
+    <resultMap id="trainEmployeeMap" type="TrainEmployee">
+        <id  property="id" column="TE_ID"/>
+        <result property="empId" column="TE_EMPID"/>
+        <result property="tId" column="TE_TID"/>
+        <result property="state" column="TE_STATE"/>
+        <association property="train" resultMap="com.dylan.dao.TrainDao.trainMap"/>
+        <association property="employee" resultMap="com.dylan.dao.EmployeeDao.employeeMap"/>
+    </resultMap>
+</mapper>

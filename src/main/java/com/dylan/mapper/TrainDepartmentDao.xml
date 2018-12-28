@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dylan.dao.TrainDepartmentDao">
+
+    <insert id="addTrainDepartment">
+        insert into T_TRAINDEPARTMENT values(TRAINDEPARTMENT_SEQ.nextval,#{depId},#{tId},#{state})
+    </insert>
+
+    <update id="updateTrainDepartment">
+        update T_TRAINDEPARTMENT set TD_TDSTATE=1 where TD_TDID=#{id}
+    </update>
+
+    <!--修改培训部门-->
+    <update id="updateTrainDepartmentby_depId">
+        update T_TRAINDEPARTMENT set TD_DEPID=#{depId} where TD_TDID=#{tdId}
+    </update>
+
+    <delete id="deleteDeTrainDepartment">
+        delete from T_TRAINDEPARTMENT where TD_TDID=${id}
+    </delete>
+
+    <!--查询部门所有的培训 -->
+    <select id="queryAllTrainDepartment" resultMap="trinDepartmentMap">
+        select td.TD_TDID,td.TD_DEPID,td.TD_TID,td.TD_TDSTATE,t.T_ID,t.T_TITLE,t.T_CONTENT,t.T_ADDRESS,t.T_STARTTIME,t.T_ENDTIME,
+            d.D_ID,d.D_NAME,d.D_CREATETIM
+        from T_TRAINDEPARTMENT td,T_TRAIN t,T_DEPARTMENT d where td.TD_TID=t.T_ID and d.D_ID=td.TD_DEPID
+    </select>
+
+    <!--查询部门所有的培训  分页-->
+    <select id="queryAllTrainDepartmentBy_everyPage" resultMap="trinDepartmentMap">
+         select td.TD_TdID,td.TD_DEPID,td.TD_TID,td.TD_TDSTATE,td.T_ID,td.T_TITLE,td.T_CONTENT,td.T_ADDRESS,td.T_STARTTIME,td.T_ENDTIME,
+            td.D_ID,td.D_NAME,td.D_CREATETIM
+         from (select rownum rn,t.*,td.*,d.* from T_TRAINDEPARTMENT td,T_TRAIN t,T_DEPARTMENT d where td.TD_TID=t.T_ID and d.D_ID=td.TD_DEPID and ROWNUM &lt;=#{show})td
+         where td.rn &gt;=#{current}
+    </select>
+
+    <!--//查询所有已经发布的-->
+    <select id="queryAllTrainDepartment_send"  resultMap="trinDepartmentMap">
+         select td.TD_TDID,td.TD_DEPID,td.TD_TID,td.TD_TDSTATE,t.T_ID,t.T_TITLE,t.T_CONTENT,t.T_ADDRESS,t.T_STARTTIME,t.T_ENDTIME,
+            d.D_ID,d.D_NAME,d.D_CREATETIM
+        from T_TRAINDEPARTMENT td,T_TRAIN t,T_DEPARTMENT d where td.TD_TID=t.T_ID and d.D_ID=td.TD_DEPID and td.TD_TDSTATE=#{state}
+    </select>
+    <!--//查询所有已经发布的  分页-->
+    <select id="queryAllTrainDepartment_send_everyPage"  resultMap="trinDepartmentMap">
+         select td.TD_TDID,td.TD_DEPID,td.TD_TID,td.TD_TDSTATE,td.T_ID,td.T_TITLE,td.T_CONTENT,td.T_ADDRESS,td.T_STARTTIME,td.T_ENDTIME,
+            td.D_ID,td.D_NAME,td.D_CREATETIM
+         from (select rownum rn,t.*,td.*,d.* from T_TRAINDEPARTMENT td,T_TRAIN t,T_DEPARTMENT d where td.TD_TID=t.T_ID and d.D_ID=td.TD_DEPID and td.TD_TDSTATE=#{state} and ROWNUM &lt;=#{show})td
+         where td.rn &gt;=#{current}
+    </select>
+
+    <!--//查询某部门的所有培训-->
+    <select id="queryAllTrainDepartmentBy_depId" resultMap="trinDepartmentMap">
+         select td.TD_TDID,td.TD_DEPID,td.TD_TID,td.TD_TDSTATE,t.T_ID,t.T_TITLE,t.T_CONTENT,t.T_ADDRESS,t.T_STARTTIME,t.T_ENDTIME,
+            d.D_ID,d.D_NAME,d.D_CREATETIM
+        from T_TRAINDEPARTMENT td,T_TRAIN t,T_DEPARTMENT d where td.TD_TID=t.T_ID and d.D_ID=td.TD_DEPID and d.D_ID=#{depId}
+    </select>
+
+    <!--//查询某部门的所有培训 分页-->
+    <select id="queryAllTrainDepartmentBy_depId_everyPage" resultMap="trinDepartmentMap">
+          select td.TD_TDID,td.TD_DEPID,td.TD_TID,td.TD_TDSTATE,td.T_ID,td.T_TITLE,td.T_CONTENT,td.T_ADDRESS,td.T_STARTTIME,td.T_ENDTIME,
+            td.D_ID,td.D_NAME,td.D_CREATETIM
+         from (select rownum rn,t.*,td.*,d.* from T_TRAINDEPARTMENT td,T_TRAIN t,T_DEPARTMENT d where td.TD_TID=t.T_ID and d.D_ID=td.TD_DEPID and d.D_ID=#{depId} and ROWNUM &lt;=#{show})td
+         where td.rn &gt;=#{current}
+    </select>
+
+    <!--查询某部门的所有培训  是否 发布的-->
+    <select id="queryAllTrainDepartmentBy_depId_send"  resultMap="trinDepartmentMap">
+         select td.TD_TDID,td.TD_DEPID,td.TD_TID,td.TD_TDSTATE,t.T_ID,t.T_TITLE,t.T_CONTENT,t.T_ADDRESS,t.T_STARTTIME,t.T_ENDTIME,
+            d.D_ID,d.D_NAME,d.D_CREATETIM
+        from T_TRAINDEPARTMENT td,T_TRAIN t,T_DEPARTMENT d where td.TD_TID=t.T_ID and d.D_ID=td.TD_DEPID and d.D_ID=#{depId} and td.TD_TDSTATE=#{state}
+    </select>
+
+    <!--查询某部门的所有培训  是否 发布的  分页 -->
+    <select id="queryAllTrainDepartmentBy_depId_send_everyPage"  resultMap="trinDepartmentMap">
+          select td.TD_TDID,td.TD_DEPID,td.TD_TID,td.TD_TDSTATE,td.T_ID,td.T_TITLE,td.T_CONTENT,td.T_ADDRESS,td.T_STARTTIME,td.T_ENDTIME,
+            td.D_ID,td.D_NAME,td.D_CREATETIM
+         from (select rownum rn,t.*,td.*,d.* from T_TRAINDEPARTMENT td,T_TRAIN t,T_DEPARTMENT d where td.TD_TID=t.T_ID and d.D_ID=td.TD_DEPID and d.D_ID=#{depId} and td.TD_TDSTATE=#{state} and ROWNUM &lt;=#{show})td
+         where td.rn &gt;=#{current}
+    </select>
+
+    <!--通过id查询-->
+    <select id="queryTrainDepartmentBy_id" resultMap="trinDepartmentMap">
+         select td.TD_TDID,td.TD_DEPID,td.TD_TID,td.TD_TDSTATE,t.T_ID,t.T_TITLE,t.T_CONTENT,t.T_ADDRESS,t.T_STARTTIME,t.T_ENDTIME,
+            d.D_ID,d.D_NAME,d.D_CREATETIM
+        from T_TRAINDEPARTMENT td,T_TRAIN t,T_DEPARTMENT d where td.TD_TID=t.T_ID and d.D_ID=td.TD_DEPID and td.TD_TDID=#{id}
+    </select>
+
+    <resultMap id="trinDepartmentMap" type="TrainDepartment">
+        <id  property="id" column="TD_TDID"/>
+        <result property="depId" column="TD_DEPID"/>
+        <result property="tId" column="TD_TID"/>
+        <result property="state" column="TD_TDSTATE"/>
+        <association property="train" resultMap="com.dylan.dao.TrainDao.trainMap"/>
+        <association property="department" resultMap="com.dylan.dao.DepartmentDao.departmentMap"/>
+    </resultMap>
+</mapper>

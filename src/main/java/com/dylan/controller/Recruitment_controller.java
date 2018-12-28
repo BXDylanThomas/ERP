@@ -32,8 +32,6 @@ public class Recruitment_controller {
     @RequestMapping("/addRecruitment")
     public String addRecruitment(Recruitment recruitment){
         recruitment.setContent(recruitment.getContent().trim());
-        System.out.println(recruitment);
-
         boolean res = recruitmentService.addRecruitment(recruitment);
        return "forward:queryAllRecruitment";
     }

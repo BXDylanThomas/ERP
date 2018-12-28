@@ -1,25 +1,29 @@
 $(function () {
     //查询某部门
     $("#select option").click(function () {
-        window.location.href="queryPosition?depId="+$("#select").val();
+        if($(this).val()!="-1"){
+           window.location.href="queryPosition?depId="+$("#select").val();
+        }
     })
 
     $("#addsure").click(function () {
         var id=$("#sel");
         var name=$("#name")
-
-        $.ajax({
-            type:"post",url:"addPosition",
-            data:"depId="+id.val()+"&name="+name.val(),
-            success:function (obj) {
-                if(obj==1){
-                    alert("添加成功")
-                    window.location.href="queryALlPosition";
-                }else{
-                    alert("添加失败")
+        if(id!="-1"){
+            $.ajax({
+                type:"post",url:"addPosition",
+                data:"depId="+id.val()+"&name="+name.val(),
+                success:function (obj) {
+                    if(obj==1){
+                        alert("添加成功")
+                        window.location.href="queryALlPosition";
+                    }else{
+                        alert("添加失败")
+                    }
                 }
-            }
-        })
+            })
+        }
+
     })
 
     //修改部门    更新部门名称

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dylan.dao.TrainDao">
+
+    <insert id="addTrain">
+        <selectKey keyProperty="id" resultType="int" order="AFTER">
+            select TRAIN_SEQ.currval from dual
+        </selectKey>
+        insert into T_TRAIN values(TRAIN_SEQ.nextval,#{title},#{content},#{address},#{startTime},#{endTime})
+    </insert>
+
+    <!--更新培训信息  如果 state = 1  说明已经发布了  不能修改-->
+    <update id="updateTrain">
+        update T_TRAIN set T_TITLE=#{title},T_CONTENT=#{content},T_ADDRESS=#{address},T_STARTTIME=#{startTime},T_ENDTIME=#{endTime} where T_ID=#{id}
+    </update>
+
+    <!--删除-->
+    <delete id="deleteTrain">
+        delete from T_TRAIN where T_ID=#{id}
+    </delete>
+
+    <!--通过id 查询-->
+    <select id="queryTrainBy_id" resultMap="trainMap">
+        select T_ID,T_TITLE,T_CONTENT,T_ADDRESS,T_STARTTIME,T_ENDTIME from T_TRAIN where T_ID=#{id}
+    </select>
+
+    <!--查询所有的-->
+    <select id="queryAllTrain" resultMap="trainMap">
+        select T_ID,T_TITLE,T_CONTENT,T_ADDRESS,T_STARTTIME,T_ENDTIME from T_TRAIN
+    </select>
+
+    <!--查询所有分页-->
+    <select id="queryAllTrainBy_everyPage" resultMap="trainMap">
+         select t.T_ID,t.T_TITLE,t.T_CONTENT,t.T_ADDRESS,t.T_STARTTIME,t.T_ENDTIME
+              from (select rownum rn,t.*  from T_TRAIN t where ROWNUM &lt;=#{show})t where t.rn &gt;=#{current}
+    </select>
+
+    <resultMap id="trainMap" type="Train">
+        <id  property="id" column="T_ID"/>
+        <result property="title" column="T_TITLE"/>
+        <result property="content" column="T_CONTENT"/>
+        <result property="address"  column="T_ADDRESS"/>
+        <result property="startTime" column="T_STARTTIME"/>
+        <result property="endTime" column="T_ENDTIME"/>
+
+    </resultMap>
+</mapper>

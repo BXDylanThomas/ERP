@@ -110,8 +110,8 @@
             </tr>
             <tr>
                 <td colspan="4">
-                    <textarea name="experience" required readonly>
-                        ${employee.resume.experience}
+                    <textarea name="experien" required readonly>
+                        ${employee.resume.experien}
                     </textarea>
                 </td>
             </tr>

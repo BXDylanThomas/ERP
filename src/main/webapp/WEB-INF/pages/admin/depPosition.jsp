@@ -50,7 +50,7 @@
                     <a href="queryAllRecruitment">招聘管理</a>
                 </li>
                 <li class="menu">
-                    <a href="">培训管理</a>
+                    <a href="toTrain">培训管理</a>
                 </li>
                 <li class="menu">
                     <a href="">查看考勤</a>
@@ -74,7 +74,7 @@
             <tr >
                 <td></td>
                 <td><select id="sel">
-                    <option>选择部门</option>
+                    <option value="-1" selected>选择部门</option>
                     <c:forEach items="${sessionScope.allDepartment}" var="d">
                         <option value="${d.id}">${d.name}</option>
                     </c:forEach>
@@ -88,7 +88,7 @@
 
             <span>查询部门：</span>
             <select id="select">
-                <option>请选择</option>
+                <option value="-1">请选择</option>
 
                 <c:forEach items="${sessionScope.allDepartment}" var="d">
                     <c:if test="${depId==d.id}">

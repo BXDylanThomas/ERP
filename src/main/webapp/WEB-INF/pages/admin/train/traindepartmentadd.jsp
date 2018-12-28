@@ -9,10 +9,7 @@
     <base href="<%=basePath%>"/>
     <title></title>
     <link rel="stylesheet" href="resource/css/base.css">
-    <link rel="stylesheet" href="resource/css/page.css">
     <link rel="stylesheet" href="resource/css/table.css">
-    <script src="resource/js/jquery-3.3.1.js"></script>
-    <script src="resource/js/recruitment.js"></script>
 
 </head>
 <body>
@@ -42,10 +39,10 @@
                 <li class="menu">
                     <a href="queryAllEmployee">员工管理</a>
                 </li>
-                <li class="menu"  id="a">
+                <li class="menu">
                     <a href="queryAllRecruitment">招聘管理</a>
                 </li>
-                <li class="menu">
+                <li class="menu" id="a">
                     <a href="toTrain">培训管理</a>
                 </li>
                 <li class="menu">
@@ -61,57 +58,52 @@
         </div>
     </div>
 </div>
-
 <div id="next">
-    <div >
-        <form method="post" action="addRecruitment" id="f">
+    <div id="main">
+        <form action="addtraindepartment" method="post">
             <table border="1" rules="all">
                 <tr>
-                    <th colspan="3">招聘</th>
+                    <th colspan="4">部门培训</th>
                 </tr>
                 <tr>
-                    <th>部门：</th>
-                    <td colspan="2">
-                        <select id="department">
-                            <option value="-1" selected>请选择部门</option>
-                            <c:forEach items="${sessionScope.positions}" var="d">
-                                <option value="${d.department.id}">${d.department.name}</option>
+                    <th>请选择部门</th>
+                    <td>
+                        <select name="depId">
+                            <option>请选择部门</option>
+                            <c:forEach items="${sessionScope.department}" var="d">
+                                <option value="${d.id}">${d.name}</option>
                             </c:forEach>
-                            <otion>12</otion><otion>12</otion>
                         </select>
                     </td>
                 </tr>
                 <tr>
-                    <th>职位：</th>
-                    <td colspan="2">
-                        <select id="position" name="posId">
-                            <option>请选择职位</option>
-                        </select>
+                    <th>开始时间</th>
+                    <td><input type="date" name="startTime" required></td>
+                    <th>结束时间</th>
+                    <td><input type="date" name="endTime" required></td>
+                </tr>
+                <tr>
+                    <th>培训主题</th>
+                    <td colspan="3"><input type="text" name="title" required></td>
+                </tr>
+                <tr>
+                    <th>培训地点</th>
+                    <td colspan="3"><input type="text" name="address" required></td>
+                </tr>
+                <tr>
+                    <th colspan="4">培训内容</th>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <input type="text" name="content" style="width: 100%;height: 200px" required>
                     </td>
-                </tr>
-                <tr>
-                    <th >标题</th>
-                    <td colspan="2"><input type="text" name="title" required> </td>
-                </tr>
-                <tr>
-                    <th colspan="3">招聘要求</th>
-                </tr>
-                <tr>
-                    <td colspan="3">
-                      <textarea name="content" required> </textarea>
-                    </td>
-                </tr>
-                <tr></tr>
-                <tr></tr>
-                <tr>
-                    <th>招聘人数：</th>
-                    <td colspan="2"><input type="number" name="count" style="width: 50px" required>个</td>
                 </tr>
             </table>
-            <input type="submit" value="确认" id="sub">
+            <input type="submit" value="提交" id="sub">
         </form>
     </div>
 </div>
+
 
 </body>
 </html>

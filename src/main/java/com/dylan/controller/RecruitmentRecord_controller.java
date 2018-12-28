@@ -55,6 +55,7 @@ public class RecruitmentRecord_controller {
      */
     @RequestMapping("/queryrecruitmentRecord")
     public String queryRecruitmentRecord(int recId, String current, Model model){
+
         //总共有多少数据
         List<RecruitmentRecord> all = recruitmentRecordService.queryRecruitmentRecordBy_accId(recId);
         model.addAttribute("all",all.size());

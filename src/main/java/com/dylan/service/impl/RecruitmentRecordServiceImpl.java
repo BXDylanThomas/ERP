@@ -112,7 +112,6 @@ public class RecruitmentRecordServiceImpl implements RecruitmentRecordService {
         //薪资id
         System.out.println(resume.getId());
         Salary salary = salaryDao.querySalaryBy_resId(resume.getId());
-        System.out.println(salary);
 
         employee.setSalId(salary.getId());
         //入职时间

@@ -57,7 +57,7 @@
         <div>
             <span>查询部门：</span>
             <select id="department">
-                <option>请选择部门</option>
+                <option value="-1">请选择部门</option>
                 <c:forEach items="${sessionScope.allDepartment}" var="d">
                     <c:if test="${depId==d.id}">
                         <option value="${d.id}" selected>${d.name}</option>
@@ -70,7 +70,7 @@
             &emsp;
             &emsp;<span>选择职位：</span>
             <select id="position" name="posId">
-                <option>请选择职位</option>
+                <option value="-1" selected>请选择职位</option>
                 <c:forEach items="${sessionScope.allpositions}" var="p">
                     <option value="${p.id}">${p.name}</option>
                 </c:forEach>
