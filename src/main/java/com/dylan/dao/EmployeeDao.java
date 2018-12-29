@@ -1,6 +1,8 @@
 package com.dylan.dao;
 
 import com.dylan.model.Employee;
+import com.dylan.model.TrainDepartment;
+import com.dylan.model.TrainEmployee;
 
 import java.util.List;
 import java.util.Map;
@@ -33,4 +35,16 @@ public interface EmployeeDao {
 
     //查询某职位的所有员工  分页
     List<Employee> queryEmployeeBy_posId_everyPage(Map<String,Object> map);
+
+    //查看员工的部门培训
+    List<TrainDepartment> queryTrainDepartment(int accId);
+
+    //查看员工的部门培训  分页
+    List<TrainDepartment> queryTrainDepartment_everyPage(Map<String,Object> map);
+
+    //查看员工的个人培训
+    List<TrainEmployee> queryTrainEmployee(int accId);
+
+    //查看员工的个人培训 分页
+    List<TrainEmployee> queryTrainEmployee_everyPage(Map<String,Object> map);
 }

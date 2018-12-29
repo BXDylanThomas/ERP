@@ -32,12 +32,12 @@ public interface TrainEmployeeService {
     Set<Train> queryAllTrainEmployee();
 
     //查看所有的员工培训  分页
-    List<TrainEmployee> queryAllTrainEmployee_everyPage(int currentPage);
+    Map<String,Object> queryAllTrainEmployee_everyPage(int currentPage);
 
     //查看所有的员工培训 是否发布的
     Set<Train> queryAllTrainEmployeeBy_state_(int state);
 
     //查看所有的员工培训  是否发布的 分页
-    List<TrainEmployee> queryAllTrainEmployeeBy_state_everyPage_(int currentPage,int state);
+    Map<String,Object> queryAllTrainEmployeeBy_state_everyPage_(int currentPage,int state);
 
 }

@@ -80,6 +80,35 @@
         where e.E_RESID=r.R_ID and e.E_POSID=p.P_ID and p.P_DEPID=d.D_ID and s.S_ID=e.E_SALID and a.A_ID=e.E_ACCID and a.A_ID=#{accId}
     </select>
 
+    <!--查看员工的部门培训-->
+    <select id="queryTrainDepartment" resultMap="com.dylan.dao.TrainDepartmentDao.trinDepartmentMap">
+        select  d.D_NAME,T_TITLE,T_CONTENT,T_ADDRESS,T_STARTTIME,T_ENDTIME
+              from T_ACCOUNT a,T_EMPLOYEE e,T_POSITION p,T_DEPARTMENT d,T_TRAINDEPARTMENT td,T_TRAIN t
+              where a.A_ID=#{accId} and a.A_ID=e.E_ACCID and e.E_POSID=p.P_ID and p.P_DEPID=d.D_ID and d.D_ID=td.TD_DEPID and td.TD_TID=t.T_ID and td.TD_TDSTATE=1
+    </select>
+
+    <!--查看员工的部门培训 分页-->
+    <select id="queryTrainDepartment_everyPage" resultMap="com.dylan.dao.TrainDepartmentDao.trinDepartmentMap">
+         select  d.D_NAME,d.T_TITLE,d.T_CONTENT,d.T_ADDRESS,d.T_STARTTIME,d.T_ENDTIME
+          from(select rownum rn,d.*,t.* from T_ACCOUNT a,T_EMPLOYEE e,T_POSITION p,T_DEPARTMENT d,T_TRAINDEPARTMENT td,T_TRAIN t
+              where a.A_ID=#{accId} and a.A_ID=e.E_ACCID and e.E_POSID=p.P_ID and p.P_DEPID=d.D_ID and d.D_ID=td.TD_DEPID and td.TD_TID=t.T_ID and td.TD_TDSTATE=1 and ROWNUM &lt;=#{show})d
+              where d.rn &gt;=#{current}
+    </select>
+
+    <!--查看员工的个人培训-->
+    <select id="queryTrainEmployee" resultMap="com.dylan.dao.TrainEmployeeDao.trainEmployeeMap">
+           select  t.T_TITLE,t.T_CONTENT,t.T_ADDRESS,t.T_STARTTIME,t.T_ENDTIME
+              from T_ACCOUNT a,T_EMPLOYEE e,T_TRAINEMPLOYEE te,T_TRAIN t
+              where a.A_ID=#{accId} and a.A_ID=e.E_ACCID and e.E_ID=te.TE_EMPID and te.TE_TID=t.T_ID and te.TE_STATE=1
+    </select>
+
+    <select id="queryTrainEmployee_everyPage" resultMap="com.dylan.dao.TrainEmployeeDao.trainEmployeeMap">
+         select  t.T_TITLE,t.T_CONTENT,t.T_ADDRESS,t.T_STARTTIME,t.T_ENDTIME from(
+               select rownum rn,t.* from T_ACCOUNT a,T_EMPLOYEE e,T_TRAINEMPLOYEE te,T_TRAIN t
+                  where a.A_ID=#{accId} and a.A_ID=e.E_ACCID and e.E_ID=te.TE_EMPID and te.TE_TID=t.T_ID and te.TE_STATE=1 and ROWNUM &lt;=#{show})t
+            where t.rn &gt;=#{current}
+    </select>
+
     <resultMap id="employeeMap" type="Employee">
         <id property="id" column="E_ID"/>
         <result property="accId" column="E_ACCID"/>

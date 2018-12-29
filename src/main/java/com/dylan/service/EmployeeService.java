@@ -1,6 +1,8 @@
 package com.dylan.service;
 
 import com.dylan.model.Employee;
+import com.dylan.model.TrainDepartment;
+import com.dylan.model.TrainEmployee;
 
 import java.util.List;
 import java.util.Map;
@@ -30,4 +32,17 @@ public interface EmployeeService {
 
     //查询某职位的所有员工  分页
     List<Employee> queryEmployeeBy_posId_everyPage(int posId,int currentPage);
+
+    //查看部门培训
+    List<TrainDepartment> queryTrainDepartment(int accId);
+
+    //查看部门培训  分页
+    List<TrainDepartment> queryTrainDepartment_everyPage(int accId,int current);
+
+    //查看个人培训
+    List<TrainEmployee> queryTrainEmployee(int accId);
+
+    //查看个人培训
+    List<TrainEmployee> queryTrainEmployee_everyPage(int accId,int current);
+
 }

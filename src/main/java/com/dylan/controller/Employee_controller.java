@@ -1,9 +1,6 @@
 package com.dylan.controller;
 
-import com.dylan.model.Account;
-import com.dylan.model.Department;
-import com.dylan.model.Employee;
-import com.dylan.model.Position;
+import com.dylan.model.*;
 import com.dylan.service.DepartmentService;
 import com.dylan.service.EmployeeService;
 import com.dylan.service.PositionService;
@@ -218,6 +215,52 @@ public class Employee_controller {
         List<Employee> employees = employeeService.queryEmployeeBy_posId_everyPage(posId,page);
         model.addAttribute("employees",employees);
         return "employee/employee/employeepos";
+    }
+
+    /**
+     * 员工查看 部门培训
+     */
+    @RequestMapping("/empQueryTrainDepartment")
+    public String empQueryTrainDepartment(int accId,String current,Model model){
+
+        //总共有多少数据
+        List<TrainDepartment> all = employeeService.queryTrainDepartment(accId);
+        model.addAttribute("all",all.size());
+        int pages = PagesUtil.getPages(all.size());
+        //当前页数
+        int page = PagesUtil.getAllPage(current);
+        model.addAttribute("pages",pages);
+        //得到前一页和后一页
+        PagesUtil.getPre_next_page(page,pages,model);
+
+        List<TrainDepartment> trainDepartments = employeeService.queryTrainDepartment_everyPage(accId,page);
+
+        model.addAttribute("trainDepartment",trainDepartments);
+
+        return "employee/train/traindepartment";
+    }
+
+    /**
+     * 员工查看 部门培训
+     */
+    @RequestMapping("/empQueryTrainEmployee")
+    public String empQueryTrainEmployee(int accId,String current,Model model){
+
+        //总共有多少数据
+        List<TrainEmployee> all = employeeService.queryTrainEmployee(accId);
+        model.addAttribute("all",all.size());
+        int pages = PagesUtil.getPages(all.size());
+        //当前页数
+        int page = PagesUtil.getAllPage(current);
+        model.addAttribute("pages",pages);
+        //得到前一页和后一页
+        PagesUtil.getPre_next_page(page,pages,model);
+
+        List<TrainEmployee> trainEmployees = employeeService.queryTrainEmployee_everyPage(accId,page);
+
+        model.addAttribute("trainEmployee",trainEmployees);
+
+        return "employee/train/trainemployee";
     }
 
 }

@@ -1,11 +1,11 @@
 package com.dylan.controller;
 
-import com.dylan.dao.EmployeeDao;
-import com.dylan.dao.TrainDao;
 import com.dylan.model.Employee;
 import com.dylan.model.Train;
 import com.dylan.model.TrainEmployee;
+import com.dylan.service.EmployeeService;
 import com.dylan.service.TrainEmployeeService;
+import com.dylan.service.TrainService;
 import com.dylan.util.PagesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,10 +23,10 @@ public class TrainEmployee_controller {
     private TrainEmployeeService trainEmployeeService;
 
     @Autowired
-    private TrainDao trainDao;
+    private TrainService trainService;
 
     @Autowired
-    private EmployeeDao employeeDao;
+    private EmployeeService EmployeeService;
 
     /**
      * 去添加员工培训 页面
@@ -46,7 +46,7 @@ public class TrainEmployee_controller {
     @RequestMapping("/addAllTrainEmployee")
     public String addAllTrainEmployee(Train train, Model model, HttpSession session){
         session.setAttribute("tra",train);
-        List<Employee> employees = employeeDao.queryAllEmployee();
+        List<Employee> employees = EmployeeService.queryAllEmployee();
         model.addAttribute("employees",employees);
         return "admin/train/trainemployeechoice";
     }
@@ -61,10 +61,10 @@ public class TrainEmployee_controller {
     public String addAllTrainEmployeeChoice(HttpServletRequest request,HttpSession session){
         Train train= (Train) session.getAttribute("tra");
         String[] choices = request.getParameterValues("choice");
+        session.removeAttribute("tra");
         trainEmployeeService.addTrainEmployee(choices,train);
         return "forward:queryAllTrainEmployee";
     }
-
 
     /**
      * 员工培训发布
@@ -98,11 +98,11 @@ public class TrainEmployee_controller {
     }
     @RequestMapping("/toupdateTrainEmployee")
     public String toupdateTrainEmployee(Train train){
-        boolean res = trainDao.updateTrain(train);
+        boolean res = trainService.updateTrain(train);
         return  "forward:queryAllTrainEmployee";
     }
     /**
-     * 查询所有的员工培训
+     * 查询所有的员工培训 管理员
      * @param current
      * @param model
      * @return
@@ -121,23 +121,17 @@ public class TrainEmployee_controller {
         //得到前一页和后一页
         PagesUtil.getPre_next_page(page,pages,model);
 
-        List<TrainEmployee> trainEmployees = trainEmployeeService.queryAllTrainEmployee_everyPage(page);
-        Set<Train> trainSet=new TreeSet<>(new Comparator<Train>() {
-            @Override
-            public int compare(Train o1, Train o2) {
-                return o1.getId()-o2.getId();
-            }
-        });
-        for(TrainEmployee te:trainEmployees){
-            trainSet.add(te.getTrain());
-        }
-        model.addAttribute("trains",trainSet);
+        Map<String,Object> map = trainEmployeeService.queryAllTrainEmployee_everyPage(page);
+        List<Train> train= (List<Train>) map.get("train");
+        List<TrainEmployee> trainEmployees= (List<TrainEmployee>) map.get("trainEmployees");
+
+        model.addAttribute("trains",train);
         model.addAttribute("trainEmployee",trainEmployees);
         return "admin/train/trainemployee";
     }
 
     /**
-     * 查询所有的员工培训
+     * 查询所有的员工培训   带已发布 未发布  管理员
      * @param current
      * @param model
      * @return
@@ -157,18 +151,22 @@ public class TrainEmployee_controller {
         //得到前一页和后一页
         PagesUtil.getPre_next_page(page,pages,model);
 
-        List<TrainEmployee> trainEmployees = trainEmployeeService.queryAllTrainEmployeeBy_state_everyPage_(page,state);
-        Set<Train> trainSet=new TreeSet<>(new Comparator<Train>() {
-            @Override
-            public int compare(Train o1, Train o2) {
-                return o1.getId()-o2.getId();
-            }
-        });
-        for(TrainEmployee te:trainEmployees){
-            trainSet.add(te.getTrain());
-        }
-        model.addAttribute("trains",trainSet);
+        Map<String,Object> map= trainEmployeeService.queryAllTrainEmployeeBy_state_everyPage_(page,state);
+        List<Train> train= (List<Train>) map.get("train");
+        List<TrainEmployee> trainEmployees= (List<TrainEmployee>) map.get("trainEmployees");
+        model.addAttribute("trains",train);
         model.addAttribute("trainEmployee",trainEmployees);
         return "admin/train/trainemployeestate";
     }
+
+    /**
+     * 去员工培训记录 查询页面
+     * @return
+     */
+    @RequestMapping("/toEmpQueryTrain")
+    public String toEmpQueryTrain(){
+        return "employee/train/train";
+    }
+
+
 }

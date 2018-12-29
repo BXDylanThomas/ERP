@@ -10,13 +10,11 @@
     <title></title>
     <link rel="stylesheet" href="resource/css/base.css">
     <link rel="stylesheet" href="resource/css/table.css">
+    <link rel="stylesheet" href="resource/css/traininput.css">
+
     <script src="resource/js/jquery-3.3.1.js"></script>
     <script src="resource/js/traindepartment.js"></script>
-    <style>
-        input{
-            border: none;
-        }
-    </style>
+
 </head>
 <body>
 <div>

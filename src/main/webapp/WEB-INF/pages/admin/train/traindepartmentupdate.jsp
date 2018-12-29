@@ -10,6 +10,7 @@
     <title></title>
     <link rel="stylesheet" href="resource/css/base.css">
     <link rel="stylesheet" href="resource/css/table.css">
+
     <script src="resource/js/jquery-3.3.1.js"></script>
     <script src="resource/js/traindepartment.js"></script>
     <style>

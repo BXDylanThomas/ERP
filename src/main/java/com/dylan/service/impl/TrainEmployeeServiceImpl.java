@@ -161,13 +161,12 @@ public class TrainEmployeeServiceImpl implements TrainEmployeeService {
      * @return
      */
     @Override
-    public List<TrainEmployee> queryAllTrainEmployee_everyPage(int currentPage) {
+    public Map<String,Object> queryAllTrainEmployee_everyPage(int currentPage) {
         if(currentPage<=0){
             return null;
         }
-        Map<String,Object> map=new HashMap<>();
-        map= PagesUtil.getPage(map,currentPage);
-        return trainEmployeeDao.queryAllTrainEmployee_everyPage(map);
+        List<TrainEmployee> trainEmployees = trainEmployeeDao.queryAllTrainEmployee();
+        return getNewOne(trainEmployees,currentPage);
     }
 
     /**
@@ -197,13 +196,43 @@ public class TrainEmployeeServiceImpl implements TrainEmployeeService {
      * @return
      */
     @Override
-    public List<TrainEmployee> queryAllTrainEmployeeBy_state_everyPage_(int currentPage, int state) {
+    public Map<String,Object> queryAllTrainEmployeeBy_state_everyPage_(int currentPage, int state) {
         if(currentPage<=0){
             return null;
         }
+        List<TrainEmployee> trainEmployees = trainEmployeeDao.queryAllTrainEmployeeBy_state_(state);
+        return getNewOne(trainEmployees,currentPage);
+    }
+
+    /**
+     * 员工培训的分页  恶心！
+     * 先要得到所有的培训的id
+     * @param trainEmployees
+     * @param currentPage
+     * @return
+     */
+    public Map<String,Object> getNewOne(List<TrainEmployee> trainEmployees,int currentPage){
+        Set<Train> set=new TreeSet<>(new Comparator<Train>() {
+            @Override
+            public int compare(Train o1, Train o2) {
+                return o1.getId()-o2.getId();
+            }
+        });
+        for(TrainEmployee te:trainEmployees){
+            set.add(te.getTrain());
+        }
+        List<Train> list=new ArrayList<>(set);
+        List<TrainEmployee> newList=new ArrayList<>();
+        for(int i=(currentPage-1)*PagesUtil.SHOW;i<list.size() && i<currentPage*PagesUtil.SHOW;i++){
+            for(TrainEmployee te:trainEmployees){
+                if(te.getTrain().getId()==list.get(i).getId()){
+                    newList.add(te);
+                }
+            }
+        }
         Map<String,Object> map=new HashMap<>();
-        map.put("state",state);
-        map= PagesUtil.getPage(map,currentPage);
-        return trainEmployeeDao.queryAllTrainEmployeeBy_state_everyPage_(map);
+        map.put("train",list);
+        map.put("trainEmployees",newList);
+        return map;
     }
 }

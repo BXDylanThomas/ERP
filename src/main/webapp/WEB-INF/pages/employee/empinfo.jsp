@@ -37,7 +37,7 @@
                         <a href="">查看考勤</a>
                     </li>
                     <li class="menu">
-                        <a href="">查看培训</a>
+                        <a href="toEmpQueryTrain">查看培训</a>
                     </li>
                     <li class="menu">
                         <a href="">查看薪资</a>

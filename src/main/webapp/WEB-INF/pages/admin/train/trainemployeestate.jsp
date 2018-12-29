@@ -10,13 +10,11 @@
     <title></title>
     <link rel="stylesheet" href="resource/css/base.css">
     <link rel="stylesheet" href="resource/css/table.css">
+    <link rel="stylesheet" href="resource/css/traininput.css">
+
     <script src="resource/js/jquery-3.3.1.js"></script>
     <script src="resource/js/trainemployee.js"></script>
-    <style>
-        input{
-            border: none;
-        }
-    </style>
+
 </head>
 <body>
 <div>
@@ -94,15 +92,19 @@
                         <td colspan="2"></td>
                         <th>状态</th>
                         <td>
-                            <c:forEach items="${trainEmployee}" begin="1" end="1" var="te">
-                                <c:if test="${te.tId==t.id}">
-                                    <c:if test="${te.state==0}">
-                                        <a href="publicshTrainEmployee?id=${t.id}" onclick= "if(confirm( '是否确定！ ')==false)return   false; ">去发布</a>
-                                        &emsp;<a href="updateTrainEmployee?id=${t.id}">修改</a>
-                                        &emsp;<a href="deleteTrainEmployee?id=${t.id}" onclick= "if(confirm( '是否确定！ ')==false)return   false; ">删除</a>
-                                    </c:if>
-                                    <c:if test="${te.state==1}">
-                                        已发布
+                            <c:set var="flag" value="true"></c:set>
+                            <c:forEach items="${trainEmployee}" var="te">
+                                <c:if test="${flag}">
+                                    <c:if test="${te.tId==t.id}">
+                                        <c:if test="${te.state==0}">
+                                            <a href="publicshTrainEmployee?id=${t.id}" onclick= "if(confirm( '是否确定！ ')==false)return   false; ">去发布</a>
+                                            &emsp;<a href="updateTrainEmployee?id=${t.id}">修改</a>
+                                            &emsp;<a href="deleteTrainEmployee?id=${t.id}" onclick= "if(confirm( '是否确定！ ')==false)return   false; ">删除</a>
+                                        </c:if>
+                                        <c:if test="${te.state==1}">
+                                            已发布
+                                        </c:if>
+                                        <c:set var="flag" value="false"></c:set>
                                     </c:if>
                                 </c:if>
                             </c:forEach>
@@ -141,7 +143,7 @@
                     <tr>
                         <td colspan="4">
                     <textarea type="text" name="content" style="width: 100%;height: 100px" readonly>
-                            ${t.title}
+                            ${t.content}
                     </textarea>
                         </td>
                     </tr>

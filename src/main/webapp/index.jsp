@@ -8,7 +8,7 @@
     <base href="<%=basePath%>"/>
     <title></title>
     <script>
-        window.location.href="returnAdmin"
+        window.location.href="returnLogin"
     </script>
 </head>
 

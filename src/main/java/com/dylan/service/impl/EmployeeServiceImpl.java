@@ -2,6 +2,8 @@ package com.dylan.service.impl;
 
 import com.dylan.dao.EmployeeDao;
 import com.dylan.model.Employee;
+import com.dylan.model.TrainDepartment;
+import com.dylan.model.TrainEmployee;
 import com.dylan.service.EmployeeService;
 import com.dylan.util.PagesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,5 +104,66 @@ public class EmployeeServiceImpl implements EmployeeService {
         map.put("posId",posId);
         map = PagesUtil.getPage(map, currentPage);
         return employeeDao.queryEmployeeBy_posId_everyPage(map);
+    }
+
+    /**
+     * 查看部门培训
+     * @param accId
+     * @return
+     */
+    @Override
+    public List<TrainDepartment> queryTrainDepartment(int accId) {
+        if(accId<=0){
+            return null;
+        }
+        return employeeDao.queryTrainDepartment(accId);
+    }
+
+    /**
+     * 查看部门培训  分页
+     * @param accId
+     * @param current
+     * @return
+     */
+    @Override
+    public List<TrainDepartment> queryTrainDepartment_everyPage(int accId, int current) {
+        if(accId<=0 || current<=0){
+            return null;
+        }
+        Map<String,Object> map=new HashMap<>();
+        map.put("accId",accId);
+        map = PagesUtil.getPage(map, current);
+        return employeeDao.queryTrainDepartment_everyPage(map);
+    }
+
+    /**
+     * 查看个人培训
+     * @param accId
+     * @return
+     */
+    @Override
+    public List<TrainEmployee> queryTrainEmployee(int accId) {
+        if(accId<=0){
+            return null;
+        }
+        return employeeDao.queryTrainEmployee(accId);
+    }
+
+    /**
+     * 查看个人培训  分页
+     * @param accId
+     * @param current
+     * @return
+     */
+    @Override
+    public List<TrainEmployee> queryTrainEmployee_everyPage(int accId, int current) {
+        if(accId<=0 || current<=0){
+            return null;
+        }
+        Map<String,Object> map=new HashMap<>();
+        map.put("accId",accId);
+        map = PagesUtil.getPage(map, current);
+        return employeeDao.queryTrainEmployee_everyPage(map);
+
     }
 }

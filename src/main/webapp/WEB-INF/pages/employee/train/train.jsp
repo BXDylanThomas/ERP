@@ -49,7 +49,8 @@
 </div>
     <div id="next">
         <div id="main">
-            <br/> <br/>
+            <br/> <br/><a href="empQueryTrainDepartment?accId=${sessionScope.user.id}&current=1">查看部门培训</a>
+            <br/> <br/><a href="empQueryTrainEmployee?accId=${sessionScope.user.id}&current=1">查看个人培训</a>
         </div>
 
     </div>
