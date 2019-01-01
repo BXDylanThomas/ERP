@@ -124,12 +124,17 @@
                         <td class="rul">${e.resume.education}</td>
                         <td class="=lg">${e.resume.major}</td>
                         <td class="=lg">${e.resume.exp}</td>
+
                         <td class="rul">
-                            <a href="javascript:void(0)"class="update">修改信息</a>
+                            <a href="#?id=${e.id})">管理</a>
                         </td>
-                        <td class="rul">
+
+                        <%--<td class="rul">
+                            <a href="#?id=${e.id})">查看上月考勤</a>
+                            <a href="#?id=${e.id})">转正</a>
+                            <a href="#?id=${e.id})">换岗</a>
                             <a href="#?id=${e.id})">办理离职</a>
-                        </td>
+                        </td>--%>
                     </tr>
                 </c:forEach>
             </c:if>

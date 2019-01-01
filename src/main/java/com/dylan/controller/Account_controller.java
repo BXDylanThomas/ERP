@@ -31,7 +31,7 @@ public class Account_controller {
 
     @RequestMapping("/returnEmployee")
     public String returnEmployee(){
-        return "employee/main";
+        return  "forward:checkIn";
     }
 
     @RequestMapping("/returnVisitor")

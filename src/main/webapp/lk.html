@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="resource/js/jquery-3.3.1.js"></script>
+
+    <style>
+        #raid{
+            background:black;
+            color:white;
+            width:120px;
+            height:100px;
+            padding-top:40px;
+            position:relative;
+            border-radius:50%;
+            border:5px solid #cc3300;
+            text-align:center;
+        }
+    </style>
+    <script>
+        $(function(){
+            var raid = $("#raid");
+            var R = 290;
+            var X = 899;
+            var Y = 100;
+
+            var rightNum = 50;
+            var leftNUm = 130;
+            var num = parseInt((parseInt(leftNUm) + parseInt(rightNum))/2) ;
+            var isLeft = 1;
+            move(num);
+
+            setInterval(function(){
+                num += isLeft;
+                if(num < rightNum){
+                    isLeft = -isLeft;
+                }else if(num > leftNUm){
+                    isLeft = -isLeft;
+                }
+                move(num);
+            },40);
+
+            function move(num){
+                var a = Math.sin(num*Math.PI/180)*R;
+                var b = Math.cos(num*Math.PI/180)*R;
+                raid.css("left",X+b+"px");
+                raid.css("top",Y+a+"px");
+                var time = new Date();
+                raid.html(time.getFullYear()+"年"+(time.getMonth()+1)+"月"+(time.getDate())+"日");
+                raid.append("<br>");
+                raid.append(time.toTimeString().split(" ")[0]);
+            }
+        });
+
+
+    </script>
+</head>
+<body>
+
+<div id="raid">--时间--</div>
+
+</body>
+</html>

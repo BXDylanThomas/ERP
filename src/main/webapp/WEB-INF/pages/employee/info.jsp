@@ -36,7 +36,7 @@
                         <a href="queryAllEmployeeemp">员工查询</a>
                     </li>
                     <li class="menu">
-                        <a href="">查看考勤</a>
+                        <a href="queryCheckRecord">查看考勤</a>
                     </li>
                     <li class="menu">
                         <a href="toEmpQueryTrain">查看培训</a>

@@ -9,6 +9,19 @@
     <base href="<%=basePath%>"/>
     <title></title>
     <link rel="stylesheet" href="resource/css/base.css">
+    <script src="resource/js/jquery-3.3.1.js"></script>
+    <script>
+        $(function () {
+            $("button").click(function () {
+                var result=$("#result").val()
+                if(result==1){
+                    window.location.href="goWork";
+                }else{
+                    window.location.href="goHome";
+                }
+            })
+        })
+    </script>
 </head>
 <body>
     <div>
@@ -35,7 +48,7 @@
                     <a href="queryAllEmployeeemp">员工查询</a>
                 </li>
                 <li class="menu">
-                    <a href="">查看考勤</a>
+                    <a href="queryCheckRecord">查看考勤</a>
                 </li>
                 <li class="menu">
                     <a href="toEmpQueryTrain">查看培训</a>
@@ -50,6 +63,17 @@
     <div id="next">
         <div id="main">
             <br/> <br/>
+            <input type="hidden" value="${result}" id="result">
+
+            <c:if test="${result==1}">
+                <button value="上班打卡">上班打卡</button>
+            </c:if>
+            <c:if test="${result==2}">
+                <button value="下班打卡">下班打卡</button>
+            </c:if>
+            <c:if test="${result==3}">
+               下班成功
+            </c:if>
         </div>
 
     </div>

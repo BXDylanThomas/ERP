@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dylan.dao.CheckRecordDao">
+
+    <!-- 上班添加 考勤表  或者 没有上班时间时，进行下班打卡-->
+    <insert id="addCheckRecord">
+        insert into T_CHECKRECORD(C_ID, C_EMPID, C_WORKTIME, C_WORKSTATE,C_OVERTIME) values(CHECKRECORD_SEQ.nextval,#{empId},#{workTime},#{workState},#{overTime})
+    </insert>
+
+    <!--有上班时间  进行下班打卡-->
+    <update id="updateCheckRecord">
+        update T_CHECKRECORD set C_OFFTIME=#{offTime},C_OFFSTATE=#{offState} where C_ID=#{id}
+    </update>
+
+    <!--查询员工当天是否有上班打卡-->
+    <select id="queryCheckRecord" resultMap="checkRecordMap">
+        select C_ID,C_EMPID,C_WORKTIME,C_OFFTIME,C_OVERTIME,C_OFFSTATE,C_WORKSTATE
+        from T_CHECKRECORD where C_EMPID=#{empId} and C_WORKTIME between #{start} and #{end}
+    </select>
+
+    <!--得到最近一次的登录记录表 根据员工id-->
+    <select id="queryCheckRecordLast" resultMap="checkRecordMap">
+        select c.C_ID,c.C_EMPID,c.C_WORKTIME,c.C_OFFTIME,c.C_STATE,c.C_OVERTIME
+          from (select rownum rn, c.* from T_CHECKRECORD c where C_EMPID=#{empId} order by c.C_ID desc )c where c.rn=1
+    </select>
+
+    <!--计算某员工 某月  没有旷工的 总天数-->
+    <select id="countWorkTime" resultType="java.lang.Integer">
+      SELECT count(c.C_ID) from(select * from T_CHECKRECORD c where  C.C_EMPID=#{empId}
+				and  c.C_WORKTIME between #{start} and #{end} and c.C_WORKSTATE != 4 and c.C_OFFSTATE != 4)c
+    </select>
+
+    <!--通过员工id 查询打卡记录-->
+    <select id="queryCheckRecordBY_empId_everyMonth" resultMap="checkRecordMap">
+        select c.C_WORKTIME,c.C_OFFTIME,c.C_OVERTIME,c.C_WORKSTATE,c.C_OFFSTATE from T_CHECKRECORD c,T_EMPLOYEE e where e.E_ID=#{empId} and e.E_ID= c.C_EMPID and c.C_WORKTIME between #{start} and #{end}
+    </select>
+
+    <resultMap id="checkRecordMap" type="CheckRecord">
+        <id property="id" column="C_ID"/>
+        <result property="empId" column="C_EMPID"/>
+        <result property="workTime" column="C_WORKTIME"/>
+        <result property="offTime" column="C_OFFTIME"/>
+        <result property="workState" column="C_WORKSTATE"/>
+        <result property="offState" column="C_OFFSTATE"/>
+        <result property="overTime" column="C_OVERTIME"/>
+    </resultMap>
+</mapper>
