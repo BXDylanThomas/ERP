@@ -1,6 +1,7 @@
 package com.dylan.service;
 
 import com.dylan.model.Employee;
+import com.dylan.model.EmployeeLeave;
 import com.dylan.model.TrainDepartment;
 import com.dylan.model.TrainEmployee;
 
@@ -9,11 +10,21 @@ import java.util.Map;
 
 public interface EmployeeService {
 
-    //办理  转正  或离职
-    boolean updateEmployee(Employee employee);
+    //办理  转正
+    boolean updateEmployee(int empId);
+
+    //办理  离职
+    boolean updateEmployeeLeave(EmployeeLeave employeeLeave);
+
+    //换岗
+    boolean updateEmployeePosition(int empId,int posId);
 
     //通过账号账号id  查询某员工的具体信息
     Employee queryEmployeeBy_accId(int accId);
+
+    //通过账号账号id  查询某员工的具体信息
+    Employee queryEmployeeBy_empId(int empId);
+
 
     //查询所有的员工
     List<Employee> queryAllEmployee();

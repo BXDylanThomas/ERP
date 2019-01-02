@@ -3,18 +3,15 @@ package com.dylan.model;
 import java.io.Serializable;
 
 /**
- * 惩罚记录表
+ * 员工离职
  */
-public class PrizeRecord implements Serializable {
-
+public class EmployeeLeave implements Serializable {
     private Integer id;
-    private Integer empId;  //员工id
-    private String reason; //奖惩原因
-    private Double money;  //奖惩金额   小于0 就是罚   大于0  是奖
-    private String time;  // 奖惩时间
+    private Integer empId;
+    private String reason;
+    private String time;
 
-
-    public PrizeRecord() {
+    public EmployeeLeave() {
     }
 
     public Integer getId() {
@@ -41,14 +38,6 @@ public class PrizeRecord implements Serializable {
         this.reason = reason;
     }
 
-    public Double getMoney() {
-        return money;
-    }
-
-    public void setMoney(Double money) {
-        this.money = money;
-    }
-
     public String getTime() {
         return time;
     }
@@ -59,11 +48,10 @@ public class PrizeRecord implements Serializable {
 
     @Override
     public String toString() {
-        return "PrizeRecordDao{" +
+        return "EmployeeLeave{" +
                 "id=" + id +
                 ", empId=" + empId +
                 ", reason='" + reason + '\'' +
-                ", money=" + money +
                 ", time='" + time + '\'' +
                 '}';
     }

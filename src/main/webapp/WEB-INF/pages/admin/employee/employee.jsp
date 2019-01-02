@@ -48,13 +48,7 @@
                     <a href="toTrain">培训管理</a>
                 </li>
                 <li class="menu">
-                    <a href="">查看考勤</a>
-                </li>
-                <li class="menu">
                     <a href="">薪资结算</a>
-                </li>
-                <li class="menu">
-                    <a href="">查看奖惩记录</a>
                 </li>
             </ul>
         </div>
@@ -126,15 +120,8 @@
                         <td class="=lg">${e.resume.exp}</td>
 
                         <td class="rul">
-                            <a href="#?id=${e.id})">管理</a>
+                            <a href="admintoempmanager?empId=${e.id}">管理</a>
                         </td>
-
-                        <%--<td class="rul">
-                            <a href="#?id=${e.id})">查看上月考勤</a>
-                            <a href="#?id=${e.id})">转正</a>
-                            <a href="#?id=${e.id})">换岗</a>
-                            <a href="#?id=${e.id})">办理离职</a>
-                        </td>--%>
                     </tr>
                 </c:forEach>
             </c:if>

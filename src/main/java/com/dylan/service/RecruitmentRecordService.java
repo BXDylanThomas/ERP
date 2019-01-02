@@ -16,6 +16,7 @@ public interface RecruitmentRecordService {
     boolean updateRecruitmentRecord_time(int id, Salary salary);
 
     boolean sureChange(Account account,int posId);
+
     //是否已经阅
     boolean updateRecruitmentRecord_state(int id);
 

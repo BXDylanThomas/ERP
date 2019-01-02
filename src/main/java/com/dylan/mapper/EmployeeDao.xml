@@ -6,7 +6,11 @@
         insert into T_EMPLOYEE values (EMPLOYEE_SEQ.nextval,#{accId},#{resId},#{posId},#{entryTime},#{salId},#{performance},#{empState})
     </insert>
     <update id="updateEmployee">
-        update T_EMPLOYEE set E_EMPSTATE=#{empState} where
+        update T_EMPLOYEE set E_EMPSTATE=#{state} where E_ID=#{empId}
+    </update>
+
+    <update id="updateEmployeePosition">
+         update T_EMPLOYEE set E_POSID=#{posId} where E_ID=#{empId}
     </update>
     <!--//查询所有的员工-->
     <select id="queryAllEmployee" resultMap="employeeMap">
@@ -15,7 +19,7 @@
         p.P_ID,p.P_NAME,p.P_CREATETIME,p.P_DEPID,d.D_ID,d.D_NAME,d.D_CREATETIM,
         s.S_ID,s.S_RESID,s.S_SALARY
         from T_EMPLOYEE e,T_RESUME r,T_POSITION p,T_DEPARTMENT d,T_SALARY s
-        where e.E_RESID=r.R_ID and e.E_POSID=p.P_ID and p.P_DEPID=d.D_ID and s.S_ID=e.E_SALID
+        where e.E_RESID=r.R_ID and e.E_POSID=p.P_ID and p.P_DEPID=d.D_ID and s.S_ID=e.E_SALID and e.E_EMPSTATE!=1
     </select>
 
     <!-- //查询所有的员工  分页-->
@@ -25,7 +29,7 @@
         e.P_ID,e.P_NAME,e.P_CREATETIME,e.P_DEPID,e.D_ID,e.D_NAME,e.D_CREATETIM,
         e.S_ID,e.S_RESID,e.S_SALARY
           from (select rownum rn,e.*,r.*,p.*,d.*,s.* from T_EMPLOYEE e,T_RESUME r,T_POSITION p,T_DEPARTMENT d,T_SALARY s
-              where e.E_RESID=r.R_ID and e.E_POSID=p.P_ID and p.P_DEPID=d.D_ID and s.S_ID=e.E_SALID and ROWNUM &lt;=#{show})e
+              where e.E_RESID=r.R_ID and e.E_POSID=p.P_ID and p.P_DEPID=d.D_ID and s.S_ID=e.E_SALID and e.E_EMPSTATE!=1 and ROWNUM &lt;=#{show})e
         where  e.rn &gt;=#{current}
     </select>
 
@@ -36,7 +40,7 @@
         p.P_ID,p.P_NAME,p.P_CREATETIME,p.P_DEPID,d.D_ID,d.D_NAME,d.D_CREATETIM,
         s.S_ID,s.S_RESID,s.S_SALARY
         from T_EMPLOYEE e,T_RESUME r,T_POSITION p,T_DEPARTMENT d,T_SALARY s
-        where e.E_RESID=r.R_ID and e.E_POSID=p.P_ID and p.P_DEPID=d.D_ID and s.S_ID=e.E_SALID and d.D_ID=#{depId}
+        where e.E_RESID=r.R_ID and e.E_POSID=p.P_ID and p.P_DEPID=d.D_ID and s.S_ID=e.E_SALID and d.D_ID=#{depId} and e.E_EMPSTATE!=1
     </select>
 
     <!--查询某部门的所有员工  分页-->
@@ -46,7 +50,7 @@
         e.P_ID,e.P_NAME,e.P_CREATETIME,e.P_DEPID,e.D_ID,e.D_NAME,e.D_CREATETIM,
         e.S_ID,e.S_RESID,e.S_SALARY
           from (select rownum rn,e.*,r.*,p.*,d.*,s.* from T_EMPLOYEE e,T_RESUME r,T_POSITION p,T_DEPARTMENT d,T_SALARY s
-              where e.E_RESID=r.R_ID and e.E_POSID=p.P_ID and p.P_DEPID=d.D_ID and s.S_ID=e.E_SALID and d.D_ID=#{depId} and ROWNUM &lt;=#{show})e
+              where e.E_RESID=r.R_ID and e.E_POSID=p.P_ID and p.P_DEPID=d.D_ID and s.S_ID=e.E_SALID and d.D_ID=#{depId} and e.E_EMPSTATE!=1 and ROWNUM &lt;=#{show})e
         where  e.rn &gt;=#{current}
     </select>
 
@@ -57,7 +61,7 @@
         p.P_ID,p.P_NAME,p.P_CREATETIME,p.P_DEPID,d.D_ID,d.D_NAME,d.D_CREATETIM,
         s.S_ID,s.S_RESID,s.S_SALARY
         from T_EMPLOYEE e,T_RESUME r,T_POSITION p,T_DEPARTMENT d,T_SALARY s
-        where e.E_RESID=r.R_ID and e.E_POSID=p.P_ID and p.P_DEPID=d.D_ID and s.S_ID=e.E_SALID and p.P_ID=#{posId}
+        where e.E_RESID=r.R_ID and e.E_POSID=p.P_ID and p.P_DEPID=d.D_ID and s.S_ID=e.E_SALID and p.P_ID=#{posId} and e.E_EMPSTATE!=1
     </select>
     <!--查询某职位的所有员工 分页-->
     <select id="queryEmployeeBy_posId_everyPage" resultMap="employeeMap">
@@ -66,7 +70,7 @@
         e.P_ID,e.P_NAME,e.P_CREATETIME,e.P_DEPID,e.D_ID,e.D_NAME,e.D_CREATETIM,
         e.S_ID,e.S_RESID,e.S_SALARY
           from (select rownum rn,e.*,r.*,p.*,d.*,s.* from T_EMPLOYEE e,T_RESUME r,T_POSITION p,T_DEPARTMENT d,T_SALARY s
-              where e.E_RESID=r.R_ID and e.E_POSID=p.P_ID and p.P_DEPID=d.D_ID and s.S_ID=e.E_SALID and p.P_ID=#{posId} and ROWNUM &lt;=#{show})e
+              where e.E_RESID=r.R_ID and e.E_POSID=p.P_ID and p.P_DEPID=d.D_ID and s.S_ID=e.E_SALID and p.P_ID=#{posId} and e.E_EMPSTATE!=1 and ROWNUM &lt;=#{show})e
         where  e.rn &gt;=#{current}
     </select>
 
@@ -78,6 +82,15 @@
         s.S_ID,s.S_RESID,s.S_SALARY,s.S_SALARY
         from T_EMPLOYEE e,T_RESUME r,T_POSITION p,T_DEPARTMENT d,T_SALARY s,T_ACCOUNT a
         where e.E_RESID=r.R_ID and e.E_POSID=p.P_ID and p.P_DEPID=d.D_ID and s.S_ID=e.E_SALID and a.A_ID=e.E_ACCID and a.A_ID=#{accId}
+    </select>
+
+    <select id="queryEmployeeBy_empId" resultMap="employeeMap">
+      select e.E_ID, e.E_ACCID,e.E_RESID,e.E_POSID,e.E_ENTRYTIME,e.E_SALID,e.E_PERFORMANCE,e.E_EMPSTATE,
+            r.R_ID,r.R_NAME,r.R_BIRTH,r.R_SEX,r.R_PHONE,r.R_ADDRESS,r.R_EMAIL,r.R_EDUCATION,r.R_MAJOR,r.R_EXPERIENCE,r.R_ACCID,
+            p.P_ID,p.P_NAME,p.P_CREATETIME,p.P_DEPID,d.D_ID,d.D_NAME,d.D_CREATETIM,
+            s.S_ID,s.S_RESID,s.S_SALARY,s.S_SALARY
+            from T_EMPLOYEE e,T_RESUME r,T_POSITION p,T_DEPARTMENT d,T_SALARY s
+            where e.E_RESID=r.R_ID and e.E_POSID=p.P_ID and p.P_DEPID=d.D_ID and s.S_ID=e.E_SALID and e.E_ID=#{empId}
     </select>
 
     <!--查看员工的部门培训-->
@@ -108,6 +121,7 @@
                   where a.A_ID=#{accId} and a.A_ID=e.E_ACCID and e.E_ID=te.TE_EMPID and te.TE_TID=t.T_ID and te.TE_STATE=1 and ROWNUM &lt;=#{show})t
             where t.rn &gt;=#{current}
     </select>
+
 
     <resultMap id="employeeMap" type="Employee">
         <id property="id" column="E_ID"/>

@@ -2,4 +2,37 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.dylan.dao.PrizeRecordDao">
 
+    <!--添加一条奖惩-->
+    <insert id="addPrizeRecord">
+        insert into T_PRIZERECORD(PR_ID, PR_EMPID, PR_REASON, PR_MONEY, PR_TIME) values (PRIZERECORD_SEQ.nextval,#{empId},#{reason},#{money},#{time})
+    </insert>
+    <update id="updatePrizeRecord">
+        update  T_PRIZERECORD set PR_REASON=#{reason},PR_MONEY=#{money},PR_TIME=#{time} where PR_ID=#{id}
+    </update>
+
+    <select id="queryPrizeRecordBy_empId" resultMap="prizeRecord">
+        select pz.PR_ID,pz.PR_EMPID,pz.PR_REASON,pz.PR_MONEY,pz.PR_TIME from T_PRIZERECORD pz
+        where PR_EMPID=#{empId} and pz.PR_TIME between #{start} and #{end}
+    </select>
+
+    <!--通过员工id 查看的所有奖惩记录表-->
+    <select id="queryAllPrizeRecordBy_empId" resultMap="prizeRecord">
+         select pz.PR_ID,pz.PR_EMPID,pz.PR_REASON,pz.PR_MONEY,pz.PR_TIME from T_PRIZERECORD pz
+        where PR_EMPID=#{empId}
+    </select>
+
+    <!--通过员工id 查看的所有奖惩记录表  分页-->
+    <select id="queryAllPrizeRecordBy_empId_everyPage" resultMap="prizeRecord">
+         select pz.PR_ID,pz.PR_EMPID,pz.PR_REASON,pz.PR_MONEY,pz.PR_TIME
+         from(select rownum rn,pz.* from T_PRIZERECORD pz where PR_EMPID=#{empId} and ROWNUM &lt;=#{show})pz
+          where pz.rn &gt;=#{current}
+    </select>
+
+    <resultMap id="prizeRecord" type="PrizeRecord">
+        <id property="id" column="PR_ID"/>
+        <result property="empId" column="PR_EMPID"/>
+        <result property="reason" column="PR_REASON"/>
+        <result property="money" column="PR_MONEY"/>
+        <result property="time" column="PR_TIME"/>
+    </resultMap>
 </mapper>

@@ -73,7 +73,8 @@
     <div id="next">
         <div id="raid"></div>
         <br/>
-        <span>本月考勤</span>&emsp; <a href="queryCheckRecordPreMonth" id="preMonth">查看上月考勤</a><br/>
+        <span>本月考勤</span>&emsp; <a href="queryCheckRecordPreMonth" id="preMonth">查看上月考勤</a>
+        &emsp;  <a href="queryPrizeRecordEmpId"> 查看历史奖惩</a>
 
         <table border="1" rules="all">
             <tr>

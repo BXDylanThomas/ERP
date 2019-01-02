@@ -263,4 +263,46 @@ public class Employee_controller {
         return "employee/train/trainemployee";
     }
 
+    /**
+     * 管理员去员工管理界面
+     * @param empId
+     * @param model
+     * @return
+     */
+    @RequestMapping("/admintoempmanager")
+    public String admintoempmanager(int empId,Model model){
+        Employee employee = employeeService.queryEmployeeBy_empId(empId);
+
+        List<Department> dep = departmentService.queryAllDepartment();
+
+        model.addAttribute("employee",employee);
+        return "admin/employee/empmanager";
+    }
+
+    /**
+     * 转正
+     */
+    @RequestMapping("/employeeRegular")
+    public String employeeRegular(int empId){
+        boolean res = employeeService.updateEmployee(empId);
+        return "forward:queryAllEmployee";
+    }
+
+        /**
+         * 办理离职
+         */
+    @RequestMapping("/employeeLeave")
+    public String employeeLeave(EmployeeLeave employeeLeave){
+        boolean res = employeeService.updateEmployeeLeave(employeeLeave);
+        return "forward:queryAllEmployee";
+    }
+
+    /**
+     * 员工换岗
+     */
+    @RequestMapping("/employeeChangePosition")
+    public String employeeChangePosition(int empId,int posId){
+        boolean res = employeeService.updateEmployeePosition(empId, posId);
+        return "forward:queryAllEmployee";
+    }
 }

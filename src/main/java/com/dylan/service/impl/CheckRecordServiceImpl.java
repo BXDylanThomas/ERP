@@ -5,7 +5,9 @@ import com.dylan.dao.EmployeeDao;
 import com.dylan.dao.PrizeRecordDao;
 import com.dylan.model.CheckRecord;
 import com.dylan.model.Employee;
+import com.dylan.model.PrizeRecord;
 import com.dylan.service.CheckRecordService;
+import com.dylan.util.PagesUtil;
 import oracle.sql.DATE;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +61,7 @@ public class CheckRecordServiceImpl implements CheckRecordService {
 
     @Autowired
     private EmployeeDao employeeDao;
+
     /**
      * 上班打卡
      *
@@ -96,16 +99,24 @@ public class CheckRecordServiceImpl implements CheckRecordService {
         String hour=simpleDateFormat.format(date);
         Date time = simpleDateFormat.parse(hour);
 
+        PrizeRecord record=new PrizeRecord();
+        record.setEmpId(employee.getId());
+        record.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(date));
         if(time.before(workTime) || time.equals(workTime)){
             checkRecord.setWorkState(regular);
         }else if(time.after(workTime) && time.before(lateTime)){
             //大于9点  小于 12 点  是迟到
             checkRecord.setWorkState(late);
+            record.setReason("迟到");
+            record.setMoney(-20.0);
+            boolean res = prizeRecordDao.addPrizeRecord(record);
         }else{
             //算旷工
             checkRecord.setWorkState(absenteeism);
+            record.setReason("旷工");
+            record.setMoney(-employee.getResume().getSalary().getMoney()/22);
+            boolean res = prizeRecordDao.addPrizeRecord(record);
         }
-
        return  checkRecordDao.addCheckRecord(checkRecord);
     }
 
@@ -135,6 +146,7 @@ public class CheckRecordServiceImpl implements CheckRecordService {
      */
     @Override
     public boolean offCheckOut(int accId) throws ParseException {
+        Employee employee = employeeDao.queryEmployeeBy_accId(accId);
         CheckRecord checkRecord = queryCheckRecordIsCheck(accId);
         //  是null  说明当天没有打卡
         if(checkRecord==null){
@@ -148,12 +160,50 @@ public class CheckRecordServiceImpl implements CheckRecordService {
         String hour=simpleDateFormat.format(date);
         Date time = simpleDateFormat.parse(hour);
 
+        //查找当天有没有记录]
+        Map<String,Object> map=getSeconds();
+        map.put("empId",employee.getId());
+
+        PrizeRecord prizeRecord = prizeRecordDao.queryPrizeRecordBy_empId(map);
+
         if(time.before(earlyTime)){
             //早于 15:00  旷工
             checkRecord.setOffState(absenteeism);
+
+
+            //如果prizeRecord 是 null  当天上午上班正常
+            if(prizeRecord==null){
+                PrizeRecord record=new PrizeRecord();
+                record.setEmpId(employee.getId());
+                record.setReason("旷工");
+                record.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(date));
+                record.setMoney(-employee.getResume().getSalary().getMoney()/22);
+                boolean res = prizeRecordDao.addPrizeRecord(record);
+            }else{
+                prizeRecord.setReason("旷工");
+                prizeRecord.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(date));
+                prizeRecord.setMoney(-employee.getResume().getSalary().getMoney()/22);
+                boolean res = prizeRecordDao.updatePrizeRecord(prizeRecord);
+            }
         }else if((time.after(earlyTime) || time.equals(earlyTime)) && time.before(offTime)){
             //15:00 --18:00 之间   早退
             checkRecord.setOffState(early);
+            //如果上班是正常
+            if(prizeRecord==null){
+                PrizeRecord record=new PrizeRecord();
+                record.setEmpId(employee.getId());
+                record.setReason("早退");
+                record.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(date));
+                record.setMoney(-20.0);
+            }else if(prizeRecord.getReason().contains("迟到")){
+                //如果上班迟到
+                prizeRecord.setReason("迟到，早退");
+                prizeRecord.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(date));
+                prizeRecord.setMoney(-20.0+prizeRecord.getMoney());
+                prizeRecordDao.updatePrizeRecord(prizeRecord);
+            }
+            //早上已经旷工了 不再计算
+
         }else{
             checkRecord.setOffState(regular);
         }
@@ -163,18 +213,17 @@ public class CheckRecordServiceImpl implements CheckRecordService {
     /**
      * 查看某员工  当月的 打卡记录
      * 参数 包括   员工id  某年   某月
-     * @param accId
+     * @param empId
      * @return
      */
     @Override
-    public  Map<String, Object> queryCheckRecordBY_empId_everyMonth(int accId) {
-        if(accId<=0){
+    public  Map<String, Object> queryCheckRecordBY_empId_everyMonth(int empId) {
+        if(empId<=0){
             return null;
         }
-        Employee employee = employeeDao.queryEmployeeBy_accId(accId);
         Date date=new Date();
         Map<String, Object> map = getMonth(date);
-        map.put("empId",employee.getId());
+        map.put("empId",empId);
         List<CheckRecord> checkRecords = checkRecordDao.queryCheckRecordBY_empId_everyMonth(map);
 
         Collections.sort(checkRecords);
@@ -184,25 +233,43 @@ public class CheckRecordServiceImpl implements CheckRecordService {
 
     /**
      * 查看上月的考勤记录
-     * @param accId
+     * @param empId
      * @return
      */
     @Override
-    public  Map<String, Object> queryCheckRecordBY_empId_preMonth(int accId) {
-        if(accId<=0){
+    public  Map<String, Object> queryCheckRecordBY_empId_preMonth(int empId) {
+        if(empId<=0){
             return null;
         }
-        Employee employee = employeeDao.queryEmployeeBy_accId(accId);
         Date date=new Date();
         Calendar calendar=Calendar.getInstance();
         calendar.setTime(date);
         calendar.add(2,-1);
         Map<String, Object> map = getMonth(calendar.getTime());
-        map.put("empId",employee.getId());
+        map.put("empId",empId);
         List<CheckRecord> checkRecords = checkRecordDao.queryCheckRecordBY_empId_everyMonth(map);
         Collections.sort(checkRecords);
         map.put("list",checkRecords);
         return map;
+    }
+
+    @Override
+    public List<PrizeRecord> queryAllPrizeRecordBy_empId(int empId) {
+        if(empId<=0){
+            return null;
+        }
+        return prizeRecordDao.queryAllPrizeRecordBy_empId(empId);
+    }
+
+    @Override
+    public List<PrizeRecord> queryAllPrizeRecordBy_empId_everyPage(int empId,int currentPage) {
+        if(empId<=0){
+            return null;
+        }
+        Map<String,Object> map=new HashMap<>();
+        map.put("empId",empId);
+        map = PagesUtil.getPage(map, currentPage);
+        return prizeRecordDao.queryAllPrizeRecordBy_empId_everyPage(map);
     }
 
     /**
@@ -252,44 +319,7 @@ public class CheckRecordServiceImpl implements CheckRecordService {
             list.add(i);
         }
         map.put("max",list);
-
-
         return map;
     }
-
- /*   @Test
-    public void test() throws ParseException {
-
-        Employee employee = employeeDao.queryEmployeeBy_accId(1);
-        *//**
-         * 判断之前有没有哪天是没有上班时间  也没有下班时间的
-         *根据最近的打卡记录  有 上班时间 或者 下班时间 的
-         * 如果有 记录 当天是旷工
-         *//*
-        CheckRecord checkRecord = checkRecordDao.queryCheckRecordLast(employee.getId());
-        String wt=checkRecord.getWorkTime();
-        String ot=checkRecord.getOffTime();
-
-        //有可能 ①上班时间 下班时间都有  ②有上班时间，无下班时间   ③有可能无上班时间 有下班时间
-      *//*  String newOne= wt!=null?wt:ot;
-        Date time=null;
-        try {
-            time= new SimpleDateFormat("yyyy-MM-dd").parse(newOne);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        Date current=new Date();
-
-        //①是上月的打卡时间，则需要根据当月的一号 计算
-        if(time.getMonth()<current.getMonth()){
-            //在判断当天是否是一号
-            //如果不是一号，则需要
-        }else{
-            //② 是当月的打卡时间
-
-        }*//*
-
-    }*/
 
 }

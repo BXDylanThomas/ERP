@@ -52,9 +52,6 @@
                 <li class="menu">
                     <a href="">薪资结算</a>
                 </li>
-                <li class="menu">
-                    <a href="">查看奖惩记录</a>
-                </li>
             </ul>
         </div>
     </div>

@@ -38,7 +38,6 @@ public class PagesUtil {
 
     public static void getPre_next_page(int page, int pages, Model model) {
         //前一页 不能小于最小的1
-
         if(page==1){
             model.addAttribute("prepages",1);
         }else{

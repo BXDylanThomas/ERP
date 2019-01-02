@@ -111,7 +111,7 @@
             <tr>
                 <td colspan="4">
                     <textarea name="experien" required readonly>
-                        ${employee.resume.experien}
+                        ${employee.resume.exp}
                     </textarea>
                 </td>
             </tr>

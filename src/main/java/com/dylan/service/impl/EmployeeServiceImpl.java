@@ -1,7 +1,9 @@
 package com.dylan.service.impl;
 
 import com.dylan.dao.EmployeeDao;
+import com.dylan.dao.EmployeeLeaveDao;
 import com.dylan.model.Employee;
+import com.dylan.model.EmployeeLeave;
 import com.dylan.model.TrainDepartment;
 import com.dylan.model.TrainEmployee;
 import com.dylan.service.EmployeeService;
@@ -9,6 +11,8 @@ import com.dylan.util.PagesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,17 +20,63 @@ import java.util.Map;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
+    public final static int LEAVE=1;
+    public final static int REGULAR=2;
+
     @Autowired
     private EmployeeDao employeeDao;
 
+    @Autowired
+    private EmployeeLeaveDao employeeLeaveDao;
+
     /**
-     * 转正  或者   离职
-     * @param employee
+     * 转正
+     */
+    @Override
+    public boolean updateEmployee(int empId) {
+        if(empId<=0){
+            return false;
+        }
+        Map<String,Object> map=new HashMap<>();
+        map.put("empId",empId);
+        map.put("state",REGULAR);
+        return employeeDao.updateEmployee(map);
+    }
+
+    /**
+     * 离职
+     */
+    @Override
+    public boolean updateEmployeeLeave(EmployeeLeave employeeLeave) {
+        if(employeeLeave==null || employeeLeave.getEmpId()<=0){
+            return false;
+        }
+        //设置为离职状态
+        Map<String,Object> map=new HashMap<>();
+        map.put("empId",employeeLeave.getEmpId());
+        map.put("state",LEAVE);
+        boolean res1 = employeeDao.updateEmployee(map);
+
+        //添加离职记录表
+        employeeLeave.setTime(new SimpleDateFormat("yyyy-MM-dd ").format(new Date()) );
+        return res1 && employeeLeaveDao.addEmployeeLeave(employeeLeave);
+    }
+
+    /**
+     * 换岗
+     * @param empId
+     * @param posId
      * @return
      */
     @Override
-    public boolean updateEmployee(Employee employee) {
-        return false;
+    public boolean updateEmployeePosition(int empId, int posId) {
+        if(empId<=0 || posId<=0){
+            return false;
+        }
+        Map<String,Object> map=new HashMap<>();
+        map.put("empId",empId);
+        map.put("posId",posId);
+        return employeeDao.updateEmployeePosition(map);
     }
 
     /**
@@ -41,6 +91,14 @@ public class EmployeeServiceImpl implements EmployeeService {
             return null;
         }
         return employeeDao.queryEmployeeBy_accId(accId);
+    }
+
+    @Override
+    public Employee queryEmployeeBy_empId(int empId) {
+        if(empId<=0){
+            return null;
+        }
+        return employeeDao.queryEmployeeBy_empId(empId);
     }
 
     /**
