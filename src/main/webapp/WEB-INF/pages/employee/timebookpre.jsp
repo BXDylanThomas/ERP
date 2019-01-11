@@ -8,8 +8,10 @@
 <head>
     <base href="<%=basePath%>"/>
     <title></title>
-    <link rel="stylesheet" href="resource/css/base.css">
+    <link rel="stylesheet" href="resource/css/button.css">
+
     <script src="resource/js/jquery-3.3.1.js"></script>
+
     <script>
         $(function(){
             var raid = $("#raid");
@@ -27,54 +29,31 @@
     </script>
 
     <style>
+        table{
+            margin-top: 20px;
+        }
         td{
             width: 100px;
             height: 100px;
             text-align: center;
         }
+        #next{
+            position: relative;
+            left: 300px;
+        }
+        #raid{
+            font-size: 15px;
+        }
     </style>
 </head>
 <body>
-    <div>
-    <!--top-->
-    <div id="top">
-        <c:if test="${sessionScope.user!=null}">
-            <div  class="welcome">
-                <span>欢迎：${sessionScope.user.name}</span>
-                <a href="exit">退出</a>
-            </div>
-        </c:if>
-    </div>
-    <div id="introduce"></div>
-    <div id="guid">
-        <div id="guid2">
-            <ul>
-                <li class="menu">
-                    <a href="returnEmployee">主页</a>
-                </li>
-                <li class="menu">
-                    <a href="toemployeeinfo">个人信息</a>
-                </li>
-                <li class="menu">
-                    <a href="queryAllEmployeeemp">员工查询</a>
-                </li>
-                <li class="menu">
-                    <a href="queryCheckRecord">查看考勤</a>
-                </li>
-                <li class="menu">
-                    <a href="toEmpQueryTrain">查看培训</a>
-                </li>
-                <li class="menu">
-                    <a href="">查看薪资</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
+<div style="margin:0 auto;width: 80%">
+<jsp:include page="base.jsp" />
     <div id="next">
+        <br/>
         <div id="raid"></div>
         <br/>
-        <span>上月考勤</span><br/>
+        <span style="font-size: 20px">上月考勤</span>&emsp; <a href="queryPrizeRecordEmpId" class="send"> 查看历史奖惩</a><br/>
         <table border="1" rules="all">
             <tr>
                 <c:forEach items="${max}" var="day" varStatus="i">
@@ -124,6 +103,7 @@
         </table>
 
     </div>
+</div>
 </body>
 
 </body>

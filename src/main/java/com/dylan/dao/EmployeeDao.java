@@ -12,6 +12,9 @@ public interface EmployeeDao {
     //添加员工
     boolean addEmployee(Employee employee);
 
+    //旧职工重新来公司
+    boolean updateEmployeenew(Employee employee);
+
     //换岗
     boolean updateEmployeePosition(Map<String,Object> map);
 
@@ -53,5 +56,6 @@ public interface EmployeeDao {
 
     //查看员工的个人培训 分页
     List<TrainEmployee> queryTrainEmployee_everyPage(Map<String,Object> map);
+
 
 }

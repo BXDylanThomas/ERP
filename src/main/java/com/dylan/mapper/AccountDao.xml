@@ -14,7 +14,7 @@
 
     <!--查询  用于登录-->
     <select id="queryAccount" resultMap="accountMap">
-        select * from T_ACCOUNT where A_NAME=#{name} and A_PASSWORD=#{password} and A_TYPE=#{type}
+        select a.A_ID,a.A_NAME,a.A_PASSWORD,a.A_TYPE from T_ACCOUNT a where a.A_NAME=#{name} and a.A_PASSWORD=#{password} and A_TYPE=#{type}
     </select>
 
     <!--查询  检查用户名 是否 重复 -->
@@ -26,12 +26,17 @@
     <select id="queryAccountBy_id" resultMap="accountMap">
           select * from T_ACCOUNT where A_ID=#{id} and rownum=1
     </select>
+    <select id="queryAccountBy_empId" resultMap="accountMap">
+         select * from T_ACCOUNT a,T_EMPLOYEE e where a.A_ID=e.E_ACCID and e.E_ID=#{id}   and rownum=1
+    </select>
+
 
     <resultMap id="accountMap" type="Account">
         <id  property="id" column="A_ID"/>
         <result property="name" column="A_NAME"/>
         <result property="password" column="A_PASSWORD"/>
         <result property="type" column="A_TYPE"/>
+        <association property="resume" resultMap="com.dylan.dao.ResumeDao.resumeMap"/>
     </resultMap>
 
 </mapper>

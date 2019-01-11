@@ -8,50 +8,29 @@
 <head>
     <base href="<%=basePath%>"/>
     <title></title>
-    <link rel="stylesheet"  href="resource/css/base.css">
+    <link rel="stylesheet" href="resource/css/button.css"/>
+    <style>
+        #next a{
+            position: relative;
+            left: 310px;
+            margin: 30px;
+            width: 200px;
+            height: 50px;
+        }
+    </style>
 </head>
 <body>
+<div style="margin:0 auto;width: 80%">
 
-<%--base--%>
-<div>
-    <!--top-->
-    <div id="top">
-        <%--没有登录--%>
-        <c:if test="${sessionScope.user==null}">
-            <div class="welcome">
-                <a href="returnRegister">免费注册</a>
-                <a href="returnLogin">登录</a>
-            </div>
-        </c:if>
-        <c:if test="${sessionScope.user!=null}">
-            <div  class="welcome">
-                <span>欢迎：${sessionScope.user.name}</span>
-                <a href="exit">退出</a>
-            </div>
-        </c:if>
-    </div>
-    <div id="introduce"></div>
-    <div id="guid">
-        <div id="guid2">
-            <ul>
-                <li class="menu">
-                    <a href="returnVisitor">主页</a>
-                </li>
-                <li class="menu">
-                    <a href="visitorqueryAllRecruitment">查看招聘</a>
-                </li>
-                <li class="menu"  id="a">
-                    <a href="tovisitorInfo">个人信息</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
+<jsp:include page="base.jsp" />
+
 <div id="next">
-    <br/>
-    <a href="queryResume">查看简历</a><br/><br/>
-    <a href="queryResumeaccId">查看面试邀请</a>
+    <div>
+        <a href="queryResume" class="send">查看简历</a><br/>
+        <a href="queryResumeaccId" class="send">查看面试邀请</a>
+    </div>
 </div>
 
+</div>
 </body>
 </html>

@@ -17,7 +17,7 @@ public interface PositionService {
     boolean deletePosition(int posId);
 
     //通过名字 查询职位  判断是否重复
-    boolean queryPositionBy_name(String name);
+    boolean queryPositionBy_name(String name,int id );
 
     //通过 职位 id  查询职位
     Position queryPositionBy_podId(int posId);

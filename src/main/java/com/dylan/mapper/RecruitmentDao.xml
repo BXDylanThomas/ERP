@@ -44,6 +44,14 @@
         where r.rn &gt;=#{current}
     </select>
 
+    <!--通过id查询某个具体的-->
+    <select id="queryRecruitmentBy_id" resultMap="recruitment">
+         select r.R_ID,r.R_POSID,r.R_TITLE,r.R_CONTENT,r.R_COUNT,r.R_CREATETIME,
+                p.P_ID,p.P_DEPID,p.P_NAME,d.D_ID,d.D_NAME
+         from T_RECRUITMENT r,T_POSITION p,T_DEPARTMENT d
+        where  r.R_POSID=p.P_ID and p.P_DEPID=d.D_ID and r.R_ID=#{id}
+    </select>
+
     <resultMap id="recruitment" type="Recruitment">
         <id property="id" column="R_ID"/>
         <result property="posId" column="R_POSID"/>

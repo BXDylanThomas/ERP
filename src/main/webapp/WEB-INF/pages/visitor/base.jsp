@@ -8,12 +8,28 @@
 <head>
     <base href="<%=basePath%>"/>
     <title></title>
-    <link rel="stylesheet"  href="resource/css/base.css">
+    <link rel="stylesheet" href="resource/css/qq.css">
+    <link rel="stylesheet" href="resource/css/aa.css">
+    <style>
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+        #top{
+            width: 100%;
+            height: 30px;
+            background: aliceblue;
+            text-align: right;
+        }
+        .welcome{
+            position: relative;
+            left: -50px;
+        }
+    </style>
 </head>
 <body>
 
-<%--base--%>
-<div>
+<div >
     <!--top-->
     <div id="top">
         <%--没有登录--%>
@@ -30,23 +46,15 @@
             </div>
         </c:if>
     </div>
-    <div id="introduce"></div>
-    <div id="guid">
-        <div id="guid2">
-            <ul>
-                <li class="menu">
-                    <a href="returnVisitor">主页</a>
-                </li>
-                <li class="menu">
-                    <a href="visitorqueryAllRecruitment">查看招聘</a>
-                </li>
-                <li class="menu"  id="a">
-                    <a href="tovisitorInfo">个人信息</a>
-                </li>
+    <div  class="navbar navbar-default" >
+        <div >
+            <ul class="nav navbar-nav navbar-right margin-top cl-effect-2 title-custom" style="position: relative;left: -500px;" >
+                <li><a href="returnVisitor"><span data-hover="首页">首页&emsp;</span></a></li>
+                <li><a href="visitorqueryAllRecruitment"><span data-hover="人才招聘">人才招聘&emsp;</span></a></li>
+                <li><a href="tovisitorInfo"><span data-hover="个人信息">个人信息&emsp;</span></a></li>
             </ul>
         </div>
     </div>
 </div>
-
 </body>
 </html>

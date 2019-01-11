@@ -1,11 +1,9 @@
 package com.dylan.service.impl;
 
+import com.dylan.dao.AccountDao;
 import com.dylan.dao.EmployeeDao;
 import com.dylan.dao.EmployeeLeaveDao;
-import com.dylan.model.Employee;
-import com.dylan.model.EmployeeLeave;
-import com.dylan.model.TrainDepartment;
-import com.dylan.model.TrainEmployee;
+import com.dylan.model.*;
 import com.dylan.service.EmployeeService;
 import com.dylan.util.PagesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +26,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Autowired
     private EmployeeLeaveDao employeeLeaveDao;
+
+    @Autowired
+    private AccountDao accountDao;
 
     /**
      * 转正
@@ -57,6 +58,13 @@ public class EmployeeServiceImpl implements EmployeeService {
         map.put("state",LEAVE);
         boolean res1 = employeeDao.updateEmployee(map);
 
+        //账号改为游客
+
+        Account account = accountDao.queryAccountBy_empId(employeeLeave.getEmpId());
+
+        account.setType("visitor");
+        accountDao.updateAccount(account);
+
         //添加离职记录表
         employeeLeave.setTime(new SimpleDateFormat("yyyy-MM-dd ").format(new Date()) );
         return res1 && employeeLeaveDao.addEmployeeLeave(employeeLeave);
@@ -77,6 +85,21 @@ public class EmployeeServiceImpl implements EmployeeService {
         map.put("empId",empId);
         map.put("posId",posId);
         return employeeDao.updateEmployeePosition(map);
+    }
+
+    @Override
+    public List<EmployeeLeave> queryEmployeeLeave() {
+        return employeeLeaveDao.queryEmployeeLeave();
+    }
+
+    @Override
+    public List<EmployeeLeave> queryEmployeeLeave_everyPage(int currentPage) {
+        if(currentPage<=0){
+            return null;
+        }
+        Map<String,Object> map=new HashMap<>();
+        map = PagesUtil.getPage(map, currentPage);
+        return employeeLeaveDao.queryEmployeeLeave_everyPage(map);
     }
 
     /**

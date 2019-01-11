@@ -8,61 +8,29 @@
 <head>
     <base href="<%=basePath%>"/>
     <title></title>
-    <link rel="stylesheet" href="resource/css/base.css">
     <link rel="stylesheet" href="resource/css/depposemp.css">
+    <link rel="stylesheet" href="resource/css/button.css">
+
     <link rel="stylesheet" href="resource/css/page.css">
+
     <style>
-        input{
-            background: white;
+        #next{
+            position: relative;
+            left: 200px;
+        }
+        th,td{
+            text-align: center;
         }
     </style>
 </head>
 <body>
-<div>
-    <!--top-->
-    <div id="top">
-        <c:if test="${sessionScope.user!=null}">
-            <div  class="welcome">
-                <span>欢迎：${sessionScope.user.name}</span>
-                <a href="exit">退出</a>
-            </div>
-        </c:if>
-    </div>
-    <div id="introduce"></div>
-    <div id="guid">
-        <div id="guid2">
-            <ul>
-                <li class="menu">
-                    <a href="returnEmployee">主页</a>
-                </li>
-                <li class="menu" >
-                    <a href="queryDepartment">部门管理</a>
-                </li>
-                <li class="menu" id="a">
-                    <a href="queryALlPosition">职位管理</a>
-                </li>
-                <li class="menu">
-                    <a href="queryAllEmployee">员工管理</a>
-                </li>
-                <li class="menu">
-                    <a href="queryAllRecruitment">招聘管理</a>
-                </li>
-                <li class="menu">
-                    <a href="toTrain">培训管理</a>
-                </li>
-                <li class="menu">
-                    <a href="">薪资结算</a>
-                </li>
-
-            </ul>
-        </div>
-    </div>
-</div>
+<div style="margin:0 auto;width: 80%">
+<jsp:include page="base.jsp" />
 <div id="next">
     <div >
         <div id="main">
             <br/>
-            <span id="addpos" >添加职务</span>
+            <span id="addpos"style="font-size: 20px;">添加职务</span>
             &emsp;
             <tr >
                 <td></td>
@@ -75,7 +43,7 @@
                 </td>
                 <td><input id="name" value="${p.name}" style="background: lightcyan;border: 1px black solid"></td>
                 <td></td>
-                <td><a href="javascript:void(0)"id="addsure">确认添加</a></td>
+                <td><a href="javascript:void(0)"id="addsure"  class="send" style="height: 40px">确认添加</a></td>
             </tr>
             <br/><br/>
             &emsp;
@@ -111,7 +79,7 @@
                 </c:if>
 
                 <tr id="ad">
-                    <td><a href="javascript:void(0)" id="del">删除</a></td>
+                    <td><a href="javascript:void(0)" id="del" class="send"  style="height: 40px">删除</a></td>
                 </tr>
             </table>
         </div>
@@ -130,9 +98,9 @@
 
     </div>
 </div>
-
+</div>
 <script src="resource/js/jquery-3.3.1.js"></script>
+<script src="resource/js/alert.js"></script>
 <script src="resource/js/position.js"></script>
-
 </body>
 </html>

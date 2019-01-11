@@ -7,45 +7,11 @@
 <html>
 <head>
     <base href="<%=basePath%>"/>
-    <link rel="stylesheet"  href="resource/css/base.css">
-    <link rel="stylesheet" href="resource/css/page.css">
 </head>
 <body>
-
-<%--base--%>
-<div>
-    <!--top-->
-    <div id="top">
-        <%--没有登录--%>
-        <c:if test="${sessionScope.user==null}">
-            <div class="welcome">
-                <a href="returnRegister">免费注册</a>
-                <a href="returnLogin">登录</a>
-            </div>
-        </c:if>
-        <c:if test="${sessionScope.user!=null}">
-            <div  class="welcome">
-                <span>欢迎：${sessionScope.user.name}</span>
-                <a href="exit">退出</a>
-            </div>
-        </c:if>
-    </div>
-    <div id="introduce"></div>
-    <div id="guid">
-        <div id="guid2">
-            <ul>
-                <li class="menu" id="a">
-                    <a href="returnVisitor" >主页</a>
-                </li>
-                <li class="menu">
-                    <a href="visitorqueryAllRecruitment">查看招聘</a>
-                </li>
-                <li class="menu">
-                    <a href="tovisitorInfo">个人信息</a>
-                </li>
-            </ul>
-        </div>
-    </div>
+<div style="margin:0 auto;width: 80%">
+    <jsp:include page="base.jsp" />
+    <div><img src="resource/image/imag1.jpg" style="width: 1210px;height: 600px"></div>
 </div>
 
 </body>

@@ -2,6 +2,7 @@ package com.dylan.service.impl;
 
 import com.dylan.dao.AccountDao;
 import com.dylan.model.Account;
+import com.dylan.model.Resume;
 import com.dylan.service.AccountDService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,6 +48,7 @@ public class AccountDServiceImpl implements AccountDService {
         }
         return accountDao.updateAccount(acc);
     }
+
 
     /**
      * 登录

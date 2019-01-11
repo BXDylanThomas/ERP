@@ -51,6 +51,7 @@ public class Resume_controller {
          Account account = (Account) session.getAttribute("user");
 
         Resume resume = resumeService.queryResumeBy_accId(account.getId());
+
         model.addAttribute("resume",resume);
         return "visitor/resume";
     }
@@ -67,6 +68,7 @@ public class Resume_controller {
         resume.setAccId(account.getId());
         resume.setBirth(bir);
         resume.setExp(experience);
+        System.out.println(resume);
 
         boolean res = resumeService.addResume(resume);
         return "forward:queryResume";
@@ -79,6 +81,7 @@ public class Resume_controller {
      */
     @RequestMapping("/updateresumemake")
     public String updateresumemake(Resume resume){
+        System.out.println(resume);
         boolean res = resumeService.updateResume(resume);
         return "forward:queryResume";
     }

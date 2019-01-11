@@ -56,6 +56,16 @@ public class TrainDepartment_controller {
     }
 
     /**
+     * 查看单个通过id
+     */
+    @RequestMapping("/queryDepartmentone")
+    public String queryDepartmentone(int id,Model model){
+        TrainDepartment trainDepartment = trainDepartmentService.queryTrainDepartmentBy_id(id);
+        model.addAttribute("t",trainDepartment);
+        return "admin/train/traindepartmentone";
+    }
+
+    /**
      * 查询所有的培训中已经发布的  或者未发布的
      * @return
      */

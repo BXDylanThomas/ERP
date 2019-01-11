@@ -132,7 +132,7 @@ public class Resume  implements Serializable {
                 ", email='" + email + '\'' +
                 ", education='" + education + '\'' +
                 ", major='" + major + '\'' +
-                ", experien='" + exp + '\'' +
+                ", exp='" + exp + '\'' +
                 ", accId=" + accId +
                 ", salary=" + salary +
                 '}';

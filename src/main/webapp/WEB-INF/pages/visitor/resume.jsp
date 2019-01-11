@@ -7,108 +7,103 @@
 <html>
 <head>
     <base href="<%=basePath%>"/>
-    <link rel="stylesheet"  href="resource/css/base.css">
-    <link rel="stylesheet"  href="resource/css/table.css">
 
+    <link rel="stylesheet"  href="resource/css/table.css">
+    <link rel="stylesheet" href="resource/css/button.css"/>
+    <link rel="stylesheet" href="resource/css/layui.css"/>
     <style>
         input{
             border: none;
         }
+        #next{
+            position: relative;
+            left: 100px;
+            top: 20px;
+        }
+        .layui-form-label{
+            width: 100px;
+        }
+        .layui-input-block{
+            width: 500px;
+        }
     </style>
 </head>
 <body>
+<div style="margin:0 auto;width: 80%">
 
-    <%--base--%>
-    <div>
-        <!--top-->
-        <div id="top">
-            <%--没有登录--%>
-            <c:if test="${sessionScope.user==null}">
-                <div class="welcome">
-                    <a href="returnRegister">免费注册</a>
-                    <a href="returnLogin">登录</a>
-                </div>
-            </c:if>
-            <c:if test="${sessionScope.user!=null}">
-                <div  class="welcome">
-                    <span>欢迎：${sessionScope.user.name}</span>
-                    <a href="exit">退出</a>
-                </div>
-            </c:if>
-        </div>
-        <div id="introduce"></div>
-        <div id="guid">
-            <div id="guid2">
-                <ul>
-                    <li class="menu" >
-                        <a href="returnVisitor" >主页</a>
-                    </li>
-                    <li class="menu">
-                        <a href="visitorqueryAllRecruitment">查看招聘</a>
-                    </li>
-                    <li class="menu" id="a">
-                        <a href="tovisitorInfo">个人信息</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div id="next">
+<jsp:include page="base.jsp" />
+
+<div id="next">
         <c:if test="${resume==null || empty resume}">
-            <span>暂无简历，去<a href="toresumemake">添加</a></span>
+            <div style="position: relative;left: 200px;top: 100px;">
+                <span style="font-size: 22px">暂无简历，去<a href="toresumemake" class="send">添加</a></span>
+            </div>
         </c:if>
         <c:if test="${resume!=null || not empty resume}">
             <form method="post" action="updateresumemake" id="f">
                 <input type="hidden" name="id" value="${resume.id}">
                 <input type="hidden" name="accId" value="${resume.accId}">
-                <table border="1" rules="all">
-                    <tr>
-                        <th colspan="4">简历</th>
-                    </tr>
-                    <tr>
-                        <th>姓名：</th>
-                        <td><input type="text" value="${resume.name}" name="name" readonly></td>
-                        <th>性别：</th>
-                        <td><input type="text" value="${resume.sex}" name="sex" readonly></td>
-                    </tr>
-                    <tr>
-                        <th>出身年月：</th>
-                        <td><input type="date" value="${resume.birth}" name="birth" readonly ></td>
-                        <th>联系电话：</th>
-                        <td><input type="text" value="${resume.phone}" name="phone" readonly></td>
-                    </tr>
-                    <tr>
-                        <th>专业：</th>
-                        <td><input type="text" value="${resume.major}" name="major" readonly></td>
-                        <th>最高学历：</th>
-                        <td><input type="text" value="${resume.education}" name="education" readonly></td>
-                    </tr>
-                    <tr>
-                        <th>邮箱：</th>
-                        <td colspan="3"><input type="text" value="${resume.email}" name="email" readonly></td>
-                    </tr>
-                    <tr>
-                        <th>联系地址：</th>
-                        <td colspan="3"><input type="text" value="${resume.address}" name="address" readonly></td>
-                    </tr>
-                    <tr>
-                        <th colspan="4">工作经验：</th>
-                    </tr>
-                    <tr>
-                        <td colspan="4">
-                            <textarea name="exp" required readonly>
-                                    ${resume.exp}
-                            </textarea>
-                        </td>
-                    </tr>
-                </table>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">姓名</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="name" lay-verify="required|title" value="${resume.name}" readonly autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">性别</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="sex" lay-verify="required|title" value="${resume.sex}" readonly autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">出身年月</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="birth" lay-verify="required|title" value="${resume.birth}" readonly   class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">最高学历</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="education" lay-verify="required|title"value="${resume.education}" readonly  autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">专业</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="major" lay-verify="required|title"value="${resume.major}" readonly  autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">联系电话</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="phone" lay-verify="required|number"value="${resume.phone}" readonly lay-verType="tips" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">邮箱</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="email" lay-verify="required|number"value="${resume.email}" readonly lay-verType="tips" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">联系地址</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="address" lay-verify="required|title" value="${resume.address}" readonly autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">工作经验</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="exp" lay-verify="required|title"  value="${resume.exp}"readonly autocomplete="off" class="layui-input" style="text-align: left">
+                    </div>
+                </div>
                 <div>
-                    <input type="button" value="修改" id="sub">
+                    <input type="button" value="修改" id="sub" class="send" style="position: relative;left: 80px">
                 </div>
             </form>
         </c:if>
     </div>
-
+</div>
     <script src="resource/js/jquery-3.3.1.js"></script>
     <script src="resource/js/resume.js"></script>
 </body>

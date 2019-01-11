@@ -6,5 +6,24 @@
         insert into T_EMPLOYEELEAVE values(EMPLOYEELEAVE_SEQ.nextval,#{time},#{reason},#{empId})
     </insert>
 
+    <select id="queryEmployeeLeave" resultMap="employeeLeaveMap">
+          select e.E_ENTRYTIME,r.R_NAME,el.EL_REASON,el.EL_TIME
+        from T_EMPLOYEE e,T_RESUME r,T_EMPLOYEELEAVE el
+        where e.E_RESID=r.R_ID and e.E_ID=el.EL_EMPID
+    </select>
 
+    <select id="queryEmployeeLeave_everyPage" resultMap="employeeLeaveMap">
+        select el.R_NAME,el.E_ENTRYTIME,el.EL_REASON,el.EL_TIME
+        from(select rownum rn,e.*,r.*,el.*
+        from T_EMPLOYEE e,T_RESUME r,T_EMPLOYEELEAVE el
+        where e.E_RESID=r.R_ID and e.E_ID=el.EL_EMPID and  ROWNUM &lt;=#{show})el where  el.rn &gt;=#{current}
+    </select>
+
+    <resultMap id="employeeLeaveMap" type="EmployeeLeave">
+        <id property="id" column="EL_ID"/>
+        <result property="empId" column="EL_EMPID"/>
+        <result property="reason" column="EL_REASON"/>
+        <result property="time" column="EL_TIME"/>
+        <association property="employee" resultMap="com.dylan.dao.EmployeeDao.employeeMap"/>
+    </resultMap>
 </mapper>

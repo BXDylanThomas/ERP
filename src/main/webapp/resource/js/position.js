@@ -15,10 +15,10 @@ $(function () {
                 data:"depId="+id.val()+"&name="+name.val(),
                 success:function (obj) {
                     if(obj==1){
-                        alert("添加成功")
+                        jQuery.alertWindow("添加成功")
                         window.location.href="queryALlPosition";
                     }else{
-                        alert("添加失败")
+                        jQuery.alertWindow("请确认，职位名称重复")
                     }
                 }
             })
@@ -30,6 +30,7 @@ $(function () {
     $(".update").click(function () {
         var id=$(this).next();
         var name=$(this).parent().parent();
+        var nm=$("#aa :nth-child(3) :nth-child(1)").val();
         if($(this).text()=="修改"){
             name.attr("id","aa")
 
@@ -39,12 +40,13 @@ $(function () {
         }else{
             $.ajax({
                 type:"post",url:"updatePosition",
-                data:"id="+id.val()+"&name="+$("#aa :nth-child(2) :nth-child(1)").val(),
+                data:"id="+id.val()+"&name="+$("#aa :nth-child(3) :nth-child(1)").val(),
                 success:function (obj) {
                     if(obj==1){
-
+                        jQuery.alertWindow("修改成功")
                     }else{
-                        alert("请确认，职位名称重复")
+                        jQuery.alertWindow("请确认，职位名称重复")
+                        window.location.href="queryALlPosition";
                     }
                 }
             })
@@ -71,7 +73,7 @@ $(function () {
                     type:"post",url:"deletePosition",data:"id="+c[i].value,async:false,
                     success:function (obj) {
                         if(obj==0){
-                            alert("存在在职人员，不能删除部门")
+                            jQuery.alertWindow("存在在职人员，不能删除部门")
                             return;
                         }
                     }

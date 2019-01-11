@@ -7,8 +7,9 @@
 <head>
     <base href="<%=basePath%>"/>
     <title></title>
-    <link rel="stylesheet" href="resource/css/base.css">
+    <link rel="stylesheet" href="resource/css/button.css">
     <script src="resource/js/jquery-3.3.1.js"></script>
+
     <script>
         $(function () {
             var a1=false;
@@ -53,6 +54,11 @@
         })
     </script>
     <style>
+        #next{
+            position: relative;
+            left: 400px;
+            top: 20px;
+        }
         td{
             width: 150px;
             height: 30px;
@@ -68,48 +74,13 @@
         }
         #add{
             position: relative;
-            left: 140px;
-            top: 20px;
+            left: 80px;
         }
     </style>
 </head>
 <body>
-    <div>
-        <!--top-->
-        <div id="top">
-            <c:if test="${sessionScope.user!=null}">
-                <div  class="welcome">
-                    <span>欢迎：${sessionScope.user.name}</span>
-                    <a href="exit">退出</a>
-                </div>
-            </c:if>
-        </div>
-        <div id="introduce"></div>
-        <div id="guid">
-            <div id="guid2">
-                <ul>
-                    <li class="menu">
-                        <a href="returnEmployee">主页</a>
-                    </li>
-                    <li class="menu">
-                        <a href="toemployeeinfo" id="a">个人信息</a>
-                    </li>
-                    <li class="menu">
-                        <a href="queryAllEmployeeemp">员工查询</a>
-                    </li>
-                    <li class="menu">
-                        <a href="queryCheckRecord">查看考勤</a>
-                    </li>
-                    <li class="menu">
-                        <a href="toEmpQueryTrain">查看培训</a>
-                    </li>
-                    <li class="menu">
-                        <a href="">查看薪资</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
+<div style="margin:0 auto;width: 80%">
+<jsp:include page="base.jsp" />
     <div id="next">
 
         <table>
@@ -130,9 +101,9 @@
             </tr>
 
         </table>
-        <a id="add" href="javascript:void(0)">确定</a>
-
+        <a id="add" href="javascript:void(0)" class="send">确定</a>
     </div>
+</div>
 </body>
 </body>
 </html>

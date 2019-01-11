@@ -31,7 +31,8 @@ public class PositionServiceImpl implements PositionService {
         if(position==null || position.getName()==null || position.getName().equals("") || position.getDepId()<=0){
             return false;
         }
-        if(queryPositionBy_name(position.getName())){
+
+        if(queryPositionBy_name(position.getName(),position.getDepId())){
             position.setCreateTime(new SimpleDateFormat("yyyy-MM-dd ").format(new Date()));
             return positionDao.addPosition(position);
         }
@@ -49,12 +50,13 @@ public class PositionServiceImpl implements PositionService {
         if(position==null || position.getName()==null || position.getName().equals("") ){
             return false;
         }
-        if(positionDao.queryPositionBy_name(position.getName())!=null){
-            return true;
-        }
-        if(queryPositionBy_name(position.getName())){
+        Position pos = positionDao.queryPositionBy_podId(position.getId());
+
+        if(queryPositionBy_name(position.getName(),pos.getDepId())){
+
             return positionDao.updatePosition(position);
         }
+
         return false;
     }
 
@@ -77,12 +79,15 @@ public class PositionServiceImpl implements PositionService {
      * @return
      */
     @Override
-    public boolean queryPositionBy_name(String name) {
+    public boolean queryPositionBy_name(String name,int id ) {
         if(name==null || name.equals("")){
             return false;
         }
         //true 职位名称不重复 可以添加   反之 false  不行
-        return positionDao.queryPositionBy_name(name)==null?true:false;
+        Map<String,Object> map=new HashMap<>();
+        map.put("name",name);
+        map.put("depId",id);
+        return positionDao.queryPositionBy_name(map) == null;
     }
 
     /**

@@ -8,7 +8,7 @@ $(function () {
                     if(obj==1){
                         window.location.href="queryDepartment"
                     }else{
-                        alert("添加失败,部门名重复")
+                        jQuery.alertWindow("添加失败,部门名重复")
                     }
                 }
             })
@@ -32,7 +32,8 @@ $(function () {
                 success:function (obj) {
                     if(obj==1){
                     }else{
-                        alert("请确认，部门名称重复")
+                        jQuery.alertWindow("请确认，部门名称重复")
+                        window.location.href="queryDepartment"
                     }
                 }
             })
@@ -58,7 +59,7 @@ $(function () {
                     type:"post",url:"deleteDepartment",data:"id="+c[i].value,async:false,
                     success:function (obj) {
                         if(obj==0){
-                            alert("存在职位，不能删除部门")
+                            jQuery.alertWindow("存在员工，不能删除")
                             return;
                         }
                     }

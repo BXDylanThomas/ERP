@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dylan.dao.SalaryReviewDao">
+    
+    <insert id="addSalaryReview">
+        insert into T_SALARYREVIEW values (SALARYREVIEW_SEQ.nextval,#{empId},#{reason},#{time},#{state})
+    </insert>
+    
+    <update id="updateSalaryReview">
+        update T_SALARYREVIEW set RS_STATE=#{state} where RS_ID=#{id}
+    </update>
+    
+    <select id="queryAllSalaryReview" resultMap="salaryReviewMap">
+        select RS_ID,RS_STATE,rs.RS_empId,RS_REASON,RS_TIME,r.R_NAME from T_EMPLOYEE e,T_RESUME r,T_SALARYREVIEW rs
+        where e.E_ID=rs.RS_empId and e.E_RESID=r.R_ID and rs.RS_STATE!=1
+    </select>
+
+    <select id="queryAllSalaryReview_everyPage" resultMap="salaryReviewMap">
+        select rs.RS_ID,rs.RS_STATE,rs.RS_empId,rs.RS_REASON,rs.RS_TIME,rs.R_NAME
+        from (select rownum rn,e.*,r.*,rs.* from T_EMPLOYEE e,T_RESUME r,T_SALARYREVIEW rs
+              where e.E_ID=rs.RS_empId and e.E_RESID=r.R_ID  and rs.RS_STATE!=1 and ROWNUM &lt;=#{show})rs
+         where  rs.rn &gt;=#{current}
+    </select>
+
+    <resultMap id="salaryReviewMap" type="SalaryReview">
+        <id property="id" column="RS_ID"/>
+        <result property="empId" column="RS_empId"/>
+        <result property="reason" column="RS_REASON"/>
+        <result property="time" column="RS_TIME"/>
+        <result property="state" column="RS_STATE"/>
+        <association property="employee" resultMap="com.dylan.dao.EmployeeDao.employeeMap"/>
+    </resultMap>
+</mapper>

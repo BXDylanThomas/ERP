@@ -46,6 +46,14 @@ public class RecruitmentServiceImpl implements RecruitmentService {
         return recruitmentDao.deleteRecruitment(id);
     }
 
+    @Override
+    public Recruitment queryRecruitmentBy_id(int id) {
+        if(id<=0){
+            return null;
+        }
+        return recruitmentDao.queryRecruitmentBy_id(id);
+    }
+
     /**
      * 查询 所有的招聘信息   或者某职位的招聘信息
      * @param posId

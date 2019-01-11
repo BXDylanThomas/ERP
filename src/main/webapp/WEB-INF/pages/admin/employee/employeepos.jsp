@@ -8,53 +8,18 @@
 <head>
     <base href="<%=basePath%>"/>
     <title></title>
-    <link rel="stylesheet" href="resource/css/base.css">
+
     <link rel="stylesheet" href="resource/css/employee.css">
     <link rel="stylesheet" href="resource/css/page.css">
+    <link rel="stylesheet" href="resource/css/next.css">
+
     <script src="resource/js/jquery-3.3.1.js"></script>
     <script src="resource/js/employee.js"></script>
 </head>
 <body>
-<div>
-    <!--top-->
-    <div id="top">
-        <c:if test="${sessionScope.user!=null}">
-            <div  class="welcome">
-                <span>欢迎：${sessionScope.user.name}</span>
-                <a href="exit">退出</a>
-            </div>
-        </c:if>
-    </div>
-    <div id="introduce"></div>
-    <div id="guid">
-        <div id="guid2">
-            <ul>
-                <li class="menu">
-                    <a href="returnEmployee">主页</a>
-                </li>
-                <li class="menu">
-                    <a href="queryDepartment">部门管理</a>
-                </li>
-                <li class="menu">
-                    <a href="queryALlPosition">职位管理</a>
-                </li>
-                <li class="menu">
-                    <a href="queryAllEmployee"  id="a">员工管理</a>
-                </li>
-                <li class="menu">
-                    <a href="queryAllRecruitment">招聘管理</a>
-                </li>
-                <li class="menu">
-                    <a href="toTrain">培训管理</a>
-                </li>
+<div style="margin:0 auto;width: 80%">
+<jsp:include page="../base.jsp" />
 
-                <li class="menu">
-                    <a href="">薪资结算</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
 <div id="next">
     <div id="main">
         <br/><br/>
@@ -84,6 +49,8 @@
                     </c:if>
                 </c:forEach>
             </select>
+            &emsp;<a href="queryemployeeleave" class="send">查看离职员工</a>
+
         </div>
         <br/>
         <table>
@@ -98,9 +65,6 @@
                 <th class="rul">联系电话</th>
                 <th class="=lg">联系地址</th>
                 <th class="=lg">邮箱</th>
-                <th class="rul">最高学历</th>
-                <th class="=lg">专业</th>
-                <th class="=lg">工作经验</th>
                 <th></th>
             </tr>
             <c:if test="${employees==null || empty employees}">
@@ -129,9 +93,6 @@
                         <td class="rul">${e.resume.phone}</td>
                         <td class="=lg">${e.resume.address}</td>
                         <td class="=lg">${e.resume.email}</td>
-                        <td class="rul">${e.resume.education}</td>
-                        <td class="=lg">${e.resume.major}</td>
-                        <td class="=lg">${e.resume.exp}</td>
 
                         <td class="rul">
                             <a href="admintoempmanager?empId=${e.id}">管理</a>
@@ -155,6 +116,7 @@
             &nbsp;<span>总共：<input type="text" value="${all}" readonly style="width:30px ">条数据</span>
         </div>
     </div>
+</div>
 </div>
 </body>
 </html>

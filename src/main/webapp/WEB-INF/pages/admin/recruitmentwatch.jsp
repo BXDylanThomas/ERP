@@ -8,7 +8,8 @@
 <head>
     <base href="<%=basePath%>"/>
     <title></title>
-    <link rel="stylesheet" href="resource/css/base.css">
+    <link rel="stylesheet" href="resource/css/next.css">
+    <link rel="stylesheet" href="resource/css/button.css">
     <link rel="stylesheet" href="resource/css/watchresume.css">
     <link rel="stylesheet" href="resource/css/page.css">
     <script src="resource/js/jquery-3.3.1.js"></script>
@@ -19,50 +20,11 @@
             })
         })
     </script>
+
 </head>
 <body>
-<div>
-    <!--top-->
-    <div id="top">
-        <c:if test="${sessionScope.user!=null}">
-            <div  class="welcome">
-                <span>欢迎：${sessionScope.user.name}</span>
-                <a href="exit">退出</a>
-            </div>
-        </c:if>
-    </div>
-    <div id="introduce"></div>
-    <div id="guid">
-        <div id="guid2">
-            <ul>
-                <li class="menu">
-                    <a href="returnEmployee">主页</a>
-                </li>
-                <li class="menu">
-                    <a href="queryDepartment">部门管理</a>
-                </li>
-                <li class="menu">
-                    <a href="queryALlPosition">职位管理</a>
-                </li>
-                <li class="menu">
-                    <a href="queryAllEmployee">员工管理</a>
-                </li>
-                <li class="menu"  id="a">
-                    <a href="queryAllRecruitment">招聘管理</a>
-                </li>
-                <li class="menu">
-                    <a href="toTrain">培训管理</a>
-                </li>
-                <li class="menu">
-                    <a href="">查看考勤</a>
-                </li>
-                <li class="menu">
-                    <a href="">薪资结算</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
+<div style="margin:0 auto;width: 80%">
+<jsp:include page="base.jsp" />
 
 <div id="next">
     <div >
@@ -108,19 +70,17 @@
                         </tr>
                         <tr>
                             <td colspan="4">
-                            <textarea name="experien" required readonly>
-                                    ${r.resume.exp}
-                            </textarea>
+                                <input type="text" name="exp" required readonly value="${r.resume.exp}" style="width: 100%;height: 100%;">
                             </td>
                         </tr>
                     </table>
-                    <div style="position: relative;left: 430px;top: -180px;">
+                    <div style="position: relative;left: 430px;top: -140px;">
                         <form action="sendoffer" method="post" id="fo">
                             <input type="hidden" value="${r.resume.id}" name="resId">
                             <input type="hidden" value="${r.id}" name="recRRId">
                             <label for="sa">基本工资：</label>
                             <input type="number"  name="money" required id="sa" style="width: 100px;height: 20px;border: 1px black solid" ><br/>
-                            <a href="javascript:void(0)" id="add" style="position: relative;left: 55px;top: 10px;">邀请面试</a>
+                            <a href="javascript:void(0)" id="add" class="send" style="position: relative;left: 55px;top: 10px;">邀请面试</a>
                         </form>
                     </div>
                 </c:forEach>
@@ -141,6 +101,7 @@
         </div>
 
     </div>
+</div>
 </div>
 </body>
 </html>

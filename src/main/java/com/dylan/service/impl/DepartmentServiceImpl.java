@@ -1,8 +1,10 @@
 package com.dylan.service.impl;
 
 import com.dylan.dao.DepartmentDao;
+import com.dylan.dao.EmployeeDao;
 import com.dylan.dao.PositionDao;
 import com.dylan.model.Department;
+import com.dylan.model.Employee;
 import com.dylan.model.Position;
 import com.dylan.service.DepartmentService;
 import com.dylan.util.PagesUtil;
@@ -23,6 +25,9 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Autowired
     private PositionDao positionDao;
+
+    @Autowired
+    private EmployeeDao employeeDao;
     /**
      * 添加部门  需要判断名字是否重复
      * @param department
@@ -33,7 +38,6 @@ public class DepartmentServiceImpl implements DepartmentService {
         if(department==null || department.getName()==null || department.getName().equals("")){
             return false;
         }
-        System.out.println(department);
         if(queryDepartmentBy_name(department.getName())){
             department.setCreateTime(new SimpleDateFormat("yyyy-MM-dd ").format(new Date()));
             return departmentDao.addDepartment(department);
@@ -65,7 +69,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     /**
      * 删除部门
-     * 如果之下存在职位  则不能进行删除
+     * 如果之下存在员工  则不能进行删除
      * @param depId
      * @return
      */
@@ -74,11 +78,18 @@ public class DepartmentServiceImpl implements DepartmentService {
         if(depId<=0){
             return false;
         }
-        List<Position> positions = positionDao.queryAllPosition();
-        for(Position p:positions){
-            if(p.getDepId()==depId){
-                return false;
+        List<Employee> employees = employeeDao.queryEmployeeBy_depId(depId);
+        for(Employee e:employees){
+            if(e.getEmpState()!=1){
+              if(e.getPosition().getDepartment().getId()==depId) {
+                  return false;
+              }
             }
+        }
+        //没有员工，连同部门职位一直删除
+        List<Position> positions = positionDao.queryPositionBy_depId(depId);
+        for(Position p:positions){
+            positionDao.deletePosition(p.getId());
         }
         return departmentDao.deleteDepartment(depId);
     }

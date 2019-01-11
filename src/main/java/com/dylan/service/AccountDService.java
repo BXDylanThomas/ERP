@@ -1,6 +1,7 @@
 package com.dylan.service;
 
 import com.dylan.model.Account;
+import com.dylan.model.Resume;
 
 public interface AccountDService {
 
@@ -9,6 +10,8 @@ public interface AccountDService {
 
     //修改  密码   类型
     boolean updateAccount(Account account);
+
+
 
     //查询账户
     Account login(Account account);

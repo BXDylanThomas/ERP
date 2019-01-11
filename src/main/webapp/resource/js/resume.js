@@ -10,7 +10,6 @@ $(function () {
             $(this).val("确定")
         }else{
             $("#f").submit();
-
         }
     })
 })

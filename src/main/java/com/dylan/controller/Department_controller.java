@@ -26,7 +26,6 @@ public class Department_controller {
      */
     @RequestMapping("/addDepartment")
     public void addDepartment(Department department,HttpServletResponse response) throws IOException {
-        System.out.println(department);
         boolean res = departmentService.addDepartment(department);
         if(res){
             response.getWriter().write("1");
@@ -34,6 +33,7 @@ public class Department_controller {
             response.getWriter().write("0");
         }
     }
+
 
     /**
      * 查询所有部门

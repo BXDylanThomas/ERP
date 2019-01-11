@@ -19,6 +19,12 @@ public interface EmployeeService {
     //换岗
     boolean updateEmployeePosition(int empId,int posId);
 
+    //查看离职员工
+    List<EmployeeLeave> queryEmployeeLeave();
+
+    //查看离职员工分页
+    List<EmployeeLeave> queryEmployeeLeave_everyPage(int currentPage);
+
     //通过账号账号id  查询某员工的具体信息
     Employee queryEmployeeBy_accId(int accId);
 

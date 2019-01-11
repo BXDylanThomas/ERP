@@ -11,6 +11,7 @@ public class Account implements Serializable {
     private String name;
     private String password;
     private String type;    // admin 管理员  visitor 游客    employee  员工
+    private String resume;
 
     public Account() {
     }
@@ -45,6 +46,14 @@ public class Account implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getResume() {
+        return resume;
+    }
+
+    public void setResume(String resume) {
+        this.resume = resume;
     }
 
     @Override

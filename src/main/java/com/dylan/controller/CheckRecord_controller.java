@@ -36,16 +36,7 @@ public class CheckRecord_controller {
      public String checkIn(Model model, HttpSession session){
         Account account= (Account) session.getAttribute("user");
         CheckRecord checkRecord = checkRecordService.queryCheckRecordIsCheck(account.getId());
-
-        if(checkRecord==null){
-            model.addAttribute("result",1);
-        }else{
-            if(checkRecord.getOffTime()==null){
-                model.addAttribute("result",2);
-            }else{
-                model.addAttribute("result",3);
-            }
-        }
+        model.addAttribute("result",checkRecord);
         return  "employee/main";
     }
 

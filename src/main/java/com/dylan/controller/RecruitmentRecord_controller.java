@@ -1,9 +1,13 @@
 package com.dylan.controller;
 
+import com.dylan.dao.EmployeeDao;
 import com.dylan.model.Account;
+import com.dylan.model.Employee;
 import com.dylan.model.RecruitmentRecord;
 import com.dylan.model.Salary;
+import com.dylan.service.AccountDService;
 import com.dylan.service.RecruitmentRecordService;
+import com.dylan.service.ResumeService;
 import com.dylan.util.PagesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +26,10 @@ public class RecruitmentRecord_controller {
 
     @Autowired
     private RecruitmentRecordService recruitmentRecordService;
+    @Autowired
+    private AccountDService accountDService;
+    @Autowired
+    private ResumeService resumeService;
 
     /**
      * 投递简历
@@ -31,10 +39,12 @@ public class RecruitmentRecord_controller {
     @RequestMapping("/sendresumemake")
     public void sendresumemake(int recId, HttpSession session, HttpServletResponse response) throws IOException {
         Account account = (Account) session.getAttribute("user");
-
         if(account==null){
             response.getWriter().print("-1");
+        }else if(resumeService.queryResumeBy_accId(account.getId())==null){
+            response.getWriter().print("-2");
         }else{
+
             boolean res = recruitmentRecordService.addRecruitmentRecord(recId,account);
             if(res){
                 response.getWriter().print("1");
@@ -42,8 +52,6 @@ public class RecruitmentRecord_controller {
                 response.getWriter().print("0");
             }
         }
-
-
     }
 
     /**
@@ -94,10 +102,10 @@ public class RecruitmentRecord_controller {
      * @throws IOException
      */
     @RequestMapping("/sureOffer")
-    public String sureOffer(int posId,HttpSession session) throws IOException {
+    public String sureOffer(int id,HttpSession session) throws IOException {
 
         Account account= (Account) session.getAttribute("user");
-        boolean res = recruitmentRecordService.sureChange(account,posId);
+        boolean res = recruitmentRecordService.sureChange(account,id);
         if(res){
             session.removeAttribute("user");
             return "forward:login";

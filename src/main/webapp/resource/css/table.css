@@ -6,19 +6,3 @@ td{
     margin: 0px;
     text-align: center;
 }
-
-#sub{
-    position: relative;
-    left: 140px;
-    top: 8px;
-    width:  100px;
-    height: 40px;
-    background: red;
-    color: white;
-    border: none;
-    margin: 0px;
-    padding: 0px;
-}
-input{
-    width: 100%;
-}

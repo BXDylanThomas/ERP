@@ -1,6 +1,7 @@
 package com.dylan.dao;
 
 import com.dylan.model.Account;
+import com.dylan.model.Resume;
 
 public interface AccountDao {
 
@@ -18,4 +19,7 @@ public interface AccountDao {
 
     //通过id  查询
     Account queryAccountBy_id(int id);
+
+    //通过员工id查账号
+    Account queryAccountBy_empId(int empId);
 }

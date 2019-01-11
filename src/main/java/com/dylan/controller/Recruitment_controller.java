@@ -82,7 +82,7 @@ public class Recruitment_controller {
     }
 
     /**
-     * y员工查看招聘
+     * 员工查看招聘
      */
     @RequestMapping("/visitorqueryAllRecruitment")
     public String visitorqueryAllRecruitment(String current, Model model){
@@ -105,6 +105,15 @@ public class Recruitment_controller {
         return "visitor/recruitment";
     }
 
+    /**
+     * 查看某个具体的招聘信息
+     */
+    @RequestMapping("/visitorqueryOneRecruitment")
+    public String visitorqueryOneRecruitment(int id ,Model model){
+        Recruitment recruitment = recruitmentService.queryRecruitmentBy_id(id);
+        model.addAttribute("recruitment",recruitment);
+        return "visitor/recruitmentone";
+    }
     /**
      * 查询某个部门的招聘信息
      * @param posId

@@ -28,6 +28,12 @@
           where pz.rn &gt;=#{current}
     </select>
 
+    <!--查询员工某个月的-->
+    <select id="queryAllPrizeRecordBy_empId_month" resultMap="prizeRecord">
+        select pz.PR_ID,pz.PR_EMPID,pz.PR_REASON,pz.PR_MONEY,pz.PR_TIME from T_PRIZERECORD pz
+        where PR_EMPID=#{empId} and pz.PR_TIME between #{start} and #{end}
+    </select>
+
     <resultMap id="prizeRecord" type="PrizeRecord">
         <id property="id" column="PR_ID"/>
         <result property="empId" column="PR_EMPID"/>

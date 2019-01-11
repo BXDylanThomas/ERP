@@ -17,8 +17,8 @@
     </delete>
 
     <!--通过  名字  查询职位  判断是否重复 -->
-    <select id="queryPositionBy_name" resultType="com.dylan.model.Position">
-        select  * from T_POSITION where P_NAME=#{name} and rownum=1
+    <select id="queryPositionBy_name" resultMap="positionMap">
+        select  * from T_POSITION where P_DEPID=#{depId} and  P_NAME=#{name} and rownum=1
     </select>
 
     <!--通过 职位id  查询职位  -->

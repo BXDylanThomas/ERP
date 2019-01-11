@@ -12,6 +12,9 @@
     <update id="updateEmployeePosition">
          update T_EMPLOYEE set E_POSID=#{posId} where E_ID=#{empId}
     </update>
+    <update id="updateEmployeenew">
+         update T_EMPLOYEE set E_EMPSTATE=#{empState},E_PERFORMANCE=#{performance},E_ENTRYTIME=#{entryTime},E_POSID=#{posId} where E_ID=#{id}
+    </update>
     <!--//查询所有的员工-->
     <select id="queryAllEmployee" resultMap="employeeMap">
         select e.E_ID, e.E_ACCID,e.E_RESID,e.E_POSID,e.E_ENTRYTIME,e.E_SALID,e.E_PERFORMANCE,e.E_EMPSTATE,

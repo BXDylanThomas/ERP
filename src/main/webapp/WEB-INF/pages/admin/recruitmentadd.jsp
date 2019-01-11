@@ -8,66 +8,26 @@
 <head>
     <base href="<%=basePath%>"/>
     <title></title>
-    <link rel="stylesheet" href="resource/css/base.css">
+    <link rel="stylesheet" href="resource/css/next.css">
+    <link rel="stylesheet" href="resource/css/button.css">
     <link rel="stylesheet" href="resource/css/page.css">
     <link rel="stylesheet" href="resource/css/table.css">
     <script src="resource/js/jquery-3.3.1.js"></script>
     <script src="resource/js/recruitment.js"></script>
-
 </head>
 <body>
-<div>
-    <!--top-->
-    <div id="top">
-        <c:if test="${sessionScope.user!=null}">
-            <div  class="welcome">
-                <span>欢迎：${sessionScope.user.name}</span>
-                <a href="exit">退出</a>
-            </div>
-        </c:if>
-    </div>
-    <div id="introduce"></div>
-    <div id="guid">
-        <div id="guid2">
-            <ul>
-                <li class="menu">
-                    <a href="returnEmployee">主页</a>
-                </li>
-                <li class="menu">
-                    <a href="queryDepartment">部门管理</a>
-                </li>
-                <li class="menu">
-                    <a href="queryALlPosition">职位管理</a>
-                </li>
-                <li class="menu">
-                    <a href="queryAllEmployee">员工管理</a>
-                </li>
-                <li class="menu"  id="a">
-                    <a href="queryAllRecruitment">招聘管理</a>
-                </li>
-                <li class="menu">
-                    <a href="toTrain">培训管理</a>
-                </li>
-                <li class="menu">
-                    <a href="">查看考勤</a>
-                </li>
-                <li class="menu">
-                    <a href="">薪资结算</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
+<div style="margin:0 auto;width: 80%">
+<jsp:include page="base.jsp" />
 
 <div id="next">
     <div >
         <form method="post" action="addRecruitment" id="f">
             <table border="1" rules="all">
                 <tr>
-                    <th colspan="3">招聘</th>
+                    <td colspan="3">招聘</td>
                 </tr>
                 <tr>
-                    <th>部门：</th>
+                    <td>部门：</td>
                     <td colspan="2">
                         <select id="department">
                             <option value="-1" selected>请选择部门</option>
@@ -79,7 +39,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>职位：</th>
+                    <td>职位：</td>
                     <td colspan="2">
                         <select id="position" name="posId">
                             <option>请选择职位</option>
@@ -87,28 +47,27 @@
                     </td>
                 </tr>
                 <tr>
-                    <th >标题</th>
-                    <td colspan="2"><input type="text" name="title" required> </td>
+                    <td >标题</td>
+                    <td colspan="2"><input type="text" name="title" required style="width: 100%;height: 100%"> </td>
                 </tr>
                 <tr>
-                    <th colspan="3">招聘要求</th>
+                    <td colspan="3">招聘要求</td>
                 </tr>
                 <tr>
-                    <td colspan="3">
-                      <textarea name="content" required> </textarea>
+                    <td colspan="3"style="height: 50px">
+                        <input name="content" required style="width: 100%;height: 100%">
                     </td>
                 </tr>
-                <tr></tr>
-                <tr></tr>
+
                 <tr>
-                    <th>招聘人数：</th>
-                    <td colspan="2"><input type="number" name="count" style="width: 50px" required>个</td>
+                    <td>招聘人数：</td>
+                    <td colspan="2"><input type="number" name="count" style="width: 100%" required>个</td>
                 </tr>
             </table>
-            <input type="submit" value="确认" id="sub">
+            <input type="submit" value="确认" id="sub" class="send" style="position: relative;left: 200px; top: 20px;">
         </form>
     </div>
 </div>
-
+</div>
 </body>
 </html>

@@ -8,13 +8,15 @@
 <head>
     <base href="<%=basePath%>"/>
     <title></title>
-    <link rel="stylesheet" href="resource/css/base.css">
     <script src="resource/js/jquery-3.3.1.js"></script>
+    <link rel="stylesheet" href="resource/css/button.css">
+    <script type="text/javascript" src="resource/js/jquery-1.11.0.js" ></script>
+    <script type="text/javascript" src="resource/js/circle_JT_min.js" ></script>
     <script>
         $(function () {
             $("button").click(function () {
                 var result=$("#result").val()
-                if(result==1){
+                if(result==""){
                     window.location.href="goWork";
                 }else{
                     window.location.href="goHome";
@@ -22,61 +24,57 @@
             })
         })
     </script>
+    <style>
+       #next{
+           position: relative;
+           left: 500px;
+       }
+        #main{
+            position: relative;
+            left: 50px;
+        }
+    </style>
 </head>
 <body>
-    <div>
-    <!--top-->
-    <div id="top">
-        <c:if test="${sessionScope.user!=null}">
-            <div  class="welcome">
-                <span>欢迎：${sessionScope.user.name}</span>
-                <a href="exit">退出</a>
-            </div>
-        </c:if>
-    </div>
-    <div id="introduce"></div>
-    <div id="guid">
-        <div id="guid2">
-            <ul>
-                <li class="menu">
-                    <a href="returnEmployee" id="a">主页</a>
-                </li>
-                <li class="menu">
-                    <a href="toemployeeinfo">个人信息</a>
-                </li>
-                <li class="menu">
-                    <a href="queryAllEmployeeemp">员工查询</a>
-                </li>
-                <li class="menu">
-                    <a href="queryCheckRecord">查看考勤</a>
-                </li>
-                <li class="menu">
-                    <a href="toEmpQueryTrain">查看培训</a>
-                </li>
-                <li class="menu">
-                    <a href="">查看薪资</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
+<div style="margin:0 auto;width: 80%">
+    <jsp:include page="base.jsp" />
     <div id="next">
+        <div id="dom"></div>
+
         <div id="main">
             <br/> <br/>
             <input type="hidden" value="${result}" id="result">
-
-            <c:if test="${result==1}">
-                <button value="上班打卡">上班打卡</button>
+            <c:if test="${result==null}">
+                <button value="上班打卡" class="send">上班打卡</button>
             </c:if>
-            <c:if test="${result==2}">
-                <button value="下班打卡">下班打卡</button>
+            <c:if test="${result.offTime==null && result.workTime!=null}">
+                <span  class="send" style="position: relative;left: -60px">上班时间：${result.workTime}</span><br/><br/>
+                <button value="下班打卡" class="send">下班打卡</button>
             </c:if>
-            <c:if test="${result==3}">
-               下班成功
+            <c:if test="${result.offTime!=null}">
+                <span class="send" style="position: relative;left: -60px">上班时间：${result.workTime}</span><br/><br/>
+                <span class="send" style="position: relative;left: -60px">下班时间：${result.offTime}</span>
             </c:if>
         </div>
-
     </div>
+</div>
+<script>
+    $.circleJt({
+        domId:'dom',//必须
+        radius:100,//必须
+        pbColor:'#00796b',//必需
+        pbWidth:10,//非必需
+        value:0,//必须
+        totalValue:1000,//非必需
+        percentage:true,//非必需
+        fontSize:30,
+
+        clock:true,//如果clock为真的时候，上述属性除value,totalValue,percentage均全都无效
+        digitalWatch:true//以电子表形式显示
+    });
+
+
+</script>
 </body>
 
 </body>

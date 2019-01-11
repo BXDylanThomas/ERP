@@ -17,7 +17,7 @@ public interface PositionDao {
     boolean deletePosition(int posId);
 
     //通过名字 查询职位  判断是否重复
-    Position queryPositionBy_name(String name);
+    Position queryPositionBy_name(Map<String,Object> map);
 
     //通过 职位 id  查询职位
     Position queryPositionBy_podId(int posId);

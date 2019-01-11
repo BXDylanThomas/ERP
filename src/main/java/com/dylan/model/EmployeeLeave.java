@@ -10,6 +10,7 @@ public class EmployeeLeave implements Serializable {
     private Integer empId;
     private String reason;
     private String time;
+    private Employee employee;
 
     public EmployeeLeave() {
     }
@@ -46,6 +47,14 @@ public class EmployeeLeave implements Serializable {
         this.time = time;
     }
 
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
     @Override
     public String toString() {
         return "EmployeeLeave{" +
@@ -53,6 +62,7 @@ public class EmployeeLeave implements Serializable {
                 ", empId=" + empId +
                 ", reason='" + reason + '\'' +
                 ", time='" + time + '\'' +
+                ", employee=" + employee +
                 '}';
     }
 }

@@ -8,11 +8,13 @@ import com.dylan.model.Employee;
 import com.dylan.model.PrizeRecord;
 import com.dylan.service.CheckRecordService;
 import com.dylan.util.PagesUtil;
+import com.dylan.util.TimeUtil;
 import oracle.sql.DATE;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -35,6 +37,7 @@ public class CheckRecordServiceImpl implements CheckRecordService {
     public final static int monthDay=22;  //加班基准
 
     private static SimpleDateFormat simpleDateFormat=new SimpleDateFormat("HH:mm");
+    private static DecimalFormat df= new DecimalFormat("######0.0");
 
     //转化为时间格式
     static Date workTime=null;
@@ -81,7 +84,7 @@ public class CheckRecordServiceImpl implements CheckRecordService {
          *如果  小于22天  正常上班  没有加班之说
          */
         Date date=new Date();
-        Map<String,Object> map=getMonth(date);
+        Map<String,Object> map=TimeUtil.getMonth(date);
         map.put("empId",employee.getId());
         Integer count = checkRecordDao.countWorkTime(map);
 
@@ -105,6 +108,7 @@ public class CheckRecordServiceImpl implements CheckRecordService {
         if(time.before(workTime) || time.equals(workTime)){
             checkRecord.setWorkState(regular);
         }else if(time.after(workTime) && time.before(lateTime)){
+
             //大于9点  小于 12 点  是迟到
             checkRecord.setWorkState(late);
             record.setReason("迟到");
@@ -114,7 +118,7 @@ public class CheckRecordServiceImpl implements CheckRecordService {
             //算旷工
             checkRecord.setWorkState(absenteeism);
             record.setReason("旷工");
-            record.setMoney(-employee.getResume().getSalary().getMoney()/22);
+            record.setMoney(Double.parseDouble(df.format(-employee.getResume().getSalary().getMoney()/22)));
             boolean res = prizeRecordDao.addPrizeRecord(record);
         }
        return  checkRecordDao.addCheckRecord(checkRecord);
@@ -177,12 +181,12 @@ public class CheckRecordServiceImpl implements CheckRecordService {
                 record.setEmpId(employee.getId());
                 record.setReason("旷工");
                 record.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(date));
-                record.setMoney(-employee.getResume().getSalary().getMoney()/22);
+                record.setMoney(Double.parseDouble(df.format(-employee.getResume().getSalary().getMoney()/22)));
                 boolean res = prizeRecordDao.addPrizeRecord(record);
             }else{
                 prizeRecord.setReason("旷工");
                 prizeRecord.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(date));
-                prizeRecord.setMoney(-employee.getResume().getSalary().getMoney()/22);
+                prizeRecord.setMoney(Double.parseDouble(df.format(-employee.getResume().getSalary().getMoney()/22)));
                 boolean res = prizeRecordDao.updatePrizeRecord(prizeRecord);
             }
         }else if((time.after(earlyTime) || time.equals(earlyTime)) && time.before(offTime)){
@@ -222,7 +226,7 @@ public class CheckRecordServiceImpl implements CheckRecordService {
             return null;
         }
         Date date=new Date();
-        Map<String, Object> map = getMonth(date);
+        Map<String, Object> map = TimeUtil.getMonth(date);
         map.put("empId",empId);
         List<CheckRecord> checkRecords = checkRecordDao.queryCheckRecordBY_empId_everyMonth(map);
 
@@ -245,7 +249,7 @@ public class CheckRecordServiceImpl implements CheckRecordService {
         Calendar calendar=Calendar.getInstance();
         calendar.setTime(date);
         calendar.add(2,-1);
-        Map<String, Object> map = getMonth(calendar.getTime());
+        Map<String, Object> map = TimeUtil.getMonth(calendar.getTime());
         map.put("empId",empId);
         List<CheckRecord> checkRecords = checkRecordDao.queryCheckRecordBY_empId_everyMonth(map);
         Collections.sort(checkRecords);
@@ -291,35 +295,6 @@ public class CheckRecordServiceImpl implements CheckRecordService {
         return map;
     }
 
-    /**
-     * 得到某月的第一天  和最后一天的格式
-     * @throws ParseException
-     */
-    public Map<String,Object> getMonth(Date date){
 
-        Map<String,Object> map=new HashMap<>();
-        Calendar cal=Calendar.getInstance();
-        cal.setTime(date);
-        map.put("today",cal.get(5));
-        SimpleDateFormat sim=new SimpleDateFormat("yyyy-MM-dd HH:mm");
-
-        //得到某月的第一天
-        int first=cal.getActualMinimum(Calendar.DAY_OF_MONTH);
-        cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), first, 0, 0, 0);
-        String start = sim.format(cal.getTime());
-        map.put("start",start);
-
-        //得到某月的最后一天
-        int last=cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-        cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), last, 23, 59, 59);
-        String end = sim.format(cal.getTime());
-        map.put("end",end);
-        List<Integer> list=new ArrayList<>();
-        for(int i=1;i<=last;i++){
-            list.add(i);
-        }
-        map.put("max",list);
-        return map;
-    }
 
 }

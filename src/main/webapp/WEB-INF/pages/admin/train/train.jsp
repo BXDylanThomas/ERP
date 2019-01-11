@@ -6,59 +6,26 @@
 <html>
 <head>
     <base href="<%=basePath%>"/>
+    <link rel="stylesheet" href="resource/css/next.css">
+    <link rel="stylesheet" href="resource/css/button.css">
     <title></title>
-    <link rel="stylesheet" href="resource/css/base.css">
+    <style>
+        #main a{
+            margin: 10px 0px;
+        }
+    </style>
 </head>
 <body>
-<div>
-    <!--top-->
-    <div id="top">
-        <c:if test="${sessionScope.user!=null}">
-            <div  class="welcome">
-                <span>欢迎：${sessionScope.user.name}</span>
-                <a href="exit">退出</a>
-            </div>
-        </c:if>
-    </div>
-    <div id="introduce"></div>
-    <div id="guid">
-        <div id="guid2">
-            <ul>
-                <li class="menu">
-                    <a href="returnEmployee">主页</a>
-                </li>
-                <li class="menu">
-                    <a href="queryDepartment">部门管理</a>
-                </li>
-                <li class="menu">
-                    <a href="queryALlPosition">职位管理</a>
-                </li>
-                <li class="menu">
-                    <a href="queryAllEmployee">员工管理</a>
-                </li>
-                <li class="menu">
-                    <a href="queryAllRecruitment">招聘管理</a>
-                </li>
-                <li class="menu" id="a">
-                    <a href="toTrain">培训管理</a>
-                </li>
-                <li class="menu">
-                    <a href="">查看考勤</a>
-                </li>
-                <li class="menu">
-                    <a href="">薪资结算</a>
-                </li>
-                <li class="menu">
-                    <a href="">查看奖惩记录</a>
-                </li>
-            </ul>
+<div style="margin:0 auto;width: 80%">
+    <jsp:include page="../base.jsp" />
+
+    <div id="next">
+        <div id="main" >
+            <a href="toTrainDepartment" class="send">查看部门培训</a><br/>
+            <a href="queryAllTrainEmployee" class="send">查看员工培训</a>
         </div>
     </div>
 </div>
-<div id="next"></div>
-    <div id="main" style="position: relative;left: 600px;top: 5px;">
-        <br/><br/><a href="toTrainDepartment">查看部门培训</a>
-        <br/><br/><a href="queryAllTrainEmployee">查看员工培训</a>
-    </div>
 </body>
+
 </html>

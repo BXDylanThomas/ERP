@@ -94,23 +94,24 @@ public class RecruitmentRecordServiceImpl implements RecruitmentRecordService {
      * @return
      */
     @Override
-    public boolean sureChange(Account account,int posId) {
+    public boolean sureChange(Account account,int id) {
         if(account==null){
             return false;
         }
+
+
         account.setType(EMPLOYEE);
         boolean res = accountDao.updateAccount(account);
         Resume resume = resumeDao.queryResumeBy_accId(account.getId());
-
+        RecruitmentRecord recruitmentRecord = recruitmentRecordDao.queryRecruitmentRecordBy_id(id);
         Employee  employee=new Employee();
         //账号
         employee.setAccId(account.getId());
         //设置简历id
         employee.setResId(resume.getId());
         //职位id
-        employee.setPosId(posId);
+        employee.setPosId(recruitmentRecord.getRecruitment().getPositions().getId());
         //薪资id
-        System.out.println(resume.getId());
         Salary salary = salaryDao.querySalaryBy_resId(resume.getId());
 
         employee.setSalId(salary.getId());
@@ -124,7 +125,13 @@ public class RecruitmentRecordServiceImpl implements RecruitmentRecordService {
 
         //添加员工试用期
         employee.setEmpState(WATCH);
+        //判断之前是不是在公司干过
+        Employee em = employeeDao.queryEmployeeBy_accId(account.getId());
+        if(em!=null){
+            employee.setId(em.getId());
 
+            return res && employeeDao.updateEmployeenew(employee);
+        }
         //添加员工
         boolean res2 = employeeDao.addEmployee(employee);
         return res && res2;

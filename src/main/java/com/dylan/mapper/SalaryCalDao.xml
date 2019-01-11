@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dylan.dao.SalaryCalDao">
+
+    <!--添加薪资结算-->
+    <insert id="addSalaryCal">
+        insert into T_SALARYCAL values (CALSALARY_SEQ.nextval,#{empId},#{time})
+    </insert>
+
+    <!--通过id 查询-->
+    <select id="querySalaryCalBy_id" resultType="com.dylan.model.SalaryCal">
+        select sc.C_ID,sc.C_EMPID, sc.C_TIME,distinct(sc.C_EMPID)  from T_SALARYCAL sc
+    </select>
+
+    <select id="queryAllSalaryCalby_time" resultType="java.lang.String">
+        select sc.C_TIME from T_SALARYCAL sc  GROUP BY sc.C_TIME
+    </select>
+    <select id="querySalaryCal" resultMap="salaryCalMap">
+        select * from T_SALARYCAL where C_TIME between #{start} and #{end}
+    </select>
+
+
+    <resultMap id="salaryCalMap" type="SalaryCal">
+        <id property="id" column="C_ID"/>
+        <result property="empId" column="C_EMPID"/>
+        <result property="time" column="C_TIME"/>
+        <association property="employee" resultMap="com.dylan.dao.EmployeeDao.employeeMap"/>
+    </resultMap>
+
+</mapper>

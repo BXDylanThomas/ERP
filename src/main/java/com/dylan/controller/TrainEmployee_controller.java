@@ -96,6 +96,18 @@ public class TrainEmployee_controller {
         model.addAttribute("trainEmployee",trainEmployees);
         return "admin/train/trainemployeeupdate";
     }
+
+    /**
+     *查看某一个
+     */
+    @RequestMapping("/querytrainemployeeone")
+    public String querytrainemployeeone(int id,Model model){
+        List<TrainEmployee> trainEmployees = trainEmployeeService.queryTrainEmployeeBy_tId(id);
+        model.addAttribute("t",trainEmployees.get(0).getTrain());
+        model.addAttribute("trainEmployee",trainEmployees);
+        return "admin/train/trainemployeeone";
+    }
+
     @RequestMapping("/toupdateTrainEmployee")
     public String toupdateTrainEmployee(Train train){
         boolean res = trainService.updateTrain(train);

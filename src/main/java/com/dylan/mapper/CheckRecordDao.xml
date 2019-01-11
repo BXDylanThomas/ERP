@@ -27,13 +27,13 @@
     <!--计算某员工 某月  没有旷工的 总天数-->
     <select id="countWorkTime" resultType="java.lang.Integer">
       SELECT count(c.C_ID) from(select * from T_CHECKRECORD c where  C.C_EMPID=#{empId}
-				and  c.C_WORKTIME between #{start} and #{end} and c.C_WORKSTATE != 4 and c.C_OFFSTATE != 4)c
+				and  c.C_WORKTIME between #{start} and #{end} and c.C_OFFTIME is not null and c.C_WORKSTATE != 4 and c.C_OFFSTATE != 4)c
     </select>
 
     <!--通过员工id 查询打卡记录-->
     <select id="queryCheckRecordBY_empId_everyMonth" resultMap="checkRecordMap">
         select c.C_WORKTIME,c.C_OFFTIME,c.C_OVERTIME,c.C_WORKSTATE,c.C_OFFSTATE from T_CHECKRECORD c,T_EMPLOYEE e
-        where e.E_ID=#{empId} and e.E_ID= c.C_EMPID and c.C_WORKTIME between #{start} and #{end}
+        where e.E_ID=#{empId} and e.E_ID= c.C_EMPID and c.C_WORKTIME between #{start} and #{end} and c.C_OFFTIME is not null and c.C_WORKSTATE != 4 and c.C_OFFSTATE != 4
     </select>
 
     <resultMap id="checkRecordMap" type="CheckRecord">

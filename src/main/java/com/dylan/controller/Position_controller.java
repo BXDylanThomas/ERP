@@ -1,6 +1,8 @@
 package com.dylan.controller;
 
+import com.dylan.dao.EmployeeDao;
 import com.dylan.model.Department;
+import com.dylan.model.Employee;
 import com.dylan.model.Position;
 import com.dylan.service.DepartmentService;
 import com.dylan.service.PositionService;
@@ -24,6 +26,8 @@ public class Position_controller {
 
     @Autowired
     private DepartmentService departmentService;
+    @Autowired
+    private EmployeeDao employeeDao;
 
     @RequestMapping("/addPosition")
     public void addPosition(Position position, HttpServletResponse response) throws IOException {
@@ -97,14 +101,23 @@ public class Position_controller {
     }
 
     @RequestMapping("/deletePosition")
-    public String deletePosition(Integer id){
-        boolean res = positionService.deletePosition(id);
-        return "forward:queryALlPosition";
+    public void deletePosition(Integer id,HttpServletResponse response) throws IOException {
+        List<Employee> employees = employeeDao.queryEmployeeBy_posId(id);
+
+        if(employees!=null && !employees.isEmpty()){
+
+            response.getWriter().write("0");
+        }else{
+             boolean res = positionService.deletePosition(id);
+
+            response.getWriter().write("1");
+        }
+
     }
 
     @RequestMapping("/updatePosition")
     public void updatePosition(Position position, HttpServletResponse response) throws IOException {
-        System.out.println(position);
+
         boolean res = positionService.updatePosition(position);
         if(res){
             response.getWriter().write("1");

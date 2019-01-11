@@ -22,5 +22,7 @@ public interface PrizeRecordDao {
     //通过员工id 查看的所有奖惩记录表  分页
     List<PrizeRecord> queryAllPrizeRecordBy_empId_everyPage(Map<String,Object> map);
 
+    //查询某员工  某个月的 奖惩记录表
+    List<PrizeRecord> queryAllPrizeRecordBy_empId_month(Map<String,Object> map);
 
 }

@@ -305,4 +305,25 @@ public class Employee_controller {
         boolean res = employeeService.updateEmployeePosition(empId, posId);
         return "forward:queryAllEmployee";
     }
+
+    /**
+     * 查看离职员工
+     */
+    @RequestMapping("/queryemployeeleave")
+    public String queryemployeeleave(String current,Model model){
+        //总共有多少数据
+        List<EmployeeLeave> all = employeeService.queryEmployeeLeave();
+        model.addAttribute("all",all.size());
+        int pages = PagesUtil.getPages(all.size());
+        //当前页数
+        int page = PagesUtil.getAllPage(current);
+        model.addAttribute("pages",pages);
+        //得到前一页和后一页
+        PagesUtil.getPre_next_page(page,pages,model);
+
+        List<EmployeeLeave> employeeLeaves = employeeService.queryEmployeeLeave_everyPage(page);
+        System.out.println(employeeLeaves);
+        model.addAttribute("EmployeeLeave",employeeLeaves);
+        return "admin/employee/leave";
+    }
 }
